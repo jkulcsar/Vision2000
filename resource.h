@@ -134,7 +134,6 @@
 #define IDC_COMBO_X10DEVICE_DEVICECODE  1039
 #define IDC_COMBO1                      1040
 #define IDC_COMBO_CODE_LAMP             1040
-#define IDC_COMBO_X10                   1040
 #define IDC_COMBO_X10DEVICE_LIST        1040
 #define IDC_RADIO_APPLIANCE_ON          1041
 #define IDC_RADIO_APPLIANCE_OFF         1042
@@ -165,6 +164,7 @@
 #define IDS_SETTINGS_FILE               57672
 #define IDS_TAB_HOME_AUTOMATION         57673
 #define IDS_REMOVEALL_WARNING           57674
+#define IDS_REMOVE_WARNING              57675
 
 // Next default values for new objects
 // 

@@ -61,6 +61,7 @@ BEGIN_MESSAGE_MAP(CHomeAutomationPage, CPropertyPage)
 	ON_BN_CLICKED(IDC_BUTTON_REMOVEALL_X10DEVICE, OnRemoveallX10device)
 	ON_CBN_SELENDOK(IDC_COMBO_X10DEVICE_LIST, OnSelendokComboX10deviceList)
 	ON_BN_CLICKED(IDC_CHECK_ONOFF, OnOnOff)
+	ON_BN_CLICKED(IDC_BUTTON_REMOVE_X10DEVICE, OnRemoveX10device)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -162,14 +163,44 @@ void CHomeAutomationPage::OnRemoveallX10device()
 
 	RefreshX10DeviceListComboBox();
 	RefreshButtons();
+}
+
+
+void CHomeAutomationPage::OnRemoveX10device() 
+{
+	POSITION pos;
+	CSystemTrayApp* pApp = (CSystemTrayApp*) AfxGetApp();
+	CTypedPtrList<CObList, CX10Device*>*	pX10DeviceList;
+	pX10DeviceList = pApp->GetX10DeviceList();
+
+	
+	UINT uiCurrIndex = m_cbX10DeviceList.GetCurSel();
+	if( uiCurrIndex != CB_ERR )
+	{
+		pos = (POSITION) m_cbX10DeviceList.GetItemDataPtr( uiCurrIndex );
+		CX10Device* pX10Device = pX10DeviceList->GetAt(pos);
+
+		CString strMessage;
+		CString strToFormat;
+		strToFormat.LoadString( IDS_REMOVE_WARNING );
+		strMessage.Format( (LPCTSTR)strToFormat, pX10Device->GetX10DeviceName() );
+		if( AfxMessageBox( strMessage, MB_YESNO | MB_ICONEXCLAMATION	) == IDYES )
+		{
+			pX10DeviceList->RemoveAt( pos );
+			RefreshX10DeviceListComboBox();
+		}
+
+		RefreshButtons();
+	}
+
 
 }
 
+
+
 void CHomeAutomationPage::OnSelendokComboX10deviceList() 
 {
-	UINT uiCurrIndex = m_cbX10DeviceList.GetCurSel();
-	POSITION pos = (POSITION) m_cbX10DeviceList.GetItemDataPtr( uiCurrIndex );
-
+	RefreshButtons();
 }
 
 void CHomeAutomationPage::RefreshButtons()
@@ -209,11 +240,11 @@ void CHomeAutomationPage::RefreshButtons()
 				m_btnBrighten.EnableWindow( TRUE );
 				m_btnDimm.EnableWindow( TRUE );
 			}
-		}
-		else
-		{
-			m_btnBrighten.EnableWindow( FALSE );
-			m_btnDimm.EnableWindow( FALSE );
+			else
+			{
+				m_btnBrighten.EnableWindow( FALSE );
+				m_btnDimm.EnableWindow( FALSE );
+			}
 		}
 	}
 	else
@@ -242,12 +273,12 @@ void CHomeAutomationPage::RefreshX10DeviceListComboBox()
 	UINT		uiIndex = 0;
 	while (pos != NULL)
 	{
-		// assign the curent X10Device position to the current index, then increment index
-		m_cbX10DeviceList.SetItemDataPtr( uiIndex, pos );
-
-		CX10Device* pX10Device = pX10DeviceList->GetNext(pos);
+		// assign the curent X10DeviceList position to the current index
+		CX10Device* pX10Device = pX10DeviceList->GetAt(pos);
 		m_cbX10DeviceList.InsertString( uiIndex, (LPCTSTR)pX10Device->GetX10DeviceName() );
+		m_cbX10DeviceList.SetItemDataPtr( uiIndex, pos );
 		
+		pX10DeviceList->GetNext(pos);
 		uiIndex++;
 	}
 
@@ -279,3 +310,5 @@ void CHomeAutomationPage::OnOnOff()
 		RefreshButtons();
 	}
 }
+
+

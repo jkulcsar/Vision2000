@@ -85,7 +85,11 @@ void CNewX10DeviceDlg::OnOK()
 		pX10Device->SetX10DeviceCode( uiSel );
 
 		// add the device TYPE also!
-		// .........
+		nIndex = m_cbX10DeviceType.GetCurSel();
+		if( nIndex == 0 )
+			pX10Device->SetX10DeviceType( APPLIANCE );
+		else
+			pX10Device->SetX10DeviceType( LIGHT );
 
 		// add the new X10 device to the device-list
 		pX10DeviceList->AddTail( pX10Device );
