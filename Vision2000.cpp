@@ -50,7 +50,6 @@ void CSystemTrayApp::OnAppAbout()
 
 BEGIN_MESSAGE_MAP(CSystemTrayApp, CWinApp)
 	//{{AFX_MSG_MAP(CSystemTrayApp)
-	ON_COMMAND(ID_CALL_HANGUP, OnCallHangup)
 	ON_COMMAND(ID_APP_ABOUT, OnAppAbout)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
@@ -65,8 +64,9 @@ CSystemTrayApp::CSystemTrayApp()
 
 /////////////////////////////////////////////////////////////////////////////
 // The one and only CSystemTrayApp object
-
 CSystemTrayApp theApp;
+
+CComModule _Module;
 
 /////////////////////////////////////////////////////////////////////////////
 // CSystemTrayApp initialization
@@ -86,6 +86,12 @@ BOOL CSystemTrayApp::InitInstance()
 		return FALSE;
 	m_pMainWnd = pMainFrame;
 
+	// Initialize the ATL module		
+	_Module.Init(NULL, m_hInstance);
+
+    //Initialize ATL control containment code.
+    AtlAxWinInit();
+	
 	// for COM support
 	AfxOleInit();
 
@@ -105,23 +111,6 @@ BOOL CSystemTrayApp::InitInstance()
 /////////////////////////////////////////////////////////////////////////////
 // CSystemTrayApp commands
 
-void CSystemTrayApp::OnCallHangup() 
-{
-	// If not in a call, then call szMachineName, otherwise hang up.
-	if (!m_pConf->InConnection()) 
-	{
-		CString strMachineName("tester");
-		//GetDlgItemText(IDC_MACHINENAME,strMachineName);
-		if( !strMachineName.IsEmpty() )
-			m_pConf->Call((LPTSTR)(LPCTSTR)strMachineName);
-		else
-			AfxMessageBox("Enter a machine name first!", MB_OK);
-	}
-	else
-		m_pConf->HangUp();
-}
-
-
 int CSystemTrayApp::ExitInstance() 
 {
 	// Hangup if in a call
@@ -134,7 +123,9 @@ int CSystemTrayApp::ExitInstance()
 		delete m_pConf;
 		m_pConf = NULL;
 	}
-	
+
+	_Module.Term();
+
 	return CWinApp::ExitInstance();
 }
 

@@ -46,7 +46,7 @@ void CControlVCR::Play()
 	byteTemp1 = 0xFB;
 	byteTemp2 = byteToWrite & byteTemp1;
 	byteTemp1 = 0x38;
-	byteToWrite = byteTemp1 & byteTemp2;
+	byteToWrite = byteTemp1 | byteTemp2;
 
 	m_pPP->WriteDataPort( byteToWrite );
 
@@ -58,7 +58,7 @@ void CControlVCR::Play()
 	byteTemp1 = 0xC3;
 	byteTemp2 = byteToWrite & byteTemp1;
 	byteTemp1 = 0x00;
-	byteToWrite = byteTemp1 & byteTemp2;
+	byteToWrite = byteTemp1 | byteTemp2;
 
 	m_pPP->WriteDataPort( byteToWrite );
 }
@@ -85,7 +85,7 @@ void CControlVCR::Stop()
 	byteTemp1 = 0xEF;
 	byteTemp2 = byteToWrite & byteTemp1;
 	byteTemp1 = 0x2C;
-	byteToWrite = byteTemp1 & byteTemp2;
+	byteToWrite = byteTemp1 | byteTemp2;
 
 	m_pPP->WriteDataPort( byteToWrite );
 
@@ -97,7 +97,7 @@ void CControlVCR::Stop()
 	byteTemp1 = 0xC3;
 	byteTemp2 = byteToWrite & byteTemp1;
 	byteTemp1 = 0x00;
-	byteToWrite = byteTemp1 & byteTemp2;
+	byteToWrite = byteTemp1 | byteTemp2;
 
 	m_pPP->WriteDataPort( byteToWrite );
 }
@@ -124,7 +124,7 @@ void CControlVCR::FF()
 	byteTemp1 = 0xE7;
 	byteTemp2 = byteToWrite & byteTemp1;
 	byteTemp1 = 0x24;
-	byteToWrite = byteTemp1 & byteTemp2;
+	byteToWrite = byteTemp1 | byteTemp2;
 
 	m_pPP->WriteDataPort( byteToWrite );
 
@@ -136,7 +136,7 @@ void CControlVCR::FF()
 	byteTemp1 = 0xC3;
 	byteTemp2 = byteToWrite & byteTemp1;
 	byteTemp1 = 0x00;
-	byteToWrite = byteTemp1 & byteTemp2;
+	byteToWrite = byteTemp1 | byteTemp2;
 
 	m_pPP->WriteDataPort( byteToWrite );
 }
@@ -163,7 +163,7 @@ void CControlVCR::Rew()
 	byteTemp1 = 0xEB;
 	byteTemp2 = byteToWrite & byteTemp1;
 	byteTemp1 = 0x28;
-	byteToWrite = byteTemp1 & byteTemp2;
+	byteToWrite = byteTemp1 | byteTemp2;
 
 	m_pPP->WriteDataPort( byteToWrite );
 
@@ -175,7 +175,7 @@ void CControlVCR::Rew()
 	byteTemp1 = 0xC3;
 	byteTemp2 = byteToWrite & byteTemp1;
 	byteTemp1 = 0x00;
-	byteToWrite = byteTemp1 & byteTemp2;
+	byteToWrite = byteTemp1 | byteTemp2;
 
 	m_pPP->WriteDataPort( byteToWrite );
 }
@@ -202,7 +202,7 @@ void CControlVCR::Rec()
 	byteTemp1 = 0xF7;
 	byteTemp2 = byteToWrite & byteTemp1;
 	byteTemp1 = 0x34;
-	byteToWrite = byteTemp1 & byteTemp2;
+	byteToWrite = byteTemp1 | byteTemp2;
 
 	m_pPP->WriteDataPort( byteToWrite );
 
@@ -214,7 +214,7 @@ void CControlVCR::Rec()
 	byteTemp1 = 0xC3;
 	byteTemp2 = byteToWrite & byteTemp1;
 	byteTemp1 = 0x00;
-	byteToWrite = byteTemp1 & byteTemp2;
+	byteToWrite = byteTemp1 | byteTemp2;
 
 	m_pPP->WriteDataPort( byteToWrite );
 }
@@ -241,7 +241,7 @@ void CControlVCR::Pause()
 	byteTemp1 = 0xFF;
 	byteTemp2 = byteToWrite & byteTemp1;
 	byteTemp1 = 0x3C;
-	byteToWrite = byteTemp1 & byteTemp2;
+	byteToWrite = byteTemp1 | byteTemp2;
 
 	m_pPP->WriteDataPort( byteToWrite );
 
@@ -253,7 +253,7 @@ void CControlVCR::Pause()
 	byteTemp1 = 0xC3;
 	byteTemp2 = byteToWrite & byteTemp1;
 	byteTemp1 = 0x00;
-	byteToWrite = byteTemp1 & byteTemp2;
+	byteToWrite = byteTemp1 | byteTemp2;
 
 	m_pPP->WriteDataPort( byteToWrite );
 }
@@ -280,7 +280,7 @@ void CControlVCR::VCR()
 	byteTemp1 = 0xE3;
 	byteTemp2 = byteToWrite & byteTemp1;
 	byteTemp1 = 0x20;
-	byteToWrite = byteTemp1 & byteTemp2;
+	byteToWrite = byteTemp1 | byteTemp2;
 
 	m_pPP->WriteDataPort( byteToWrite );
 
@@ -292,7 +292,7 @@ void CControlVCR::VCR()
 	byteTemp1 = 0xC3;
 	byteTemp2 = byteToWrite & byteTemp1;
 	byteTemp1 = 0x00;
-	byteToWrite = byteTemp1 & byteTemp2;
+	byteToWrite = byteTemp1 | byteTemp2;
 
 	m_pPP->WriteDataPort( byteToWrite );
 }
@@ -320,7 +320,7 @@ void CControlVCR::Power()
 	byteTemp1 = 0xF3;
 	byteTemp2 = byteToWrite & byteTemp1;
 	byteTemp1 = 0x30;
-	byteToWrite = byteTemp1 & byteTemp2;
+	byteToWrite = byteTemp1 | byteTemp2;
 
 	m_pPP->WriteDataPort( byteToWrite );
 
@@ -332,7 +332,7 @@ void CControlVCR::Power()
 	byteTemp1 = 0xC3;
 	byteTemp2 = byteToWrite & byteTemp1;
 	byteTemp1 = 0x00;
-	byteToWrite = byteTemp1 & byteTemp2;
+	byteToWrite = byteTemp1 | byteTemp2;
 
 	m_pPP->WriteDataPort( byteToWrite );
 }

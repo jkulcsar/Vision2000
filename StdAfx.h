@@ -21,9 +21,18 @@
 #include <afxcmn.h>			// MFC support for Windows Common Controls
 #endif // _AFX_NO_AFXCMN_SUPPORT
 
-#include "imsconf2_i.c"		// contains the CLSID declarations
-#include "imsconf2.h"		// contains the interface declarations
-#include "interface.h"		// Parallel Port COM object interfaces
+// link in AltAxWinInit() & containment code statically
+// this require a instance (_Module) of CComModule
+#include <atlbase.h>
+extern CComModule _Module;
+#include <atlcom.h>
+#include <atlhost.h>
+
+#include "netmeeting_i.c"		// contains the CLSID declarations
+#include "netmeeting.h"			// contains the interface declarations
+#include "imsconf2_i.c"			// contains the CLSID declarations
+#include "imsconf2.h"			// contains the interface declarations
+#include "interface.h"			// Parallel Port COM object interfaces
 #include "ClUtil.h"
 #include "MgrNtfy.h"
 #include "CallNtfy.h"

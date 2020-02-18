@@ -3,7 +3,6 @@
 
 #include "stdafx.h"
 #include "Vision2000.h"
-#include "Vision2000Dlg.h"
 
 #include "MainFrm.h"
 #include "ControlSheet.h"
@@ -67,7 +66,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;
 	
 	// Create the tray icon
-	if (!m_TrayIcon.Create(this, WM_ICON_NOTIFY, _T("MyTrayApp Hints"), NULL, IDR_POPUP_MENU))
+	if (!m_TrayIcon.Create(this, WM_ICON_NOTIFY, _T("Vision2000"), NULL, IDR_POPUP_MENU))
 		return -1;
 	m_TrayIcon.SetStandardIcon(IDI_ASTERISK);
 

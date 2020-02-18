@@ -2,7 +2,7 @@
 
 [General Info]
 Version=1
-LastClass=CAboutDlg
+LastClass=CSystemTrayApp
 LastTemplate=CDialog
 NewFileInclude1=#include "stdafx.h"
 NewFileInclude2=#include "vision2000.h"
@@ -18,13 +18,13 @@ Class6=CAboutDlg
 Class7=CSystemTrayApp
 
 ResourceCount=7
-Resource1=IDD_CALL_CONTROL_PAGE
-Resource2=IDR_MAINFRAME
-Resource3=IDD_ABOUTBOX
-Resource4=IDD_CONTROL_SHEET
-Resource5=IDD_VCR_CONTROL_PAGE
-Resource6=IDD_CAMERA_CONTROL_PAGE
-Resource7=IDR_POPUP_MENU
+Resource1=IDD_CAMERA_CONTROL_PAGE
+Resource2=IDR_POPUP_MENU
+Resource3=IDD_CALL_CONTROL_PAGE
+Resource4=IDD_ABOUTBOX
+Resource5=IDD_CONTROL_SHEET
+Resource6=IDD_VCR_CONTROL_PAGE
+Resource7=IDR_MAINFRAME
 
 [CLS:CCallControlPage]
 Type=0
@@ -68,6 +68,9 @@ Type=0
 BaseClass=CWinApp
 HeaderFile=Vision2000.h
 ImplementationFile=Vision2000.cpp
+LastObject=ID_APP_ABOUT
+Filter=N
+VirtualFilter=AC
 
 [DLG:IDD_CALL_CONTROL_PAGE]
 Type=1
