@@ -27,7 +27,9 @@ public:
 	void VCR();
 	void VPC();	// VCR Power Control
 private:
+	HCURSOR m_hOldCursor;
 	BOOL m_bPowerOn;
+	BOOL m_bURCInitialized;		// URC = Universal Remote Control
 };
 
 #endif // !defined(AFX_CONTROLVCR_H__CF033B43_7297_11D3_AFB2_004095D0EF62__INCLUDED_)

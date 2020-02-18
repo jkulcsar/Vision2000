@@ -16,7 +16,7 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNCREATE(CCameraControlPage, CPropertyPage)
 
-CCameraControlPage::CCameraControlPage() : CPropertyPage(CCameraControlPage::IDD)
+CCameraControlPage::CCameraControlPage() : CPropertyPage(CCameraControlPage::IDD, IDS_TAB_CAMERA_CONTROL)
 {
 	//{{AFX_DATA_INIT(CCameraControlPage)
 		// NOTE: the ClassWizard will add member initialization here

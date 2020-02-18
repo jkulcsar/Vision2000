@@ -63,9 +63,11 @@ BOOL CControlSheet::OnInitDialog()
     AtlAxWinInit();
 
 	CRect rectWnd, rectTab, rectButton;
+	CRect rectVideoWnd;
 	int nWidth, nHeight;
 
 	GetWindowRect(rectWnd);
+	GetWindowRect(rectVideoWnd);
 	GetDlgItem(IDOK)->GetWindowRect(rectButton);
 	GetTabControl()->GetWindowRect(rectTab);
 
@@ -78,7 +80,7 @@ BOOL CControlSheet::OnInitDialog()
 	// resize the control sheet here to fit our controls
 	SetWindowPos(	NULL, 0, 0,
 					rectWnd.Width(),
-					2 * rectWnd.Height() /*+ (3 * nHeight)*/,
+					rectWnd.Height() + (2 * nHeight),
 					SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE);
 
 	rectButton.right  = rectTab.right;
@@ -86,14 +88,17 @@ BOOL CControlSheet::OnInitDialog()
 	rectButton.top    = rectTab.bottom + (UINT)(nHeight / 2);
 	rectButton.bottom = rectTab.bottom + (UINT)(nHeight / 2) + nHeight;
 	
-	m_ButtonClose.Create( _T("Close"),
-			BS_PUSHBUTTON|WS_CHILD|WS_VISIBLE|WS_TABSTOP, rectButton, this, IDC_BUTTON_CLOSE);
-	m_ButtonClose.SetFont( GetFont() );
+//	m_ButtonClose.Create( _T("Close"),
+//			BS_PUSHBUTTON|WS_CHILD|WS_VISIBLE|WS_TABSTOP, rectButton, this, IDC_BUTTON_CLOSE);
+//	m_ButtonClose.SetFont( GetFont() );
 
+	// put the video window next to the control panel
 	POINT pt;
-	pt.x = rectTab.left;
-	pt.y = rectTab.bottom + (UINT)(3 * nHeight);
-	m_hWndRemoteVideo = CreateNetMeetingWindow( m_hWnd, pt.x, pt.y, _T("RemoteNoPause"));
+	pt.x = rectVideoWnd.right;
+	pt.y = rectVideoWnd.top;
+
+	// make the parent of the video window the desktop, NOT our control sheet
+	m_hWndRemoteVideo = CreateNetMeetingWindow( NULL /*m_hWnd*/, pt.x, pt.y, _T("RemoteNoPause"));
 
 	UpdateWindow();
 
@@ -143,7 +148,7 @@ void CControlSheet::OnPaint()
 
 
 	CRect rectOk;
-	GetDlgItem(IDC_BUTTON_CLOSE)->GetWindowRect(rectOk);
+	GetDlgItem(IDOK)->GetWindowRect(rectOk);
 	ScreenToClient(rectOk);
 
 	dc.SetBkMode(TRANSPARENT);
@@ -208,7 +213,7 @@ HWND CControlSheet::CreateNetMeetingWindow(HWND hWndParent, int x, int y, LPCTST
 		::CreateWindow("AtlAxWin",
 			// Use ATL's string conversion routine to convert to a LPTSTR from an LPOLESTR
          OLE2T(strGUIDNetMeetingActiveXControl),
-         WS_CHILD | WS_VISIBLE | WS_GROUP, 
+         WS_POPUPWINDOW | WS_CAPTION | WS_SIZEBOX | WS_VISIBLE  /*| WS_GROUP*/, 
 		 x, 
 		 y, 
 		 0, 

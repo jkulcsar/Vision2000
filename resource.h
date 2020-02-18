@@ -39,7 +39,6 @@
 #define IDB_REC_D                       166
 #define IDB_REW_D                       167
 #define IDB_STOP_U                      168
-#define IDB_BITMAP1                     169
 #define IDB_VCR_D                       169
 #define IDC_MACHINENAME                 1000
 #define IDC_CALLHANGUP                  1001
@@ -73,6 +72,9 @@
 #define ID_CALL_HANGUP                  32773
 #define ID_SEND_TEXT                    32775
 #define ID_CONTROL_SHEET                32776
+#define IDS_TAB_CAMERA_CONTROL          57665
+#define IDS_TAB_VCR_CONTROL             57666
+#define IDS_TAB_CALL_CONTROL            57667
 
 // Next default values for new objects
 // 

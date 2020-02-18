@@ -16,7 +16,7 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNCREATE(CCallControlPage, CPropertyPage)
 
-CCallControlPage::CCallControlPage() : CPropertyPage(CCallControlPage::IDD)
+CCallControlPage::CCallControlPage() : CPropertyPage(CCallControlPage::IDD, IDS_TAB_CALL_CONTROL)
 {
 	//{{AFX_DATA_INIT(CCallControlPage)
 		// NOTE: the ClassWizard will add member initialization here

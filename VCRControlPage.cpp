@@ -16,7 +16,7 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNCREATE(CVCRControlPage, CPropertyPage)
 
-CVCRControlPage::CVCRControlPage() : CPropertyPage(CVCRControlPage::IDD)
+CVCRControlPage::CVCRControlPage() : CPropertyPage(CVCRControlPage::IDD, IDS_TAB_VCR_CONTROL)
 {
 	//{{AFX_DATA_INIT(CVCRControlPage)
 		// NOTE: the ClassWizard will add member initialization here
@@ -70,7 +70,7 @@ void CVCRControlPage::OnVcr()
 	if (m_pConf->InConnection()) 
 	{
 		if( m_pConf->SendText("VCR") == S_OK )
-			AfxMessageBox("VCR selected", MB_OK);
+			AfxMessageBox("VCR selected... please allow a few seconds for the URC to initialize", MB_OK);
 		else
 			AfxMessageBox("Command NOT sent!", MB_OK);
 	}

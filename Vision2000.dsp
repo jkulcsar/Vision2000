@@ -327,6 +327,10 @@ SOURCE=.\res\pause_d.bmp
 # End Source File
 # Begin Source File
 
+SOURCE=.\res\pause_u.bmp
+# End Source File
+# Begin Source File
+
 SOURCE=.\res\play.bmp
 # End Source File
 # Begin Source File
@@ -351,6 +355,10 @@ SOURCE=.\res\power_d.bmp
 # End Source File
 # Begin Source File
 
+SOURCE=.\res\power_u.bmp
+# End Source File
+# Begin Source File
+
 SOURCE=.\res\rec.bmp
 # End Source File
 # Begin Source File
@@ -360,6 +368,10 @@ SOURCE=.\res\Rec.ico
 # Begin Source File
 
 SOURCE=.\res\rec_d.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\rec_u.bmp
 # End Source File
 # Begin Source File
 
@@ -375,6 +387,10 @@ SOURCE=.\res\rew_d.bmp
 # End Source File
 # Begin Source File
 
+SOURCE=.\res\rew_u.bmp
+# End Source File
+# Begin Source File
+
 SOURCE=.\res\Rewine.ico
 # End Source File
 # Begin Source File
@@ -387,11 +403,19 @@ SOURCE=.\res\Stop.ico
 # End Source File
 # Begin Source File
 
+SOURCE=.\res\stop_d.bmp
+# End Source File
+# Begin Source File
+
 SOURCE=.\res\stop_u.bmp
 # End Source File
 # Begin Source File
 
 SOURCE=.\res\vc_d.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\vc_u.bmp
 # End Source File
 # Begin Source File
 
@@ -404,6 +428,10 @@ SOURCE=.\res\VCR.ico
 # Begin Source File
 
 SOURCE=.\res\vcr_d.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\vcr_u.bmp
 # End Source File
 # Begin Source File
 

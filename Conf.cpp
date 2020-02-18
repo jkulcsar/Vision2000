@@ -303,17 +303,7 @@ HRESULT Conf::ConferenceCreated(INmConference *pINmConf)
 	m_pINmConf->AddRef();
 	m_pConfNotify->Connect(pINmConf);
 	m_bInConnection=TRUE;
-/*
-	for (int i = 0; i < MAX_ATTEMPTS; i++)
-	{
-		if( CreateDataChannel() == S_OK )
-			AfxMessageBox("Data channel opened successfully!", MB_OK);
-		else
-			AfxMessageBox("Data channel NOT opened!", MB_OK);
-	
-		::Sleep(20);
-	}
-*/
+
 	if (m_hWnd)
 		SendMessage(m_hWnd,WM_CONNECTED,0,0);
 	return S_OK;
@@ -388,10 +378,17 @@ HRESULT Conf::CallRejected()
 
 HRESULT Conf::RemoteHungup()
 {	
+	// Release INmChannelData and disconnect the DataNotify sink
+	if (m_pINmChannelData)
+	{
+		m_pDataNotify->Disconnect();
+		m_pINmChannelData->Release();
+		m_pINmChannelData=NULL;
+	}
+
 
 	// Release INmConf, disconnect ConfNotify sink object, and send message to 
 	// main window that the remote node has disconnected.
-
 	m_pINmConf->Release();
 	m_pINmConf=NULL;
 	m_pConfNotify->Disconnect();

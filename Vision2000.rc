@@ -316,6 +316,9 @@ END
 STRINGTABLE DISCARDABLE 
 BEGIN
     ID_APP_ABOUT            "Information about Vision2000"
+    IDS_TAB_CAMERA_CONTROL  " Camera Control "
+    IDS_TAB_VCR_CONTROL     " VCR Control "
+    IDS_TAB_CALL_CONTROL    " Call Control "
 END
 
 STRINGTABLE DISCARDABLE 

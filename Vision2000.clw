@@ -2,7 +2,7 @@
 
 [General Info]
 Version=1
-LastClass=CCameraControlPage
+LastClass=CControlSheet
 LastTemplate=CDialog
 NewFileInclude1=#include "stdafx.h"
 NewFileInclude2=#include "vision2000.h"
@@ -18,12 +18,12 @@ Class6=CAboutDlg
 Class7=CSystemTrayApp
 
 ResourceCount=7
-Resource1=IDD_ABOUTBOX
-Resource2=IDR_POPUP_MENU
+Resource1=IDD_VCR_CONTROL_PAGE
+Resource2=IDD_CAMERA_CONTROL_PAGE
 Resource3=IDD_CALL_CONTROL_PAGE
-Resource4=IDD_CONTROL_SHEET
-Resource5=IDD_CAMERA_CONTROL_PAGE
-Resource6=IDD_VCR_CONTROL_PAGE
+Resource4=IDR_POPUP_MENU
+Resource5=IDD_CONTROL_SHEET
+Resource6=IDD_ABOUTBOX
 Resource7=IDR_MAINFRAME
 
 [CLS:CCallControlPage]
@@ -53,6 +53,7 @@ Type=0
 BaseClass=CPropertySheet
 HeaderFile=ControlSheet.h
 ImplementationFile=ControlSheet.cpp
+LastObject=CControlSheet
 
 [CLS:CMainFrame]
 Type=0

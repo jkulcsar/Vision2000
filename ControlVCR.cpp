@@ -18,7 +18,8 @@ static char THIS_FILE[]=__FILE__;
 
 CControlVCR::CControlVCR()
 {
-	m_bPowerOn = FALSE;
+	m_bPowerOn			= FALSE;
+	m_bURCInitialized	= FALSE;
 }
 
 CControlVCR::~CControlVCR()
@@ -286,7 +287,34 @@ void CControlVCR::VCR()
 
 	::Sleep(250);
 
-	// Clear the data port (pins # 2-5) using the above method
+	// check first if URC is initialized
+	if( !m_bURCInitialized )  
+	{
+		// set the wait cursor
+		m_hOldCursor = ::SetCursor( ::LoadCursor(NULL, IDC_WAIT) );
+
+		::Sleep(5000);
+
+		// press the Power button 3 times with 1sec interval
+		for(int i=0; i<3; i++)
+		{
+			Power();
+			::Sleep(1000);
+		}
+
+		// press the Stop button
+		Stop(); 
+
+		m_bURCInitialized = TRUE;
+
+		// restore old cursor
+		::SetCursor( m_hOldCursor );
+
+	}
+
+	Power(); // press power for Power OFF; see the function for details
+
+		// Clear the data port (pins # 2-5) using the above method
 	byteToWrite	= m_pPP->ReadDataPort();
 
 	byteTemp1 = 0xC3;

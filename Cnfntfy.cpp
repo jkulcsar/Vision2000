@@ -149,7 +149,7 @@ HRESULT STDMETHODCALLTYPE CConfNotify::ChannelChanged(NM_CHANNEL_NOTIFY uNotify,
 	if (uNotify == NM_CHANNEL_ADDED)
 		{
 			pChannel->GetNmch(&uCh);
-			if (uCh==NMCH_VIDEO)
+			if (uCh == NMCH_VIDEO)
 			{
 				pChannel->GetInterface(&iid);
 				hr = pChannel->QueryInterface(iid,(void **)&pVidChannel);
@@ -220,7 +220,7 @@ HRESULT STDMETHODCALLTYPE CConfNotify::StateChanged(NM_CONFERENCE_STATE uState)
 				// data channel can not be created here !
 				// see CConfNotify::MemberChanged() or the same function in 
 				// the NMCHAT sample for more info
-				//hr = m_pConf->CreateDataChannel();
+				// hr = m_pConf->CreateDataChannel();
 				break;
 			}
 
