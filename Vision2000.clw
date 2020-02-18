@@ -2,55 +2,53 @@
 
 [General Info]
 Version=1
-LastClass=CSystemTrayApp
+LastClass=CAboutDlg
 LastTemplate=CDialog
 NewFileInclude1=#include "stdafx.h"
 NewFileInclude2=#include "vision2000.h"
 LastPage=0
 
 ClassCount=7
-Class1=CCameraControlPage
-Class2=CVCRControlPage
-Class3=CControlSheet
-Class4=CMainFrame
-Class5=CAboutDlg
-Class6=CSystemTrayApp
-Class7=CVision2000Dlg
+Class1=CCallControlPage
+Class2=CCameraControlPage
+Class3=CVCRControlPage
+Class4=CControlSheet
+Class5=CMainFrame
+Class6=CAboutDlg
+Class7=CSystemTrayApp
 
-ResourceCount=6
-Resource1=IDD_CAMERA_CONTROL_PAGE
-Resource2=IDD_ABOUTBOX
-Resource3=IDD_VCR_CONTROL_PAGE
+ResourceCount=7
+Resource1=IDD_CALL_CONTROL_PAGE
+Resource2=IDR_MAINFRAME
+Resource3=IDD_ABOUTBOX
 Resource4=IDD_CONTROL_SHEET
-Resource5=IDR_POPUP_MENU
-Resource6=IDR_MAINFRAME
+Resource5=IDD_VCR_CONTROL_PAGE
+Resource6=IDD_CAMERA_CONTROL_PAGE
+Resource7=IDR_POPUP_MENU
+
+[CLS:CCallControlPage]
+Type=0
+BaseClass=CPropertyPage
+HeaderFile=CallControlPage.h
+ImplementationFile=CallControlPage.cpp
 
 [CLS:CCameraControlPage]
 Type=0
 BaseClass=CPropertyPage
 HeaderFile=CameraControlPage.h
 ImplementationFile=CameraControlPage.cpp
-LastObject=CCameraControlPage
-Filter=D
-VirtualFilter=idWC
 
 [CLS:CVCRControlPage]
 Type=0
 BaseClass=CPropertyPage
 HeaderFile=VCRControlPage.h
 ImplementationFile=VCRControlPage.cpp
-Filter=D
-VirtualFilter=idWC
-LastObject=CVCRControlPage
 
 [CLS:CControlSheet]
 Type=0
 BaseClass=CPropertySheet
 HeaderFile=ControlSheet.h
 ImplementationFile=ControlSheet.cpp
-LastObject=CControlSheet
-Filter=W
-VirtualFilter=hWC
 
 [CLS:CMainFrame]
 Type=0
@@ -70,15 +68,14 @@ Type=0
 BaseClass=CWinApp
 HeaderFile=Vision2000.h
 ImplementationFile=Vision2000.cpp
-Filter=N
-VirtualFilter=AC
-LastObject=ID_APP_ABOUT
 
-[CLS:CVision2000Dlg]
-Type=0
-BaseClass=CDialog
-HeaderFile=Vision2000Dlg.h
-ImplementationFile=Vision2000Dlg.cpp
+[DLG:IDD_CALL_CONTROL_PAGE]
+Type=1
+Class=CCallControlPage
+ControlCount=3
+Control1=IDC_STATIC,button,1342177287
+Control2=IDC_MACHINE_NAME,edit,1350631552
+Control3=IDC_CALL_HANGUP,button,1342242816
 
 [DLG:IDD_CAMERA_CONTROL_PAGE]
 Type=1
@@ -128,11 +125,10 @@ Control16=IDC_POWER,button,1342242816
 [MNU:IDR_POPUP_MENU]
 Type=1
 Class=?
-Command1=ID_APP_ABOUT
-Command2=ID_CONTROL_SHEET
-Command3=ID_CALL_HANGUP
-Command4=ID_APP_EXIT
-CommandCount=4
+Command1=ID_CONTROL_SHEET
+Command2=ID_APP_ABOUT
+Command3=ID_APP_EXIT
+CommandCount=3
 
 [MNU:IDR_MAINFRAME]
 Type=1

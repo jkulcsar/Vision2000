@@ -9,6 +9,7 @@
 
 #include "CameraControlPage.h"
 #include "VCRControlPage.h"
+#include "CallControlpage.h"
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -21,6 +22,8 @@ class CControlSheet : public CPropertySheet
 private:
 	CCameraControlPage m_CameraControlPage;
 	CVCRControlPage m_VCRControlPage;
+	CCallControlPage m_CallControlPage;
+
 	CButton m_ButtonClose;
 	CEdit m_edit;
 	CString m_strLogoText;

@@ -26,6 +26,7 @@ CControlSheet::CControlSheet(LPCTSTR pszCaption, CWnd* pParentWnd, UINT iSelectP
 {
 	AddPage( &m_CameraControlPage );
 	AddPage( &m_VCRControlPage );
+	AddPage( &m_CallControlPage );
 
 	SetLogoText( _T("Vision2000"));
 	SetLogoFont( _T("Arial") );
