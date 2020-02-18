@@ -139,8 +139,20 @@ SOURCE=.\DataNotify.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\HyperLink.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Imsconf2.idl
 # SUBTRACT MTL /mktyplib203
+# End Source File
+# Begin Source File
+
+SOURCE=.\IRRemoteControl.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\IRRemoteControlPage.cpp
 # End Source File
 # Begin Source File
 
@@ -235,6 +247,18 @@ SOURCE=.\DataNotify.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\HyperLink.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IRRemoteControl.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IRRemoteControlPage.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\mainfrm.h
 # End Source File
 # Begin Source File
@@ -312,6 +336,10 @@ SOURCE=.\res\ff_d.bmp
 # Begin Source File
 
 SOURCE=.\res\ff_u.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\icon1.ico
 # End Source File
 # Begin Source File
 
@@ -452,6 +480,14 @@ SOURCE=.\res\Vision2000.rc2
 # Begin Source File
 
 SOURCE=.\Vision2000.rgs
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\vision2K.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\vision2K.ico
 # End Source File
 # End Group
 # End Target

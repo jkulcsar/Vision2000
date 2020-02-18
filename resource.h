@@ -40,6 +40,9 @@
 #define IDB_REW_D                       167
 #define IDB_STOP_U                      168
 #define IDB_VCR_D                       169
+#define IDB_VISION2000                  172
+#define IDI_VISION2000                  174
+#define IDD_IR_CONTROL_PAGE             175
 #define IDC_MACHINENAME                 1000
 #define IDC_CALLHANGUP                  1001
 #define IDC_DATA                        1002
@@ -54,9 +57,13 @@
 #define IDC_BUTTON1                     1008
 #define IDC_CAMERA1                     1008
 #define IDC_CALL_HANGUP                 1008
+#define IDC_EMAIL                       1008
+#define IDC_IR_RECORD                   1008
 #define IDC_BUTTON2                     1009
 #define IDC_CAMERA2                     1009
 #define IDC_REW                         1009
+#define IDC_WEBSITE                     1009
+#define IDC_IR_PLAYBACK                 1009
 #define IDC_BUTTON3                     1010
 #define IDC_CAMERA3                     1010
 #define IDC_REC                         1010
@@ -65,6 +72,7 @@
 #define IDC_EDIT1                       1012
 #define IDC_MACHINE_NAME                1012
 #define IDC_STOP                        1013
+#define IDC_STATIC_ICON                 1013
 #define IDC_PAUSE                       1014
 #define IDC_VCR                         1015
 #define IDC_POWER                       1016
@@ -75,14 +83,15 @@
 #define IDS_TAB_CAMERA_CONTROL          57665
 #define IDS_TAB_VCR_CONTROL             57666
 #define IDS_TAB_CALL_CONTROL            57667
+#define IDS_TAB_REMOTE_CONTROL          57668
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        170
+#define _APS_NEXT_RESOURCE_VALUE        176
 #define _APS_NEXT_COMMAND_VALUE         32777
-#define _APS_NEXT_CONTROL_VALUE         1013
+#define _APS_NEXT_CONTROL_VALUE         1016
 #define _APS_NEXT_SYMED_VALUE           105
 #endif
 #endif

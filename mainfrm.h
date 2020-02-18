@@ -46,6 +46,7 @@ protected:
 	afx_msg void OnControlSheet();
 	//}}AFX_MSG
 	afx_msg LONG OnTrayNotification(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnIdleUpdateCmdUI(WPARAM, LPARAM);
 	DECLARE_MESSAGE_MAP()
 private:
 	CControlSheet* m_pCSh;

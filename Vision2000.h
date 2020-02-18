@@ -15,6 +15,8 @@
 #include "resource.h"       // main symbols
 #include "Vision2000_i.h"
 
+#include "HyperLink.h"		// for the hyperlink feature in the About Box.
+
 /////////////////////////////////////////////////////////////////////////////
 // CSystemTrayApp:
 // See SystemTray.cpp for the implementation of this class
@@ -40,6 +42,7 @@ public:
 	public:
 	virtual BOOL InitInstance();
 	virtual int ExitInstance();
+	virtual BOOL OnIdle(LONG lCount);
 	//}}AFX_VIRTUAL
 
 // Implementation
@@ -63,6 +66,8 @@ public:
 // Dialog Data
 	//{{AFX_DATA(CAboutDlg)
 	enum { IDD = IDD_ABOUTBOX };
+	CHyperLink	m_website;
+	CHyperLink	m_email;
 	//}}AFX_DATA
 
 	// ClassWizard generated virtual function overrides
@@ -74,9 +79,11 @@ public:
 // Implementation
 protected:
 	//{{AFX_MSG(CAboutDlg)
-		// No message handlers
+	virtual BOOL OnInitDialog();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
+private:
+	HICON m_hIcon;
 };
 
 

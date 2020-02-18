@@ -55,6 +55,7 @@ protected:
 	afx_msg void OnPause();
 	virtual BOOL OnInitDialog();
 	//}}AFX_MSG
+	afx_msg LRESULT OnKickIdle(WPARAM, LPARAM);
 	DECLARE_MESSAGE_MAP()
 };
 

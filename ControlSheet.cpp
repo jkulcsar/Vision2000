@@ -5,6 +5,8 @@
 #include "vision2000.h"
 #include "ControlSheet.h"
 
+#include "afxpriv.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -27,6 +29,7 @@ CControlSheet::CControlSheet(LPCTSTR pszCaption, CWnd* pParentWnd, UINT iSelectP
 	AddPage( &m_CameraControlPage );
 	AddPage( &m_VCRControlPage );
 	AddPage( &m_CallControlPage );
+	AddPage( &m_IRRemoteControlPage );
 
 	SetLogoText( _T("Vision2000"));
 	SetLogoFont( _T("Arial") );
@@ -42,7 +45,8 @@ BEGIN_MESSAGE_MAP(CControlSheet, CPropertySheet)
 	ON_WM_CLOSE()
 	ON_WM_PAINT()
 	//}}AFX_MSG_MAP
-ON_BN_CLICKED(IDC_BUTTON_CLOSE, OnClose)
+	ON_MESSAGE(WM_KICKIDLE, OnKickIdle)
+	ON_BN_CLICKED(IDC_BUTTON_CLOSE, OnClose)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -112,6 +116,19 @@ void CControlSheet::OnClose()
 		::DestroyWindow(m_hWndRemoteVideo);
 
 	CPropertySheet::OnClose();
+}
+
+
+LRESULT CControlSheet::OnKickIdle(WPARAM, LPARAM)
+{
+//	SendMessageToDescendants( WM_KICKIDLE, 0, 0, FALSE, FALSE );
+//	return 0;
+ 
+	CPropertyPage* pActivePage=GetActivePage();
+	if ( (pActivePage != NULL) && (pActivePage->GetSafeHwnd() != NULL) )
+		return pActivePage->SendMessage(WM_KICKIDLE);
+	else
+		return 0;
 }
 
 

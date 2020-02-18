@@ -7,6 +7,7 @@
 #include "MainFrm.h"
 #include "ControlSheet.h"
 #include <initguid.h>
+#include <afxpriv.h>
 #include "Vision2000_i.c"
 
 #ifdef _DEBUG
@@ -23,18 +24,45 @@ CAboutDlg::CAboutDlg() : CDialog(CAboutDlg::IDD)
 {
 	//{{AFX_DATA_INIT(CAboutDlg)
 	//}}AFX_DATA_INIT
+	m_hIcon = NULL;
 }
 
 void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CAboutDlg)
+	DDX_Control(pDX, IDC_WEBSITE, m_website);
+	DDX_Control(pDX, IDC_EMAIL, m_email);
 	//}}AFX_DATA_MAP
 }
 
+
+BOOL CAboutDlg::OnInitDialog() 
+{
+	CDialog::OnInitDialog();
+	
+	CStatic*	pstIcon;
+
+	pstIcon = (CStatic*) GetDlgItem(IDC_STATIC_ICON);
+	m_hIcon = (HICON) LoadImage( AfxGetInstanceHandle(), MAKEINTRESOURCE(IDI_VISION2000), 
+						IMAGE_ICON, 89, 65, LR_DEFAULTCOLOR  );
+	pstIcon->SetIcon(m_hIcon);
+
+
+	// set up the hyperlinks
+	m_email.SetURL("mailto:support@snettech.com");
+	m_email.SetUnderline(FALSE);
+	m_website.SetURL("www.snettech.com");
+	m_website.SetUnderline(FALSE);
+
+
+	return TRUE;  // return TRUE unless you set the focus to a control
+	              // EXCEPTION: OCX Property Pages should return FALSE
+}
+
+
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
 	//{{AFX_MSG_MAP(CAboutDlg)
-		// No message handlers
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -144,7 +172,9 @@ Conf* CSystemTrayApp::GetConference()
 }
 
 
-	
+/////////////////////////////////////////////////////////////////////
+// CVision2000Module object
+
 CVision2000Module _Module;
 
 BEGIN_OBJECT_MAP(ObjectMap)
@@ -240,4 +270,14 @@ BOOL CSystemTrayApp::InitATL()
 	}	
 
 	return TRUE;
+}
+
+
+
+BOOL CSystemTrayApp::OnIdle(LONG lCount) 
+{
+	if( m_pMainWnd != NULL )
+		::SendMessage( m_pMainWnd->GetSafeHwnd(), WM_IDLEUPDATECMDUI, 0, 0 );
+	
+	return CWinApp::OnIdle(lCount);
 }

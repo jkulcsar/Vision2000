@@ -5,6 +5,8 @@
 #include "vision2000.h"
 #include "CameraControlPage.h"
 
+#include <afxpriv.h>
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -52,6 +54,7 @@ BEGIN_MESSAGE_MAP(CCameraControlPage, CPropertyPage)
 		ON_BN_CLICKED(IDC_CAMERA3, OnCamera3)
 		ON_BN_CLICKED(IDC_CAMERA4, OnCamera4)
 	//}}AFX_MSG_MAP
+	ON_MESSAGE(WM_KICKIDLE, OnKickIdle)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -139,4 +142,11 @@ void CCameraControlPage::OnCamera4()
 	{
 		AfxMessageBox("Not in a connection!", MB_OK);
 	}
+}
+
+
+LRESULT CCameraControlPage::OnKickIdle(WPARAM, LPARAM)
+{
+//	UpdateDialogControls( this, FALSE );
+	return 0;
 }

@@ -5,6 +5,8 @@
 #include "vision2000.h"
 #include "VCRControlPage.h"
 
+#include <afxpriv.h>
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -59,10 +61,13 @@ BEGIN_MESSAGE_MAP(CVCRControlPage, CPropertyPage)
 	ON_BN_CLICKED(IDC_STOP, OnStop)
 	ON_BN_CLICKED(IDC_PAUSE, OnPause)
 	//}}AFX_MSG_MAP
+	ON_MESSAGE(WM_KICKIDLE, OnKickIdle)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CVCRControlPage message handlers
+
+
 
 
 void CVCRControlPage::OnVcr() 
@@ -185,6 +190,7 @@ void CVCRControlPage::OnPause()
 	}
 }
 
+
 BOOL CVCRControlPage::OnInitDialog() 
 {
 	CPropertyPage::OnInitDialog();
@@ -217,4 +223,11 @@ BOOL CVCRControlPage::OnInitDialog()
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
+}
+
+
+LRESULT CVCRControlPage::OnKickIdle(WPARAM, LPARAM)
+{
+//	UpdateDialogControls( this, FALSE );
+	return 0;
 }

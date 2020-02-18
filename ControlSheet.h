@@ -10,6 +10,7 @@
 #include "CameraControlPage.h"
 #include "VCRControlPage.h"
 #include "CallControlpage.h"
+#include "IRRemoteControlPage.h"
 
 /////////////////////////////////////////////////////////////////////////////
 // NmInitStruct
@@ -31,9 +32,10 @@ class CControlSheet : public CPropertySheet
 
 private:
 	HWND CreateNetMeetingWindow(HWND hWndParent, int x, int y, LPCTSTR szMode);
-	CCameraControlPage m_CameraControlPage;
-	CVCRControlPage m_VCRControlPage;
-	CCallControlPage m_CallControlPage;
+	CCameraControlPage		m_CameraControlPage;
+	CVCRControlPage			m_VCRControlPage;
+	CCallControlPage		m_CallControlPage;
+	CIRRemoteControlPage	m_IRRemoteControlPage;
 
 	CButton m_ButtonClose;
 	CEdit m_edit;
@@ -78,6 +80,7 @@ protected:
 	afx_msg void OnClose();
 	afx_msg void OnPaint();
 	//}}AFX_MSG
+	afx_msg LRESULT OnKickIdle(WPARAM, LPARAM);
 	DECLARE_MESSAGE_MAP()
 };
 

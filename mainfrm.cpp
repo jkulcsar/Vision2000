@@ -7,6 +7,8 @@
 #include "MainFrm.h"
 #include "ControlSheet.h"
 
+#include <afxpriv.h>
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -26,6 +28,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	ON_WM_CREATE()
 	ON_WM_CLOSE()
 	ON_COMMAND(ID_CONTROL_SHEET, OnControlSheet)
+	ON_MESSAGE(WM_IDLEUPDATECMDUI, OnIdleUpdateCmdUI)
 	//}}AFX_MSG_MAP
 	ON_MESSAGE(WM_ICON_NOTIFY, OnTrayNotification)
 END_MESSAGE_MAP()
@@ -35,6 +38,7 @@ END_MESSAGE_MAP()
 
 CMainFrame::CMainFrame()
 {
+	m_pCSh = NULL;
 }
 
 CMainFrame::~CMainFrame()
@@ -68,7 +72,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	// Create the tray icon
 	if (!m_TrayIcon.Create(this, WM_ICON_NOTIFY, _T("Vision2000"), NULL, IDR_POPUP_MENU))
 		return -1;
-	m_TrayIcon.SetStandardIcon(IDI_ASTERISK);
+	m_TrayIcon.SetStandardIcon(IDR_MAINFRAME);
 
 	return 0;
 }
@@ -89,17 +93,19 @@ void CMainFrame::OnClose()
 	CFrameWnd::OnClose();
 }
 
-/*
-void CMainFrame::OnAppAbout() 
-{
-	CControlSheet csh( _T("Vision2000"), this );
-	csh.Create(this);
-//	csh.DoModal();
-}
-*/
 
 void CMainFrame::OnControlSheet() 
 {
 	m_pCSh = new CControlSheet( _T("Vision2000"), this );
 	m_pCSh->Create(this);
 }
+
+LRESULT CMainFrame::OnIdleUpdateCmdUI(WPARAM, LPARAM)
+{
+	if( (m_pCSh != NULL) && (::IsWindow(m_pCSh->GetSafeHwnd())) )
+		m_pCSh->SendMessage(WM_KICKIDLE);
+
+	return 0;
+	
+}
+

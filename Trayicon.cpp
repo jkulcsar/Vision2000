@@ -160,7 +160,7 @@ BOOL CTrayIcon::SetStandardIcon(LPCTSTR lpIconName)
 
 BOOL CTrayIcon::SetStandardIcon(UINT nIDResource)
 {
-	HICON hIcon = LoadIcon(NULL, MAKEINTRESOURCE(nIDResource));
+	HICON hIcon = LoadIcon(AfxGetInstanceHandle( ), MAKEINTRESOURCE(nIDResource));
 
 	return SetIcon(hIcon);
 }

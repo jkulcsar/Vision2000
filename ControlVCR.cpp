@@ -223,7 +223,7 @@ void CControlVCR::Rec()
 
 void CControlVCR::Pause()
 {
-	//Toggle the necessary bits (Bits number 2-5  -  REMEMBER THE FIRST BIT IS BIT 0)
+	// Toggle the necessary bits (Bits number 2-5  -  REMEMBER THE FIRST BIT IS BIT 0)
 	// using the following method;  read the status port. Create a temporary variable
 	// to represent the data port and assign all 1's to the pins except for those pins
 	// Numbered 2-5 that you want to be 0. AND this temp. var with the eresult of the
@@ -262,7 +262,7 @@ void CControlVCR::Pause()
 
 void CControlVCR::VCR()
 {
-	//Toggle the necessary bits (Bits number 2-5  -  REMEMBER THE FIRST BIT IS BIT 0)
+	// Toggle the necessary bits (Bits number 2-5  -  REMEMBER THE FIRST BIT IS BIT 0)
 	// using the following method;  read the status port. Create a temporary variable
 	// to represent the data port and assign all 1's to the pins except for those pins
 	// Numbered 2-5 that you want to be 0. AND this temp. var with the eresult of the
