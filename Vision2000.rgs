@@ -1,0 +1,11 @@
+HKCR
+{
+	NoRemove AppID
+	{
+		{47660A84-78C0-11D3-AFB2-004095D0EF62} = s 'Vision2000'
+		'Vision2000.EXE'
+		{
+			val AppID = s {47660A84-78C0-11D3-AFB2-004095D0EF62}
+		}
+	}
+}

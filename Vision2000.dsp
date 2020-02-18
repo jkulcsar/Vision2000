@@ -44,7 +44,7 @@ RSC=rc.exe
 # ADD BASE CPP /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /Yu"stdafx.h" /FD /c
 # ADD CPP /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /YX /FD /c
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
-# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
+# ADD MTL /nologo /D "NDEBUG" /win32
 # ADD BASE RSC /l 0x409 /d "NDEBUG" /d "_AFXDLL"
 # ADD RSC /l 0x409 /d "NDEBUG" /d "_AFXDLL"
 BSC32=bscmake.exe
@@ -65,11 +65,12 @@ LINK32=link.exe
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "Debug"
 # PROP Intermediate_Dir "Debug"
+# PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /Yu"stdafx.h" /FD /GZ /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR /YX /FD /GZ /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
-# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
+# ADD MTL /nologo /D "_DEBUG" /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG" /d "_AFXDLL"
 # ADD RSC /l 0x409 /d "_DEBUG" /d "_AFXDLL"
 BSC32=bscmake.exe
@@ -173,6 +174,11 @@ SOURCE=.\Vision2000.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Vision2000.idl
+# ADD MTL /h "Vision2000_i.h" /iid "Vision2000_i.c" /Oicf
+# End Source File
+# Begin Source File
+
 SOURCE=.\Vision2000.rc
 # End Source File
 # End Group
@@ -261,6 +267,10 @@ SOURCE=.\Vision2000.h
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
 # Begin Source File
 
+SOURCE=.\res\Arw01rt.ico
+# End Source File
+# Begin Source File
+
 SOURCE=.\res\bitmap1.bmp
 # End Source File
 # Begin Source File
@@ -289,12 +299,87 @@ SOURCE=.\res\camera1x.bmp
 # End Source File
 # Begin Source File
 
+SOURCE=.\res\ff.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\FF.ico
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\pause.ico
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\play.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\power.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\Power.ico
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\rec.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\Rec.ico
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\rew.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\Rew.ico
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\Rewine.ico
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\stop.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\Stop.ico
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\vcr.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\VCR.ico
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\Videocamera.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\Videotape.bmp
+# End Source File
+# Begin Source File
+
 SOURCE=.\res\Vision2000.ico
 # End Source File
 # Begin Source File
 
 SOURCE=.\res\Vision2000.rc2
 # End Source File
+# Begin Source File
+
+SOURCE=.\Vision2000.rgs
+# End Source File
 # End Group
 # End Target
 # End Project
+# Section Vision2000 : {00170202-0030-0000-5100-000001FD1200}
+# 	1:14:IDR_VISION2000:104
+# End Section

@@ -155,19 +155,19 @@ HRESULT STDMETHODCALLTYPE CDataNotify::DataReceived(INmMember *pMember, ULONG uS
 		if( !strcmp(psz,"PLAY") )
 			m_pControlVCR->Play();		// send Play command to VCR
 		if( !strcmp(psz,"STOP") )
-			m_pControlVCR->Stop();		// send Play command to VCR
+			m_pControlVCR->Stop();		// send Stop command to VCR
 		if( !strcmp(psz,"FF") )
-			m_pControlVCR->FF();		// send Play command to VCR
+			m_pControlVCR->FF();		// send Ff command to VCR
 		if( !strcmp(psz,"REW") )
-			m_pControlVCR->Rew();		// send Play command to VCR
+			m_pControlVCR->Rew();		// send Rew command to VCR
 		if( !strcmp(psz,"REC") )
-			m_pControlVCR->Rec();		// send Play command to VCR
+			m_pControlVCR->Rec();		// send Rec command to VCR
 		if( !strcmp(psz,"PAUSE") )
-			m_pControlVCR->Pause();		// send Play command to VCR
+			m_pControlVCR->Pause();		// send Pause command to VCR
 		if( !strcmp(psz,"VCR") )
-			m_pControlVCR->VCR();		// send Play command to VCR
+			m_pControlVCR->VCR();		// send VCR command to VCR
 		if( !strcmp(psz,"POWER") )
-			m_pControlVCR->Power();		// send Play command to VCR
+			m_pControlVCR->Power();		// send Power command to VCR
   }
 	return S_OK;
 }

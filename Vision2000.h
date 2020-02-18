@@ -13,6 +13,7 @@
 #endif
 
 #include "resource.h"       // main symbols
+#include "Vision2000_i.h"
 
 /////////////////////////////////////////////////////////////////////////////
 // CSystemTrayApp:
@@ -22,6 +23,8 @@
 class CSystemTrayApp : public CWinApp
 {
 private:
+	BOOL m_bATLInited;
+	BOOL InitATL();
 	// the main conference object
 	// it is created and intialized by the CWinApp object
 	// it's destroyed also by the CWinApp object

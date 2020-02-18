@@ -37,7 +37,10 @@ void CCameraControlPage::DoDataExchange(CDataExchange* pDX)
 {
 	CPropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CCameraControlPage)
-		// NOTE: the ClassWizard will add DDX and DDV calls here
+	DDX_Control(pDX, IDC_CAMERA1, m_btnCamera1);
+	DDX_Control(pDX, IDC_CAMERA2, m_btnCamera2);
+	DDX_Control(pDX, IDC_CAMERA3, m_btnCamera3);
+	DDX_Control(pDX, IDC_CAMERA4, m_btnCamera4);
 	//}}AFX_DATA_MAP
 }
 
@@ -58,7 +61,17 @@ BOOL CCameraControlPage::OnInitDialog()
 {
 	CPropertyPage::OnInitDialog();
 	
-//	m_btnCamera1.AutoLoad(IDC_CAMERA1, this );
+	m_btnCamera1.LoadBitmaps( IDB_VIDEOCAMERA );
+	m_btnCamera1.SizeToContent();
+
+	m_btnCamera2.LoadBitmaps( IDB_VIDEOCAMERA );
+	m_btnCamera2.SizeToContent();
+
+	m_btnCamera3.LoadBitmaps( IDB_VIDEOCAMERA );
+	m_btnCamera3.SizeToContent();
+
+	m_btnCamera4.LoadBitmaps( IDB_VIDEOCAMERA );
+	m_btnCamera4.SizeToContent();
 	
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE

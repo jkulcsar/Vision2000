@@ -2,7 +2,7 @@
 
 [General Info]
 Version=1
-LastClass=CSystemTrayApp
+LastClass=CCameraControlPage
 LastTemplate=CDialog
 NewFileInclude1=#include "stdafx.h"
 NewFileInclude2=#include "vision2000.h"
@@ -18,11 +18,11 @@ Class6=CAboutDlg
 Class7=CSystemTrayApp
 
 ResourceCount=7
-Resource1=IDD_CAMERA_CONTROL_PAGE
+Resource1=IDD_ABOUTBOX
 Resource2=IDR_POPUP_MENU
 Resource3=IDD_CALL_CONTROL_PAGE
-Resource4=IDD_ABOUTBOX
-Resource5=IDD_CONTROL_SHEET
+Resource4=IDD_CONTROL_SHEET
+Resource5=IDD_CAMERA_CONTROL_PAGE
 Resource6=IDD_VCR_CONTROL_PAGE
 Resource7=IDR_MAINFRAME
 
@@ -37,12 +37,16 @@ Type=0
 BaseClass=CPropertyPage
 HeaderFile=CameraControlPage.h
 ImplementationFile=CameraControlPage.cpp
+LastObject=CCameraControlPage
 
 [CLS:CVCRControlPage]
 Type=0
 BaseClass=CPropertyPage
 HeaderFile=VCRControlPage.h
 ImplementationFile=VCRControlPage.cpp
+LastObject=CVCRControlPage
+Filter=D
+VirtualFilter=idWC
 
 [CLS:CControlSheet]
 Type=0
@@ -68,7 +72,7 @@ Type=0
 BaseClass=CWinApp
 HeaderFile=Vision2000.h
 ImplementationFile=Vision2000.cpp
-LastObject=ID_APP_ABOUT
+LastObject=CSystemTrayApp
 Filter=N
 VirtualFilter=AC
 
@@ -84,10 +88,10 @@ Control3=IDC_CALL_HANGUP,button,1342242816
 Type=1
 Class=CVCRControlPage
 ControlCount=5
-Control1=IDC_CAMERA1,button,1342242816
-Control2=IDC_CAMERA2,button,1342242816
-Control3=IDC_CAMERA3,button,1342242816
-Control4=IDC_CAMERA4,button,1342242816
+Control1=IDC_CAMERA1,button,1342242827
+Control2=IDC_CAMERA2,button,1342242827
+Control3=IDC_CAMERA3,button,1342242827
+Control4=IDC_CAMERA4,button,1342242827
 Control5=IDC_STATIC,button,1342177287
 
 [DLG:IDD_ABOUTBOX]
@@ -116,14 +120,14 @@ Control5=IDC_STATIC,button,1342177287
 Control6=IDC_STATIC,button,1342177287
 Control7=IDC_STATIC,button,1342177287
 Control8=IDC_STATIC,button,1342177287
-Control9=IDC_REW,button,1342242816
-Control10=IDC_REC,button,1342242816
-Control11=IDC_PLAY,button,1342242816
-Control12=IDC_FF,button,1342242816
-Control13=IDC_STOP,button,1342242816
-Control14=IDC_PAUSE,button,1342242816
-Control15=IDC_VCR,button,1342242816
-Control16=IDC_POWER,button,1342242816
+Control9=IDC_REW,button,1342242827
+Control10=IDC_REC,button,1342242827
+Control11=IDC_PLAY,button,1342242827
+Control12=IDC_FF,button,1342242827
+Control13=IDC_STOP,button,1342242827
+Control14=IDC_PAUSE,button,1342242827
+Control15=IDC_VCR,button,1342242827
+Control16=IDC_POWER,button,1342242827
 
 [MNU:IDR_POPUP_MENU]
 Type=1

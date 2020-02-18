@@ -59,6 +59,9 @@ BOOL CControlSheet::OnInitDialog()
 {
 	BOOL bResult = CPropertySheet::OnInitDialog();
 
+    //Initialize ATL control containment code.
+    AtlAxWinInit();
+
 	CRect rectWnd, rectTab, rectButton;
 	int nWidth, nHeight;
 
@@ -88,9 +91,11 @@ BOOL CControlSheet::OnInitDialog()
 	m_ButtonClose.SetFont( GetFont() );
 
 	POINT pt;
-	pt.x = rectTab.right;
+	pt.x = rectTab.left;
 	pt.y = rectTab.bottom + (UINT)(3 * nHeight);
 	m_hWndRemoteVideo = CreateNetMeetingWindow( m_hWnd, pt.x, pt.y, _T("RemoteNoPause"));
+
+	UpdateWindow();
 
 	return bResult;
 }
@@ -196,7 +201,8 @@ HWND CControlSheet::CreateNetMeetingWindow(HWND hWndParent, int x, int y, LPCTST
 	wcscpy(nmis.str, T2OLE(szFormatModeString));
 
 	LPOLESTR strGUIDNetMeetingActiveXControl = NULL;
-	StringFromCLSID(CLSID_NetMeeting, &strGUIDNetMeetingActiveXControl);
+	if( S_OK != StringFromCLSID(CLSID_NetMeeting, &strGUIDNetMeetingActiveXControl) )
+		return NULL;
 
       HWND hWndCtl = 
 		::CreateWindow("AtlAxWin",

@@ -22,8 +22,10 @@ public:
 // Dialog Data
 	//{{AFX_DATA(CVCRControlPage)
 	enum { IDD = IDD_CAMERA_CONTROL_PAGE };
-		// NOTE - ClassWizard will add data members here.
-		//    DO NOT EDIT what you see in these blocks of generated code !
+	CBitmapButton	m_btnCamera1;
+	CBitmapButton	m_btnCamera2;
+	CBitmapButton	m_btnCamera3;
+	CBitmapButton	m_btnCamera4;
 	//}}AFX_DATA
 
 
@@ -47,7 +49,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 private:
-//	CBitmapButton m_btnCamera1;
+//	CButton m_btnCamera1;
 	Conf* m_pConf;	
 };
 

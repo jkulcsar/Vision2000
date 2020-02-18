@@ -65,6 +65,7 @@ HRESULT Conf::Initialize()
 		return E_FAIL;
 	
 	ULONG uOptions = NM_INIT_CONTROL; // Don't display the NetMeeting UI
+//	ULONG uOptions = NM_INIT_BACKGROUND; // Netmeeting 3 recommends this init mode...
 	ULONG uCaps = NMCH_AUDIO|NMCH_VIDEO|NMCH_DATA;
 	
 	hr =m_pMgrNotify->Connect(m_pINmMgr);

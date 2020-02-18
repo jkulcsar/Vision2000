@@ -6,6 +6,7 @@
 #define IDD_ABOUTBOX                    100
 #define IDS_ABOUTBOX                    101
 #define IDD_VISION2000_DIALOG           102
+#define IDR_VISION2000                  104
 #define IDR_MAINFRAME                   128
 #define IDR_POPUP_MENU                  129
 #define IDD_CONTROL_SHEET               133
@@ -13,6 +14,24 @@
 #define IDD_VCR_CONTROL_PAGE            135
 #define IDD_CALL_CONTROL_PAGE           136
 #define IDD_DIALOG1                     138
+#define IDI_ICON_VCR                    141
+#define IDI_ICON_FF                     142
+#define IDI_ICON_POWER                  143
+#define IDI_ICON_REC                    144
+#define IDI_ICON_PAUSE                  145
+#define IDI_ICON_REW                    146
+#define IDI_ICON_STOP                   147
+#define IDI_ICON_PLAY                   148
+#define IDB_REW                         150
+#define IDB_FF                          151
+#define IDB_PAUSE                       152
+#define IDB_PLAY                        153
+#define IDB_POWER                       154
+#define IDB_REC                         155
+#define IDB_STOP                        156
+#define IDB_VCR                         157
+#define IDB_VIDEOTAPE                   158
+#define IDB_VIDEOCAMERA                 159
 #define IDC_MACHINENAME                 1000
 #define IDC_CALLHANGUP                  1001
 #define IDC_DATA                        1002
@@ -50,9 +69,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        140
+#define _APS_NEXT_RESOURCE_VALUE        160
 #define _APS_NEXT_COMMAND_VALUE         32777
 #define _APS_NEXT_CONTROL_VALUE         1013
-#define _APS_NEXT_SYMED_VALUE           104
+#define _APS_NEXT_SYMED_VALUE           105
 #endif
 #endif

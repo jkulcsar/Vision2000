@@ -23,8 +23,14 @@ public:
 // Dialog Data
 	//{{AFX_DATA(CVCRControlPage)
 	enum { IDD = IDD_VCR_CONTROL_PAGE };
-		// NOTE - ClassWizard will add data members here.
-		//    DO NOT EDIT what you see in these blocks of generated code !
+	CBitmapButton	m_btnVCR;
+	CBitmapButton	m_btnStop;
+	CBitmapButton	m_btnREW;
+	CBitmapButton	m_btnRec;
+	CBitmapButton	m_btnPower;
+	CBitmapButton	m_btnPlay;
+	CBitmapButton	m_btnPause;
+	CBitmapButton	m_btnFF;
 	//}}AFX_DATA
 
 
@@ -47,9 +53,9 @@ protected:
 	afx_msg void OnRec();
 	afx_msg void OnStop();
 	afx_msg void OnPause();
+	virtual BOOL OnInitDialog();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
-
 };
 
 //{{AFX_INSERT_LOCATION}}

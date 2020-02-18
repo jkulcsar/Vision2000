@@ -23,10 +23,26 @@
 
 // link in AltAxWinInit() & containment code statically
 // this require a instance (_Module) of CComModule
+//#include <atlbase.h>
+//#include <atlcom.h>
+//#include <atlhost.h>
+
+#define _ATL_APARTMENT_THREADED
 #include <atlbase.h>
-extern CComModule _Module;
+//You may derive a class from CComModule and use it if you want to override
+//something, but do not change the name of _Module
+class CVision2000Module : public CComModule
+{
+public:
+	LONG Unlock();
+	LONG Lock();
+	LPCTSTR FindOneOf(LPCTSTR p1, LPCTSTR p2);
+	DWORD dwThreadID;
+};
+extern CVision2000Module _Module;
 #include <atlcom.h>
 #include <atlhost.h>
+
 
 #include "netmeeting_i.c"		// contains the CLSID declarations
 #include "netmeeting.h"			// contains the interface declarations

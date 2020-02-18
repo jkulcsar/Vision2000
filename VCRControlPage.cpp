@@ -36,7 +36,14 @@ void CVCRControlPage::DoDataExchange(CDataExchange* pDX)
 {
 	CPropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CVCRControlPage)
-		// NOTE: the ClassWizard will add DDX and DDV calls here
+	DDX_Control(pDX, IDC_VCR, m_btnVCR);
+	DDX_Control(pDX, IDC_STOP, m_btnStop);
+	DDX_Control(pDX, IDC_REW, m_btnREW);
+	DDX_Control(pDX, IDC_REC, m_btnRec);
+	DDX_Control(pDX, IDC_POWER, m_btnPower);
+	DDX_Control(pDX, IDC_PLAY, m_btnPlay);
+	DDX_Control(pDX, IDC_PAUSE, m_btnPause);
+	DDX_Control(pDX, IDC_FF, m_btnFF);
 	//}}AFX_DATA_MAP
 }
 
@@ -176,4 +183,38 @@ void CVCRControlPage::OnPause()
 	{
 		AfxMessageBox("Not in a connection!", MB_OK);
 	}
+}
+
+BOOL CVCRControlPage::OnInitDialog() 
+{
+	CPropertyPage::OnInitDialog();
+	
+	m_btnPlay.LoadBitmaps( IDB_PLAY );
+	m_btnPlay.SizeToContent();
+
+	m_btnStop.LoadBitmaps( IDB_STOP );
+	m_btnStop.SizeToContent();
+
+	m_btnRec.LoadBitmaps( IDB_REC );
+	m_btnRec.SizeToContent();
+
+	m_btnREW.LoadBitmaps( IDB_REW );
+	m_btnREW.SizeToContent();
+
+	m_btnFF.LoadBitmaps( IDB_FF );
+	m_btnFF.SizeToContent();
+
+	m_btnPause.LoadBitmaps( IDB_PAUSE );
+	m_btnPause.SizeToContent();
+
+	m_btnPower.LoadBitmaps( IDB_POWER );
+	m_btnPower.SizeToContent();
+
+	m_btnVCR.LoadBitmaps( IDB_VCR );
+	m_btnVCR.SizeToContent();
+
+
+
+	return TRUE;  // return TRUE unless you set the focus to a control
+	              // EXCEPTION: OCX Property Pages should return FALSE
 }
