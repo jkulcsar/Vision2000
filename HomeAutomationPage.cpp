@@ -28,9 +28,6 @@ CHomeAutomationPage::CHomeAutomationPage() : CPropertyPage(CHomeAutomationPage::
 	pApp				= (CSystemTrayApp*) AfxGetApp();
 	m_pConf				= pApp->GetConference();
 	m_pSystemSettings	= pApp->GetSystemSettings();
-	
-//	m_pX10Appliance		= pApp->GetX10Appliance();
-//	m_pX10Light			= pApp->GetX10Light();
 }
 
 
@@ -62,73 +59,15 @@ BEGIN_MESSAGE_MAP(CHomeAutomationPage, CPropertyPage)
 	ON_CBN_SELENDOK(IDC_COMBO_X10DEVICE_LIST, OnSelendokComboX10deviceList)
 	ON_BN_CLICKED(IDC_CHECK_ONOFF, OnOnOff)
 	ON_BN_CLICKED(IDC_BUTTON_REMOVE_X10DEVICE, OnRemoveX10device)
+	ON_BN_CLICKED(IDC_BUTTON_MODIFY_X10DEVICE, OnModifyX10device)
+	ON_BN_CLICKED(IDC_BUTTON_DIMM, OnDimm)
+	ON_BN_CLICKED(IDC_BUTTON_BRIGHTEN, OnBrighten)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CHomeAutomationPage message handlers
-/*
-void CHomeAutomationPage::OnApplianceOn() 
-{
-	if( m_pSystemSettings->InLocalMode() )
-		m_pX10Appliance->TurnApplianceON();
-	else
-		if (m_pConf->InConnection()) 
-			m_pConf->SendText("APPLIANCEON");
-}
 
-
-void CHomeAutomationPage::OnApplianceOff() 
-{
-	if( m_pSystemSettings->InLocalMode() )
-		m_pX10Appliance->TurnApplianceOFF();
-	else
-		if (m_pConf->InConnection()) 
-			m_pConf->SendText("APPLIANCEOFF");
-}
-
-
-void CHomeAutomationPage::OnLampOn() 
-{
-	if( m_pSystemSettings->InLocalMode() )
-		m_pX10Light->TurnLampON();
-	else
-		if (m_pConf->InConnection()) 
-			m_pConf->SendText("LIGHTON");
-}
-
-
-
-void CHomeAutomationPage::OnLampOff() 
-{
-	if( m_pSystemSettings->InLocalMode() )
-		m_pX10Light->TurnLampOFF();
-	else
-		if (m_pConf->InConnection()) 
-			m_pConf->SendText("LIGHTOFF");
-}
-
-
-void CHomeAutomationPage::OnLampDown() 
-{
-	if( m_pSystemSettings->InLocalMode() )
-		m_pX10Light->DIMM(TRUE);
-	else
-		if (m_pConf->InConnection()) 
-			m_pConf->SendText("DIMM");
-}
-
-
-void CHomeAutomationPage::OnLampUp() 
-{
-	if( m_pSystemSettings->InLocalMode() )
-		m_pX10Light->DIMM(FALSE);
-	else
-		if (m_pConf->InConnection()) 
-			m_pConf->SendText("BRIGHTEN");
-	
-}
-*/
 BOOL CHomeAutomationPage::OnInitDialog() 
 {
 	CPropertyPage::OnInitDialog();
@@ -154,12 +93,17 @@ void CHomeAutomationPage::OnAddX10device()
 void CHomeAutomationPage::OnRemoveallX10device() 
 {
 	CSystemTrayApp* pApp = (CSystemTrayApp*) AfxGetApp();
-	CTypedPtrList<CObList, CX10Device*>* pX10DeviceList;
-	pX10DeviceList = pApp->GetX10DeviceList();
+	CTypedPtrArray<CObArray, CX10Device*>* pX10DeviceArray;
+	pX10DeviceArray = pApp->GetX10DeviceArray();
 
 	if( AfxMessageBox( IDS_REMOVEALL_WARNING, MB_YESNO | MB_ICONEXCLAMATION	) == IDYES )
-		while (!pX10DeviceList->IsEmpty())
-			delete pX10DeviceList->RemoveHead();
+	{
+		for( int i = 0; i < pX10DeviceArray->GetSize(); i++ )
+			if( pX10DeviceArray->GetAt( i ) != NULL )
+				delete pX10DeviceArray->GetAt( i );
+
+		pX10DeviceArray->RemoveAll();
+	}
 
 	RefreshX10DeviceListComboBox();
 	RefreshButtons();
@@ -168,17 +112,17 @@ void CHomeAutomationPage::OnRemoveallX10device()
 
 void CHomeAutomationPage::OnRemoveX10device() 
 {
-	POSITION pos;
+	UINT uiCurrArrayIndex;
 	CSystemTrayApp* pApp = (CSystemTrayApp*) AfxGetApp();
-	CTypedPtrList<CObList, CX10Device*>*	pX10DeviceList;
-	pX10DeviceList = pApp->GetX10DeviceList();
+	CTypedPtrArray<CObArray, CX10Device*>*	pX10DeviceArray;
+	pX10DeviceArray = pApp->GetX10DeviceArray();
 
-	
 	UINT uiCurrIndex = m_cbX10DeviceList.GetCurSel();
 	if( uiCurrIndex != CB_ERR )
 	{
-		pos = (POSITION) m_cbX10DeviceList.GetItemDataPtr( uiCurrIndex );
-		CX10Device* pX10Device = pX10DeviceList->GetAt(pos);
+		uiCurrArrayIndex = (UINT) m_cbX10DeviceList.GetItemData( uiCurrIndex );
+
+		CX10Device* pX10Device = pX10DeviceArray->GetAt(uiCurrArrayIndex);
 
 		CString strMessage;
 		CString strToFormat;
@@ -186,14 +130,15 @@ void CHomeAutomationPage::OnRemoveX10device()
 		strMessage.Format( (LPCTSTR)strToFormat, pX10Device->GetX10DeviceName() );
 		if( AfxMessageBox( strMessage, MB_YESNO | MB_ICONEXCLAMATION	) == IDYES )
 		{
-			pX10DeviceList->RemoveAt( pos );
+			if( pX10Device != NULL )
+				delete pX10Device;
+
+			pX10DeviceArray->RemoveAt( uiCurrArrayIndex );
 			RefreshX10DeviceListComboBox();
 		}
-
-		RefreshButtons();
 	}
 
-
+	RefreshButtons();
 }
 
 
@@ -205,17 +150,17 @@ void CHomeAutomationPage::OnSelendokComboX10deviceList()
 
 void CHomeAutomationPage::RefreshButtons()
 {
-	POSITION pos;
+	UINT uiCurrArrayIndex;
 	CSystemTrayApp* pApp = (CSystemTrayApp*) AfxGetApp();
-	CTypedPtrList<CObList, CX10Device*>*	pX10DeviceList;
-	pX10DeviceList = pApp->GetX10DeviceList();
+	CTypedPtrArray<CObArray, CX10Device*>*	pX10DeviceArray;
+	pX10DeviceArray = pApp->GetX10DeviceArray();
 
 	
 	UINT uiCurrIndex = m_cbX10DeviceList.GetCurSel();
 	if( uiCurrIndex != CB_ERR )
 	{
-		pos = (POSITION) m_cbX10DeviceList.GetItemDataPtr( uiCurrIndex );
-		CX10Device* pX10Device = pX10DeviceList->GetAt(pos);
+		uiCurrArrayIndex = (UINT) m_cbX10DeviceList.GetItemData( uiCurrIndex );
+		CX10Device* pX10Device = pX10DeviceArray->GetAt( uiCurrArrayIndex );
 
 		m_btnRemove.EnableWindow( TRUE );
 		m_btnRemoveAll.EnableWindow( TRUE );
@@ -233,8 +178,8 @@ void CHomeAutomationPage::RefreshButtons()
 			m_btnOnOff.SetWindowText( "OFF" );
 		}
 		
-		if( pos != NULL )
-		{
+//		if( pos != NULL )
+//		{
 			if( pX10Device->GetX10DeviceType() == LIGHT )
 			{
 				m_btnBrighten.EnableWindow( TRUE );
@@ -245,7 +190,7 @@ void CHomeAutomationPage::RefreshButtons()
 				m_btnBrighten.EnableWindow( FALSE );
 				m_btnDimm.EnableWindow( FALSE );
 			}
-		}
+//		}
 	}
 	else
 	{
@@ -263,23 +208,18 @@ void CHomeAutomationPage::RefreshButtons()
 void CHomeAutomationPage::RefreshX10DeviceListComboBox()
 {
 	CSystemTrayApp* pApp = (CSystemTrayApp*) AfxGetApp();
-	CTypedPtrList<CObList, CX10Device*>*	pX10DeviceList;
-	pX10DeviceList = pApp->GetX10DeviceList();
+	CTypedPtrArray<CObArray, CX10Device*>*	pX10DeviceArray;
+	pX10DeviceArray = pApp->GetX10DeviceArray();
 
 	// reset the combobox; this is an overkill
 	m_cbX10DeviceList.ResetContent();
 
-	POSITION	pos = pX10DeviceList->GetHeadPosition();
-	UINT		uiIndex = 0;
-	while (pos != NULL)
+	for( int i = 0; i < pX10DeviceArray->GetSize(); i++ )
 	{
-		// assign the curent X10DeviceList position to the current index
-		CX10Device* pX10Device = pX10DeviceList->GetAt(pos);
-		m_cbX10DeviceList.InsertString( uiIndex, (LPCTSTR)pX10Device->GetX10DeviceName() );
-		m_cbX10DeviceList.SetItemDataPtr( uiIndex, pos );
-		
-		pX10DeviceList->GetNext(pos);
-		uiIndex++;
+		// assign the curent X10DeviceArray index to the current combobox-index
+		CX10Device* pX10Device = pX10DeviceArray->GetAt( i );
+		m_cbX10DeviceList.InsertString( i, (LPCTSTR)pX10Device->GetX10DeviceName() );
+		m_cbX10DeviceList.SetItemData( i, i );
 	}
 
 	// select the first item if we have a valid list
@@ -289,26 +229,121 @@ void CHomeAutomationPage::RefreshX10DeviceListComboBox()
 
 void CHomeAutomationPage::OnOnOff() 
 {
-	POSITION pos;
+	UINT uiCurrArrayIndex;
 	CSystemTrayApp* pApp = (CSystemTrayApp*) AfxGetApp();
-	CTypedPtrList<CObList, CX10Device*>*	pX10DeviceList;
-	pX10DeviceList = pApp->GetX10DeviceList();
+	CTypedPtrArray<CObArray, CX10Device*>*	pX10DeviceArray;
+	pX10DeviceArray = pApp->GetX10DeviceArray();
 
+	CString strCommand;
+	strCommand.Empty();
 	
 	UINT uiCurrIndex = m_cbX10DeviceList.GetCurSel();
 	if( uiCurrIndex != CB_ERR )
 	{
-		pos = (POSITION) m_cbX10DeviceList.GetItemDataPtr( uiCurrIndex );
-		CX10Device* pX10Device = pX10DeviceList->GetAt(pos);
+		uiCurrArrayIndex = (UINT) m_cbX10DeviceList.GetItemData( uiCurrIndex );
+		CX10Device* pX10Device = pX10DeviceArray->GetAt( uiCurrArrayIndex );
 
 		// toggle ON/OFF on X10 device
 		if( pX10Device->IsOn() )
-			pX10Device->SetOn( OFF );
+		{
+			if( m_pSystemSettings->InLocalMode() )
+			{
+				pX10Device->Execute( OFF );
+				pX10Device->SetOn( OFF );
+			}
+			else
+				if (m_pConf->InConnection()) 
+				{
+					strCommand.Format( "%d %d", OFF, uiCurrArrayIndex );
+					m_pConf->SendText( (char*)(LPCTSTR) strCommand );
+					pX10Device->SetOn( OFF );
+				}
+		}
 		else
-			pX10Device->SetOn( ON );
+		{
+			if( m_pSystemSettings->InLocalMode() )
+			{
+				pX10Device->Execute( ON );
+				pX10Device->SetOn( ON );
+			}
+			else
+				if (m_pConf->InConnection()) 
+				{
+					strCommand.Format( "%d %d", ON, uiCurrArrayIndex );
+					m_pConf->SendText( (char*)(LPCTSTR) strCommand );
+					pX10Device->SetOn( ON );
+				}
+		}
 
 		RefreshButtons();
 	}
 }
 
 
+void CHomeAutomationPage::OnDimm() 
+{
+	UINT uiCurrArrayIndex;
+	CSystemTrayApp* pApp = (CSystemTrayApp*) AfxGetApp();
+	CTypedPtrArray<CObArray, CX10Device*>*	pX10DeviceArray;
+	pX10DeviceArray = pApp->GetX10DeviceArray();
+
+	CString strCommand;
+	strCommand.Empty();
+	
+	UINT uiCurrIndex = m_cbX10DeviceList.GetCurSel();
+	if( uiCurrIndex != CB_ERR )
+	{
+		uiCurrArrayIndex = (UINT) m_cbX10DeviceList.GetItemData( uiCurrIndex );
+		CX10Device* pX10Device = pX10DeviceArray->GetAt( uiCurrArrayIndex );
+
+		if( pX10Device->GetX10DeviceType() == LIGHT )
+		{
+			if( m_pSystemSettings->InLocalMode() )
+				pX10Device->Execute( DIMM );
+			else
+				if (m_pConf->InConnection())
+				{					
+					strCommand.Format( "%d %d", DIMM, uiCurrArrayIndex );
+					m_pConf->SendText( (char*)(LPCTSTR) strCommand );
+				}
+		}
+	}
+}
+
+
+
+void CHomeAutomationPage::OnBrighten() 
+{
+	UINT uiCurrArrayIndex;
+	CSystemTrayApp* pApp = (CSystemTrayApp*) AfxGetApp();
+	CTypedPtrArray<CObArray, CX10Device*>*	pX10DeviceArray;
+	pX10DeviceArray = pApp->GetX10DeviceArray();
+
+	CString strCommand;
+	strCommand.Empty();
+	
+	UINT uiCurrIndex = m_cbX10DeviceList.GetCurSel();
+	if( uiCurrIndex != CB_ERR )
+	{
+		uiCurrArrayIndex = (UINT) m_cbX10DeviceList.GetItemData( uiCurrIndex );
+		CX10Device* pX10Device = pX10DeviceArray->GetAt( uiCurrArrayIndex );
+
+		if( pX10Device->GetX10DeviceType() == LIGHT )
+		{
+			if( m_pSystemSettings->InLocalMode() )
+				pX10Device->Execute( BRIGHT );
+			else
+				if (m_pConf->InConnection()) 
+				{					
+					strCommand.Format( "%d %d", BRIGHT, uiCurrArrayIndex );
+					m_pConf->SendText( (char*)(LPCTSTR) strCommand );
+				}
+		}
+	}
+}
+
+
+
+void CHomeAutomationPage::OnModifyX10device() 
+{
+}

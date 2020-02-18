@@ -65,9 +65,10 @@ void CNewX10DeviceDlg::OnOK()
 	UINT			uiSel;
 	int				nIndex;
 	CString			strSel;
+	CHAR			chSel;
 
-	CTypedPtrList<CObList, CX10Device*>* pX10DeviceList;
-	pX10DeviceList = pApp->GetX10DeviceList();
+	CTypedPtrArray<CObArray, CX10Device*>* pX10DeviceArray;
+	pX10DeviceArray = pApp->GetX10DeviceArray();
 
 	CX10Device* pX10Device = new CX10Device();
 	if( pX10Device != NULL )
@@ -75,23 +76,21 @@ void CNewX10DeviceDlg::OnOK()
 		pX10Device->SetX10DeviceName( m_strX10DeviceName );
 
 		nIndex	= m_cbX10DeviceHouseCode.GetCurSel();
-		m_cbX10DeviceHouseCode.GetLBText( nIndex, strSel );
-		uiSel = (UINT) ::atoi( (LPCTSTR) strSel );
-		pX10Device->SetX10DeviceHouseCode( uiSel );
+		m_cbX10DeviceHouseCode.GetLBText( nIndex, &chSel );
+		pX10Device->SetX10DeviceHouseCode( chSel );
 
 		nIndex	= m_cbX10DeviceCode.GetCurSel();
 		m_cbX10DeviceCode.GetLBText( nIndex, strSel );
 		uiSel = (UINT) ::atoi( (LPCTSTR) strSel );
 		pX10Device->SetX10DeviceCode( uiSel );
 
-		// add the device TYPE also!
 		nIndex = m_cbX10DeviceType.GetCurSel();
 		if( nIndex == 0 )
 			pX10Device->SetX10DeviceType( APPLIANCE );
 		else
 			pX10Device->SetX10DeviceType( LIGHT );
 
-		// add the new X10 device to the device-list
-		pX10DeviceList->AddTail( pX10Device );
+		// add the new X10 device to the device array
+		pX10DeviceArray->Add( pX10Device );
 	}
 }

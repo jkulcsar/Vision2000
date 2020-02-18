@@ -137,15 +137,9 @@ BOOL CSystemTrayApp::InitInstance()
 		return -1;	// destroy window; can not continue
 	}
 
-
 	// create the 'objects'
 	m_pControlCamera	= new CControlCamera;
 	m_pControlVCR		= new CControlVCR;
-
-	
-//	m_pX10Appliance		= new CX10Device;
-//	m_pX10Light			= new CX10Device;
-
 
 	// Initialize the conference object
 	m_pConf=new Conf(m_pMainWnd->GetSafeHwnd());
@@ -220,8 +214,11 @@ int CSystemTrayApp::ExitInstance()
 	}
 
 	// destroy X10 devices 
-	while (!m_TPtrListX10Device.IsEmpty())
-		delete m_TPtrListX10Device.RemoveHead();
+	for( int i = 0; i < m_TPtrArrayX10Device.GetSize(); i++ )
+		if( m_TPtrArrayX10Device.GetAt( i ) != NULL )
+			delete m_TPtrArrayX10Device.GetAt( i );
+
+	m_TPtrArrayX10Device.RemoveAll();
 
 
 	if(::IsWindow(m_hWndRemoteVideo))
@@ -621,8 +618,35 @@ void CSystemTrayApp::OnVideoWindow()
 }
 
 
-CTypedPtrList<CObList, CX10Device*>* CSystemTrayApp::GetX10DeviceList()
+CTypedPtrArray<CObArray, CX10Device*>* CSystemTrayApp::GetX10DeviceArray()
 {
-	return &m_TPtrListX10Device;
+	return &m_TPtrArrayX10Device;
 }
 
+
+void CSystemTrayApp::X10Execute(CString& strCommand)
+{
+	CString	strAction;
+	CString	strArrayIndex;
+	
+	UINT	uiArrayIndex;
+	short	shCommand;
+	
+	UINT	nIndex = strCommand.Find( SPACE );
+
+	strAction		= strCommand.Left( nIndex );
+	strArrayIndex	= strCommand.Mid( nIndex );
+
+	uiArrayIndex	=	::atoi( (LPCTSTR)strArrayIndex );
+	shCommand		=	::atoi( (LPCTSTR)strAction );
+
+	CTypedPtrArray<CObArray, CX10Device*>*	pX10DeviceArray;
+	pX10DeviceArray = GetX10DeviceArray();
+	
+	CX10Device* pX10Device = pX10DeviceArray->GetAt( uiArrayIndex );
+	if( pX10Device )
+	{
+		pX10Device->Execute( shCommand );
+		pX10Device->SetOn( shCommand );		// update ON/OFF status only
+	}
+}

@@ -18,6 +18,8 @@
 #include "HyperLink.h"		// for the hyperlink feature in the About Box.
 
 
+#define SPACE " "
+
 /////////////////////////////////////////////////////////////////////////////
 // NmInitStruct
 
@@ -65,14 +67,11 @@ private:
 	CControlCamera*		m_pControlCamera;
 	CControlVCR*		m_pControlVCR;
 	
-	CTypedPtrList<CObList, CX10Device*>     m_TPtrListX10Device;
+	CTypedPtrArray<CObArray, CX10Device*>     m_TPtrArrayX10Device;
 	
-//	CX10Device*			m_pX10Appliance;
-//	CX10Device*			m_pX10Light;
-
-
 public:
-	CTypedPtrList<CObList, CX10Device*>*	GetX10DeviceList();
+	void X10Execute( CString& );
+	CTypedPtrArray<CObArray, CX10Device*>*	GetX10DeviceArray();
 	CControlCamera*		GetControlCamera();
 	CControlVCR*		GetControlVCR();
 	Conf*				GetConference();

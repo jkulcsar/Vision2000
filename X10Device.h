@@ -16,8 +16,10 @@
 #define APPLIANCE	0x00
 #define LIGHT		0x01
 
-#define ON			TRUE
-#define OFF			FALSE
+#define ON			0x02
+#define OFF			0x03
+#define	DIMM		0x04
+#define	BRIGHT		0x05
 
 class CX10Device : public CObject
 {
@@ -30,28 +32,24 @@ public:
 	void Serialize( CArchive& );
 
 public:
-	void SetOn( BOOL );
+	void SetOn( short );
 	BOOL IsOn();
 	UINT GetX10DeviceType();
 	UINT GetX10DeviceCode();
-	UINT GetX10DeviceHouseCode();
+	CHAR GetX10DeviceHouseCode();
 	CString& GetX10DeviceName();
 	void SetX10DeviceType( UINT );
 	void SetX10DeviceCode( UINT );
-	void SetX10DeviceHouseCode( UINT );
+	void SetX10DeviceHouseCode( CHAR );
 	void SetX10DeviceName( CString& );
-//	void DIMM( BOOL );
-//	void TurnApplianceOFF();
-//	void TurnApplianceON();
-//	void TurnLampOFF();
-//	void TurnLampON();
+	void Execute( short );
 
 private:
-	BOOL	m_bOnOff;
+	short	m_shOnOff;
 	UINT	m_uiType;
 	short	m_shBrightness;
 	UINT	m_uiDeviceCode;
-	UINT	m_uiHouseCode;
+	CHAR	m_chHouseCode;
 	CString	m_strDeviceName;
 };
 

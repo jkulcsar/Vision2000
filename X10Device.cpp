@@ -24,7 +24,7 @@ IMPLEMENT_SERIAL( CX10Device, CObject, 1 )
 CX10Device::CX10Device()
 {
 	m_uiType		=	APPLIANCE;
-	m_bOnOff		=	OFF;
+	m_shOnOff		=	OFF;
 	m_shBrightness	=	MAX_BRIGHT;
 	m_uiDeviceCode	=	1;
 	m_strDeviceName.Empty();
@@ -48,121 +48,17 @@ void CX10Device::Serialize( CArchive& archive )
     if( archive.IsStoring() )
 	{
 		// do storing
-        archive << m_uiType << m_bOnOff << m_shBrightness << m_uiDeviceCode << m_strDeviceName;
+        archive << m_uiType << m_shOnOff << m_shBrightness << m_uiDeviceCode << m_chHouseCode << m_strDeviceName;
 	}
     else
 	{
 		// do retrieve
-		archive >> m_uiType >> m_bOnOff >> m_shBrightness >> m_uiDeviceCode >> m_strDeviceName;
-	}
-}
-
-/*
-void CX10Device::TurnApplianceON()
-{
-	CSystemTrayApp* pApp;
-	pApp = (CSystemTrayApp*) AfxGetApp();
-
-	UINT uiMode = pApp->GetSystemSettings()->GetMode();
-
-	CControlCM*		pCM				=	pApp->GetSystemSettings()->GetX10ControlModule();
-	CX10Settings*	pX10Settings	=	pApp->GetSystemSettings()->GetX10Settings();
-
-	CString strHouseCode( pX10Settings->GetHouseCode() );
-	UINT uiApplianceCode	= pX10Settings->GetApplianceCode();
-	CString strDeviceCode;
-	BSTRING bstrHouseCode(strHouseCode);
-		
-	short shBrightness	= MIN_BRIGHT;
-	short shCommand;
-
-	strDeviceCode.Format( "%d", uiApplianceCode );
-	BSTRING bstrDeviceCode(strDeviceCode);
-
-	shCommand		= 2;	// ON
-
-	::Sleep( 200 );
-
-	// turn ON
-	pCM->Exec(	bstrHouseCode.GetLPBSTR(), 
-				bstrDeviceCode.GetLPBSTR(), 
-				&shCommand, 
-				&shBrightness 
-			);
-}
-
-void CX10Device::TurnApplianceOFF()
-{
-	CSystemTrayApp* pApp;
-	pApp = (CSystemTrayApp*) AfxGetApp();
-
-	UINT uiMode = pApp->GetSystemSettings()->GetMode();
-
-	CControlCM*		pCM				=	pApp->GetSystemSettings()->GetX10ControlModule();
-	CX10Settings*	pX10Settings	=	pApp->GetSystemSettings()->GetX10Settings();
-
-	CString strHouseCode( pX10Settings->GetHouseCode() );
-	UINT uiApplianceCode	= pX10Settings->GetApplianceCode();
-	CString strDeviceCode;
-	BSTRING bstrHouseCode(strHouseCode);
-		
-	short shBrightness	= MIN_BRIGHT;
-	short shCommand;
-
-	strDeviceCode.Format( "%d", uiApplianceCode );
-	BSTRING bstrDeviceCode(strDeviceCode);
-
-	shCommand		= 3;	// OFF
-
-	::Sleep( 200 );
-
-	// turn OFF
-	pCM->Exec(	bstrHouseCode.GetLPBSTR(), 
-				bstrDeviceCode.GetLPBSTR(), 
-				&shCommand, 
-				&shBrightness 
-			);
-}
-
-
-void CX10Device::TurnLampON()
-{
-	CSystemTrayApp* pApp;
-	pApp = (CSystemTrayApp*) AfxGetApp();
-
-	UINT uiMode = pApp->GetSystemSettings()->GetMode();
-
-	// X10 version
-	if( uiMode == MODE_X10 )
-	{
-		CControlCM*		pCM				=	pApp->GetSystemSettings()->GetX10ControlModule();
-		CX10Settings*	pX10Settings	=	pApp->GetSystemSettings()->GetX10Settings();
-
-		CString strHouseCode( pX10Settings->GetHouseCode() );
-		UINT uiLampCode	= pX10Settings->GetLampCode();
-		CString strDeviceCode;
-		BSTRING bstrHouseCode(strHouseCode);
-		
-		short shCommand;
-
-		strDeviceCode.Format( "%d", uiLampCode );
-		BSTRING bstrDeviceCode(strDeviceCode);
-
-		shCommand		= 2;	// ON
-
-		::Sleep( 200 );
-
-		// turn ON
-		pCM->Exec(	bstrHouseCode.GetLPBSTR(), 
-					bstrDeviceCode.GetLPBSTR(), 
-					&shCommand, 
-					&m_shBrightness 
-				);
+		archive >> m_uiType >> m_shOnOff >> m_shBrightness >> m_uiDeviceCode >> m_chHouseCode >> m_strDeviceName;
 	}
 }
 
 
-void CX10Device::TurnLampOFF()
+void CX10Device::Execute( short shCommand )
 {
 	CSystemTrayApp* pApp;
 	pApp = (CSystemTrayApp*) AfxGetApp();
@@ -172,87 +68,50 @@ void CX10Device::TurnLampOFF()
 	CControlCM*		pCM				=	pApp->GetSystemSettings()->GetX10ControlModule();
 	CX10Settings*	pX10Settings	=	pApp->GetSystemSettings()->GetX10Settings();
 
-	CString strHouseCode( pX10Settings->GetHouseCode() );
-	UINT uiLampCode	= pX10Settings->GetLampCode();
+	CString strHouseCode( m_chHouseCode );
 	CString strDeviceCode;
 	BSTRING bstrHouseCode(strHouseCode);
 		
-	short shBrightness	= 0;
-	short shCommand;
-
-	strDeviceCode.Format( "%d", uiLampCode );
+	strDeviceCode.Format( "%d", m_uiDeviceCode );
 	BSTRING bstrDeviceCode(strDeviceCode);
 
-	shCommand		= 3;	// OFF
-
-	::Sleep( 200 );
-
-	// turn OFF
-	pCM->Exec(	bstrHouseCode.GetLPBSTR(), 
-				bstrDeviceCode.GetLPBSTR(), 
-				&shCommand, 
-				&m_shBrightness 
-			);
-}
+	::Sleep( 100 );
 
 
-void CX10Device::DIMM(BOOL bDIMM)
-{
-	CSystemTrayApp* pApp;
-	pApp = (CSystemTrayApp*) AfxGetApp();
-
-	UINT uiMode = pApp->GetSystemSettings()->GetMode();
-
-	CControlCM*		pCM				=	pApp->GetSystemSettings()->GetX10ControlModule();
-	CX10Settings*	pX10Settings	=	pApp->GetSystemSettings()->GetX10Settings();
-
-	CString strHouseCode( pX10Settings->GetHouseCode() );
-	UINT uiLampCode	= pX10Settings->GetLampCode();
-	CString strDeviceCode;
-	BSTRING bstrHouseCode(strHouseCode);
-		
-	short shBrightness	= 0;
-	short shCommand;
-
-	strDeviceCode.Format( "%d", uiLampCode );
-	BSTRING bstrDeviceCode(strDeviceCode);
-
-
-	if( bDIMM )	// dimm down the light
+	if( shCommand == DIMM )	
 	{
-		shCommand		= 4;	// DIMM
-
 		m_shBrightness -= STEP;
 		if( m_shBrightness < MIN_BRIGHT )
 			m_shBrightness = MIN_BRIGHT;
 	}
-	else		// brighten up light
-	{
-		shCommand		= 5;	// BRIGHTEN
 
+	if( shCommand == BRIGHT )			
+	{
 		m_shBrightness += STEP;
 		if( m_shBrightness > MAX_BRIGHT )
 			m_shBrightness = MAX_BRIGHT;
 	}
 
-	::Sleep( 200 );
 
-	pCM->Exec(	bstrHouseCode.GetLPBSTR(), 
-				bstrDeviceCode.GetLPBSTR(), 
-				&shCommand, 
-				&m_shBrightness 
-			);
+
+	if( (pCM != NULL) && ::IsWindow( pCM->GetSafeHwnd() ) )
+		
+		pCM->Exec(	bstrHouseCode.GetLPBSTR(), 
+					bstrDeviceCode.GetLPBSTR(), 
+					&shCommand, 
+					&m_shBrightness 
+				);
 }
-*/
+
 
 void CX10Device::SetX10DeviceName(CString& strName)
 {
 	m_strDeviceName = strName;
 }
 
-void CX10Device::SetX10DeviceHouseCode(UINT uiHouseCode)
+void CX10Device::SetX10DeviceHouseCode(CHAR chHouseCode)
 {
-	m_uiHouseCode = uiHouseCode;
+	m_chHouseCode = chHouseCode;
 }
 
 void CX10Device::SetX10DeviceCode(UINT uiDeviceCode)
@@ -271,9 +130,9 @@ CString& CX10Device::GetX10DeviceName()
 }
 
 
-UINT CX10Device::GetX10DeviceHouseCode()
+CHAR CX10Device::GetX10DeviceHouseCode()
 {
-	return m_uiHouseCode;
+	return m_chHouseCode;
 }
 
 UINT CX10Device::GetX10DeviceCode()
@@ -288,10 +147,11 @@ UINT CX10Device::GetX10DeviceType()
 
 BOOL CX10Device::IsOn()
 {
-	return m_bOnOff;
+	return ( m_shOnOff == ON );
 }
 
-void CX10Device::SetOn(BOOL bOnOff)
+void CX10Device::SetOn(short shOnOff)
 {
-	m_bOnOff = bOnOff;
+	if( (shOnOff == ON) || (shOnOff == OFF) )
+		m_shOnOff = shOnOff;
 }

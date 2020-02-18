@@ -143,12 +143,12 @@
 #define IDC_BUTTON_LAMP_DOWN            1047
 #define IDC_BUTTON_LAMP_UP              1048
 #define IDC_BUTTON_REMOVE_X10DEVICE     1049
-#define IDC_BUTTON_MODIFY_X10DEVICE     1050
 #define IDC_BUTTON_REMOVEALL_X10DEVICE  1051
 #define IDC_BUTTON_BRIGHTEN             1052
 #define IDC_BUTTON_DIMM                 1053
 #define IDC_COMBO_X10DEVICE_TYPE        1053
 #define IDC_COMBO_X10DEVICE_HOUSECODE   1054
+#define IDC_BUTTON_MODIFY_X10DEVICE     1055
 #define IDC_BUTTON_CLOSE                0x02000
 #define ID_CALL_HANGUP                  32773
 #define ID_SEND_TEXT                    32775
@@ -172,7 +172,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        204
 #define _APS_NEXT_COMMAND_VALUE         32778
-#define _APS_NEXT_CONTROL_VALUE         1055
+#define _APS_NEXT_CONTROL_VALUE         1056
 #define _APS_NEXT_SYMED_VALUE           105
 #endif
 #endif

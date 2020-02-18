@@ -118,17 +118,12 @@ HRESULT STDMETHODCALLTYPE CDataNotify::DataReceived(INmMember *pMember, ULONG uS
 
 	CControlCamera*		pControlCamera;
 	CControlVCR*		pControlVCR;
-	CX10Device*			pX10Appliance;
-	CX10Device*			pX10Light;
 
 	// init local copy of camera control 'objects'
 	CSystemTrayApp* pApp;
 	pApp = (CSystemTrayApp*) AfxGetApp();
 	pControlCamera	= pApp->GetControlCamera();
 	pControlVCR		= pApp->GetControlVCR();
-
-//	pX10Appliance	= pApp->GetX10Appliance();
-//	pX10Light		= pApp->GetX10Light();
 
 	if(m_pConf)
 	{
@@ -170,27 +165,9 @@ HRESULT STDMETHODCALLTYPE CDataNotify::DataReceived(INmMember *pMember, ULONG uS
 		if( !strcmp(psz,"POWER") )
 			pControlVCR->Power();		// send Power command to VCR
 
-/*
-		if( !strcmp(psz,"APPLIANCEON") )
-			pX10Appliance->TurnApplianceON();
-		if( !strcmp(psz,"APPLIANCEOFF") )
-			pX10Appliance->TurnApplianceOFF();
-
-		if( !strcmp(psz,"LIGHTON") )
-			pX10Light->TurnLampON();
-		if( !strcmp(psz,"LIGHTOFF") )
-			pX10Light->TurnLampOFF();
-
-		if( !strcmp(psz,"DIMM") )
-			pX10Light->DIMM( TRUE );
-		if( !strcmp(psz,"BRIGHTEN") )
-			pX10Light->DIMM( FALSE );
-
-*/
-
-
-
-
+		// if we got here, it must be a home automation X10 command
+		CString strCommand( psz );
+		pApp->X10Execute( strCommand );
   }
 	return S_OK;
 }

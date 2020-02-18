@@ -2,7 +2,7 @@
 
 [General Info]
 Version=1
-LastClass=CNewX10DeviceDlg
+LastClass=CHomeAutomationPage
 LastTemplate=CDialog
 NewFileInclude1=#include "stdafx.h"
 NewFileInclude2=#include "vision2000.h"
@@ -31,25 +31,25 @@ Class19=CAboutDlg
 Class20=CSystemTrayApp
 
 ResourceCount=19
-Resource1=IDD_PROPPAGE7
-Resource2=IDD_PROPPAGE1
-Resource3=IDD_PROPPAGE8
-Resource4=IDD_PROPPAGE5
-Resource5=IDD_PROPPAGE6
-Resource6=IDD_CALL_CONTROL_PAGE
-Resource7=IDR_POPUP_MENU
-Resource8=IDD_PROPPAGE3
-Resource9=IDD_SETTINGS_PAGE
-Resource10=IDD_PROPPAGE4
-Resource11=IDD_VCR_CONTROL_PAGE
-Resource12=IDD_HOME_AUTOMATION
-Resource13=IDD_CONTROL_SHEET
-Resource14=IDD_DIALOG_NEW_X10DEVICE
-Resource15=IDD_CAMERA_CONTROL_PAGE
-Resource16=IDD_ABOUTBOX
-Resource17=IDD_PROPPAGE2
+Resource1=IDD_PROPPAGE3
+Resource2=IDD_SETTINGS_PAGE
+Resource3=IDD_DIALOG_NEW_X10DEVICE
+Resource4=IDD_CONTROL_SHEET
+Resource5=IDD_PROPPAGE5
+Resource6=IDD_PROPPAGE6
+Resource7=IDD_PROPPAGE7
+Resource8=IDD_PROPPAGE8
+Resource9=IDD_IR_CONTROL_PAGE
+Resource10=IDD_CAMERA_CONTROL_PAGE
+Resource11=IDD_CALL_CONTROL_PAGE
+Resource12=IDR_POPUP_MENU
+Resource13=IDD_ABOUTBOX
+Resource14=IDD_HOME_AUTOMATION
+Resource15=IDD_PROPPAGE2
+Resource16=IDD_VCR_CONTROL_PAGE
+Resource17=IDD_PROPPAGE4
 Class21=CHomeAutomationPage
-Resource18=IDD_IR_CONTROL_PAGE
+Resource18=IDD_PROPPAGE1
 Class22=CNewX10DeviceDlg
 Resource19=IDR_MAINFRAME
 
@@ -345,7 +345,7 @@ CommandCount=0
 [DLG:IDD_HOME_AUTOMATION]
 Type=1
 Class=CHomeAutomationPage
-ControlCount=10
+ControlCount=11
 Control1=IDC_COMBO_X10DEVICE_LIST,combobox,1344339971
 Control2=IDC_STATIC,button,1342177287
 Control3=IDC_STATIC,button,1342177287
@@ -356,6 +356,7 @@ Control7=IDC_CHECK_ONOFF,button,1342246915
 Control8=IDC_BUTTON_BRIGHTEN,button,1342242816
 Control9=IDC_BUTTON_DIMM,button,1342242816
 Control10=IDC_STATIC,button,1342177287
+Control11=IDC_BUTTON_MODIFY_X10DEVICE,button,1342242816
 
 [CLS:CHomeAutomationPage]
 Type=0
@@ -363,7 +364,7 @@ HeaderFile=HomeAutomationPage.h
 ImplementationFile=HomeAutomationPage.cpp
 BaseClass=CPropertyPage
 Filter=C
-LastObject=IDC_BUTTON_MODIFY_X10DEVICE
+LastObject=IDC_BUTTON_BRIGHTEN
 VirtualFilter=idWC
 
 [DLG:IDD_DIALOG_NEW_X10DEVICE]

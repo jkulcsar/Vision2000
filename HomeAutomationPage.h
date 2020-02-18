@@ -52,6 +52,9 @@ protected:
 	afx_msg void OnSelendokComboX10deviceList();
 	afx_msg void OnOnOff();
 	afx_msg void OnRemoveX10device();
+	afx_msg void OnModifyX10device();
+	afx_msg void OnDimm();
+	afx_msg void OnBrighten();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 
