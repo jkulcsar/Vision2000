@@ -23,6 +23,8 @@ CControlCamera::CControlCamera()
 	pApp = (CSystemTrayApp*) AfxGetApp();
 	m_pPP = pApp->GetSystemSettings()->GetParallelPort();
 	m_bWireless = pApp->GetSystemSettings()->IsWireless();
+
+	m_uiPreviousCamera = 0;	// no camera is turned ON !!
 }
 
 CControlCamera::~CControlCamera()
@@ -33,7 +35,61 @@ CControlCamera::~CControlCamera()
 
 void CControlCamera::Show(BYTE byteNr)
 {
-	if( m_bWireless )	// wireless version
+	CSystemTrayApp* pApp;
+	pApp = (CSystemTrayApp*) AfxGetApp();
+
+	m_uiMode = pApp->GetSystemSettings()->GetMode();
+
+	// X10 version
+	if( m_uiMode == MODE_X10 )
+	{
+		CControlCM*		pCM				=	pApp->GetSystemSettings()->GetX10ControlModule();
+		CX10Settings*	pX10Settings	=	pApp->GetSystemSettings()->GetX10Settings();
+
+		CString strHouseCode( pX10Settings->GetHouseCode() );
+		UINT uiDeviceCodeBase	= pX10Settings->GetDeviceCodeBase();
+		UINT uiCamera			= byteNr;
+		CString strDeviceCode;
+		BSTRING bstrHouseCode(strHouseCode);
+		
+		short shBrightness	= 0;
+		short shCommand;
+
+		if( uiCamera != m_uiPreviousCamera )
+		{
+			strDeviceCode.Format( "%d", uiDeviceCodeBase + m_uiPreviousCamera - 1 );
+			BSTRING bstrPrevDeviceCode(strDeviceCode);
+
+			shCommand		= 3;	// OFF
+
+			// turn off the previous camera
+			pCM->Exec(	bstrHouseCode.GetLPBSTR(), 
+						bstrPrevDeviceCode.GetLPBSTR(), 
+						&shCommand, 
+						&shBrightness 
+					);
+
+			strDeviceCode.Format("%d", uiDeviceCodeBase + uiCamera - 1 );
+			BSTRING bstrCurrDeviceCode(strDeviceCode);
+
+			shCommand		= 2;	// ON
+
+			::Sleep( 200 );
+
+			// turn ON the currently selected camera
+			pCM->Exec(	bstrHouseCode.GetLPBSTR(), 
+						bstrCurrDeviceCode.GetLPBSTR(), 
+						&shCommand, 
+						&shBrightness 
+					);
+
+			// make the currently selected camera the old one (previous)
+			m_uiPreviousCamera = uiCamera;
+		}
+	}
+
+	// wireless version
+	if( m_uiMode == MODE_WIRELESS )
 	{
 		BYTE byteMask		= 0xF8;
 		BYTE byteTemp		= 0x00;
@@ -83,7 +139,9 @@ void CControlCamera::Show(BYTE byteNr)
 		m_pPP->WriteDataPort( byteToWrite );
 
 	}
-	else				// wired version
+
+	// wired version
+	if( m_uiMode == MODE_WIRED )
 	{
 		BYTE byteTemp1;
 		BYTE byteTemp2;

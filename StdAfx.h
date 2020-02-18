@@ -61,9 +61,12 @@ extern CVision2000Module _Module;
 #include "CnfNtfy.h"
 #include "Conf.h"
 
+#include "ControlCM.h"
+
+#include "SystemSettings.h"	
 #include "ControlCamera.h"
 #include "ControlVCR.h"
-#include "SystemSettings.h"	
+#include "X10Device.h"
 
 
 /////////////////////////////////////////////////////////////////////////////

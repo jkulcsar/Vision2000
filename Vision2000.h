@@ -59,13 +59,18 @@ private:
 
 	// the one and only CSystemSettings object to hold the overall system settings
 	// for details see the SystemSettings.h file
-	CSystemSettings* m_pSystemSettings;
+	CSystemSettings*	m_pSystemSettings;
 
-	CControlCamera* m_pControlCamera;
-	CControlVCR* m_pControlVCR;
+	// the 'objects' on which the app acts upon
+	CControlCamera*		m_pControlCamera;
+	CControlVCR*		m_pControlVCR;
+	CX10Device*			m_pX10Appliance;
+	CX10Device*			m_pX10Light;
 
 
 public:
+	CX10Device* GetX10Light();
+	CX10Device* GetX10Appliance();
 	CControlCamera*		GetControlCamera();
 	CControlVCR*		GetControlVCR();
 	Conf*				GetConference();
@@ -85,6 +90,7 @@ public:
 
 	//{{AFX_MSG(CSystemTrayApp)
 	afx_msg void OnAppAbout();
+	afx_msg void OnVideoWindow();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

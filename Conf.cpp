@@ -188,6 +188,63 @@ HRESULT Conf::Call(LPSTR szMachineName)
 }
 
 
+
+HRESULT Conf::CallConference(LPSTR szMachineName, LPSTR lpstrConfName, LPSTR lpstrPassword)
+{
+	HRESULT hr = S_OK;
+	BSTRING bstrName(szMachineName);
+	BSTRING bstrConfName( lpstrConfName );
+	BSTRING bstrPassword( lpstrPassword );
+
+	hr = m_pINmMgr->CallConference(
+							&m_pINmCall,
+							NM_CALL_DEFAULT,
+							NM_ADDR_MACHINENAME,
+							bstrName,
+							bstrConfName,
+							bstrPassword
+						);
+	
+	if (FAILED(hr))
+	{
+		// Call object sometimes needs to be released.
+		if (m_pINmCall)
+		{
+			m_pCallNotify->Disconnect();
+			m_pINmCall->Release();
+		}
+	}
+
+	return hr;
+
+}
+
+
+
+
+HRESULT Conf::CreateConference(LPSTR lpstrConfName, LPSTR lpstrPassword)
+{
+	HRESULT hr = S_OK;
+	BSTRING bstrConfName( lpstrConfName );
+	BSTRING bstrPassword( lpstrPassword );
+	ULONG	uCaps = NMCH_AUDIO|NMCH_VIDEO|NMCH_DATA;
+
+	hr = m_pINmMgr->CreateConference(
+						&m_pINmConf,
+						bstrConfName,
+						bstrPassword,
+						uCaps
+						);
+	if (FAILED(hr))
+	{
+		// error handling
+	}
+
+	return hr;
+}
+
+
+
 //****************************************************************************
 //
 // HRESULT Conf::HangUp()
@@ -221,8 +278,6 @@ HRESULT Conf::HangUp()
 		m_pINmChannelData->Release();
 		m_pINmChannelData=NULL;
 	}
-
-// m_pDataNotify->Release();
 
 	// Release INmConf and disconnect the ConfNotify sink
 	if (m_pINmConf)
@@ -270,8 +325,10 @@ HRESULT Conf::CallCreated(INmCall * pCall)
 
 HRESULT Conf::AcceptCall()
 {
-	// modified; automatically accept any incoming calls
-	return m_pINmCall->Accept();
+	if( IsHosting() )
+		return m_pINmCall->Accept();
+	else
+		return RejectCall();
 }
 
 //****************************************************************************
@@ -412,3 +469,13 @@ BOOL Conf::InConnection()
 }
 
 
+HRESULT Conf::IsHosting()
+{
+	if (m_pINmConf)
+	{
+		return m_pINmConf->IsHosting();
+	}
+	else
+		return S_FALSE;
+
+}

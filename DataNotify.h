@@ -17,13 +17,10 @@ class CDataNotify  :
 	public RefCount, 
 	public CNotify 
 {
-public:
 private:
 	Conf *m_pConf; // Back pointer to Conf object
 	CDataNotify(); // prevent default construction
-private:
-	CControlCamera* m_pControlCamera;
-	CControlVCR* m_pControlVCR;
+
 public:
 	CDataNotify(Conf *);
 	virtual ~CDataNotify();

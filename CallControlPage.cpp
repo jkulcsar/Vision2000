@@ -69,49 +69,6 @@ BEGIN_MESSAGE_MAP(CCallControlPage, CPropertyPage)
 	ON_UPDATE_COMMAND_UI( IDC_JOIN_CONFERENCE, OnUpdateJoinConference )
 END_MESSAGE_MAP()
 
-/////////////////////////////////////////////////////////////////////////////
-// CCallControlPage message handlers
-
-void CCallControlPage::OnCallHangup() 
-{
-	CStringArray*	pMRU;
-	
-	// If not in a call, then call szMachineName, otherwise hang up.
-	if (!m_pConf->InConnection()) 
-	{
-		CString strMachineName;
-		GetDlgItemText(IDC_MACHINE_NAME,strMachineName);
-		pMRU = m_pSystemSettings->GetMRU();
-		
-		if( !strMachineName.IsEmpty() )
-		{
-			// place the call
-			m_pConf->Call((LPTSTR)(LPCTSTR)strMachineName);
-
-			// update the call list
-			if( CB_ERR == m_ctlMachineName.FindString( -1, (LPCTSTR)strMachineName ) )
-			{
-				m_ctlMachineName.InsertString( 0, (LPCTSTR)strMachineName );
-				pMRU->InsertAt( 0 /*m_dwInsertIndex-1*/, (LPCTSTR)strMachineName );
-				m_dwInsertIndex++;
-				if( m_dwInsertIndex >= 5 )
-					m_dwInsertIndex = 1;
-			}
-		}
-		else
-			AfxMessageBox( IDS_MACHINE_NAME, MB_OK | MB_ICONEXCLAMATION );
-	}
-	else
-		m_pConf->HangUp();
-}
-
-
-LRESULT CCallControlPage::OnKickIdle(WPARAM, LPARAM)
-{
-	UpdateDialogControls( this, FALSE );
-	return 0;
-}
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // CCallControlPage::OnUpdate???? functions
@@ -159,6 +116,72 @@ void CCallControlPage::OnUpdateJoinConference( CCmdUI* pCmdUI )
 
 
 ///////////////////////////////////////////////////////////////////////////////
+// CCallControlPage message handlers
+
+void CCallControlPage::OnCallHangup() 
+{
+	CStringArray*	pMRU;
+	
+	// If not in a call, then call szMachineName, otherwise hang up.
+	if (!m_pConf->InConnection()) 
+	{
+		CString strMachineName;
+		GetDlgItemText(IDC_MACHINE_NAME,strMachineName);
+		pMRU = m_pSystemSettings->GetMRU();
+		
+		if( !strMachineName.IsEmpty() )
+		{
+/*
+			if(TRUE)
+			{
+				CString strConfName;
+				CString strPassword;
+				GetDlgItemText( IDC_EDIT_COFERENCE_NAME,		strConfName);
+				GetDlgItemText( IDC_EDIT_CONFERENCE_PASSWORD,	strPassword);
+
+				if( !strConfName.IsEmpty() && !strPassword.IsEmpty() )
+				{
+					// create the host conference
+					m_pConf->CallConference(	(LPTSTR)(LPCTSTR)strMachineName,
+												(LPTSTR)(LPCTSTR)strConfName,
+												(LPTSTR)(LPCTSTR)strPassword
+											);
+				}
+				else
+					AfxMessageBox( IDS_CONF_AND_PASSWORD, MB_OK | MB_ICONEXCLAMATION );
+			}
+			else
+*/
+			{
+				// place the call
+				m_pConf->Call( (LPTSTR)(LPCTSTR)strMachineName );
+			}
+
+			// update the call list
+			if( CB_ERR == m_ctlMachineName.FindString( -1, (LPCTSTR)strMachineName ) )
+			{
+				m_ctlMachineName.InsertString( 0, (LPCTSTR)strMachineName );
+				pMRU->InsertAt( 0, (LPCTSTR)strMachineName );
+				m_dwInsertIndex++;
+				if( m_dwInsertIndex >= 5 )
+					m_dwInsertIndex = 1;
+			}
+		}
+		else
+			AfxMessageBox( IDS_MACHINE_NAME, MB_OK | MB_ICONEXCLAMATION );
+	}
+	else
+		m_pConf->HangUp();
+}
+
+
+LRESULT CCallControlPage::OnKickIdle(WPARAM, LPARAM)
+{
+	UpdateDialogControls( this, FALSE );
+	return 0;
+}
+
+
 
 BOOL CCallControlPage::OnInitDialog() 
 {
@@ -199,7 +222,29 @@ void CCallControlPage::OnJoinConference()
 	GetDlgItem(IDC_EDIT_CONFERENCE_PASSWORD)->EnableWindow();	
 }
 
+
+
 void CCallControlPage::OnHost() 
 {
-	
+	// if not in a call, host a meeting
+	if ( !FAILED( m_pConf->IsHosting() ) ) 
+	{
+		CString strConfName;
+		CString strPassword;
+		GetDlgItemText( IDC_EDIT_COFERENCE_NAME,		strConfName);
+		GetDlgItemText( IDC_EDIT_CONFERENCE_PASSWORD,	strPassword);
+
+		if( !strConfName.IsEmpty() && !strPassword.IsEmpty() )
+		{
+			// create the host conference
+			m_pConf->CreateConference(	(LPTSTR)(LPCTSTR)strConfName,
+										(LPTSTR)(LPCTSTR)strPassword
+									);
+		}
+		else
+			AfxMessageBox( IDS_CONF_AND_PASSWORD, MB_OK | MB_ICONEXCLAMATION );
+	}
+	else
+		m_pConf->HangUp();
 }
+

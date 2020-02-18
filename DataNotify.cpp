@@ -24,12 +24,6 @@ CDataNotify::CDataNotify()
 CDataNotify::CDataNotify(Conf *pConf)
 {
 	m_pConf = pConf;
-
-	// init local copy of camera control object
-	CSystemTrayApp* pApp;
-	pApp = (CSystemTrayApp*) AfxGetApp();
-	m_pControlCamera	= pApp->GetControlCamera();
-	m_pControlVCR		= pApp->GetControlVCR();
 }
 
 
@@ -120,8 +114,20 @@ HRESULT STDMETHODCALLTYPE CDataNotify::DataReceived(INmMember *pMember, ULONG uS
 	
 	// Warning : Doesn't handle broken packets
 	// TODO: Check dwFlags & NM_DF_SEGMENT_END
-
 	psz = (LPTSTR) pb;
+
+	CControlCamera*		pControlCamera;
+	CControlVCR*		pControlVCR;
+	CX10Device*			pX10Appliance;
+	CX10Device*			pX10Light;
+
+	// init local copy of camera control 'objects'
+	CSystemTrayApp* pApp;
+	pApp = (CSystemTrayApp*) AfxGetApp();
+	pControlCamera	= pApp->GetControlCamera();
+	pControlVCR		= pApp->GetControlVCR();
+	pX10Appliance	= pApp->GetX10Appliance();
+	pX10Light		= pApp->GetX10Light();
 
 	if(m_pConf)
 	{
@@ -129,39 +135,61 @@ HRESULT STDMETHODCALLTYPE CDataNotify::DataReceived(INmMember *pMember, ULONG uS
 		// the new command model
 
 		if( !strcmp(psz,"CAMERA1") )
-			m_pControlCamera->Show(1);	// show camera 1
+			pControlCamera->Show(1);	// show camera 1
 		if( !strcmp(psz,"CAMERA2") )
-			m_pControlCamera->Show(2);	// show camera 2
+			pControlCamera->Show(2);	// show camera 2
 		if( !strcmp(psz,"CAMERA3") )
-			m_pControlCamera->Show(3);	// show camera 3
+			pControlCamera->Show(3);	// show camera 3
 		if( !strcmp(psz,"CAMERA4") )
-			m_pControlCamera->Show(4);	// show camera 4
+			pControlCamera->Show(4);	// show camera 4
 		if( !strcmp(psz,"CAMERA5") )
-			m_pControlCamera->Show(5);	// show camera 5
+			pControlCamera->Show(5);	// show camera 5
 		if( !strcmp(psz,"CAMERA6") )
-			m_pControlCamera->Show(6);	// show camera 6
+			pControlCamera->Show(6);	// show camera 6
 		if( !strcmp(psz,"CAMERA7") )
-			m_pControlCamera->Show(7);	// show camera 7
+			pControlCamera->Show(7);	// show camera 7
 		if( !strcmp(psz,"CAMERA8") )
-			m_pControlCamera->Show(8);	// show camera 8
+			pControlCamera->Show(8);	// show camera 8
 
 
 		if( !strcmp(psz,"PLAY") )
-			m_pControlVCR->Play();		// send Play command to VCR
+			pControlVCR->Play();		// send Play command to VCR
 		if( !strcmp(psz,"STOP") )
-			m_pControlVCR->Stop();		// send Stop command to VCR
+			pControlVCR->Stop();		// send Stop command to VCR
 		if( !strcmp(psz,"FF") )
-			m_pControlVCR->FF();		// send Ff command to VCR
+			pControlVCR->FF();		// send Ff command to VCR
 		if( !strcmp(psz,"REW") )
-			m_pControlVCR->Rew();		// send Rew command to VCR
+			pControlVCR->Rew();		// send Rew command to VCR
 		if( !strcmp(psz,"REC") )
-			m_pControlVCR->Rec();		// send Rec command to VCR
+			pControlVCR->Rec();		// send Rec command to VCR
 		if( !strcmp(psz,"PAUSE") )
-			m_pControlVCR->Pause();		// send Pause command to VCR
+			pControlVCR->Pause();		// send Pause command to VCR
 		if( !strcmp(psz,"VCR") )
-			m_pControlVCR->VCR();		// send VCR command to VCR
+			pControlVCR->VCR();		// send VCR command to VCR
 		if( !strcmp(psz,"POWER") )
-			m_pControlVCR->Power();		// send Power command to VCR
+			pControlVCR->Power();		// send Power command to VCR
+
+
+		if( !strcmp(psz,"APPLIANCEON") )
+			pX10Appliance->TurnApplianceON();
+		if( !strcmp(psz,"APPLIANCEOFF") )
+			pX10Appliance->TurnApplianceOFF();
+
+		if( !strcmp(psz,"LIGHTON") )
+			pX10Light->TurnLampON();
+		if( !strcmp(psz,"LIGHTOFF") )
+			pX10Light->TurnLampOFF();
+
+		if( !strcmp(psz,"DIMM") )
+			pX10Light->DIMM( TRUE );
+		if( !strcmp(psz,"BRIGHTEN") )
+			pX10Light->DIMM( FALSE );
+
+
+
+
+
+
   }
 	return S_OK;
 }

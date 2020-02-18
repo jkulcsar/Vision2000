@@ -11,6 +11,7 @@
 #include "VCRControlPage.h"
 #include "CallControlpage.h"
 #include "IRRemoteControlPage.h"
+#include "HomeAutomationPage.h"
 #include "SystemSettingsPage.h"
 
 
@@ -28,12 +29,14 @@ private:
 	CVCRControlPage			m_VCRControlPage;
 	CCallControlPage		m_CallControlPage;
 //	CIRRemoteControlPage	m_IRRemoteControlPage;
+	CHomeAutomationPage		m_HomeAutomationPage;
 	CSystemSettingsPage		m_SystemSettingsPage;
 
-	CButton m_ButtonClose;
-	CEdit m_edit;
-	CString m_strLogoText;
-	CFont m_fontLogo;
+
+	CButton		m_ButtonClose;
+	CEdit		m_edit;
+	CString		m_strLogoText;
+	CFont		m_fontLogo;
 
 
 // Construction

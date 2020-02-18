@@ -10,12 +10,22 @@
 #endif // _MSC_VER > 1000
 
 #include "IRRemoteControl.h"
+#include "X10Settings.h"
+
+#define MODE_NONE		0
+#define MODE_WIRELESS	10
+#define MODE_WIRED		20
+#define MODE_X10		30
 
 class CSystemSettings : public CObject
 {
 	DECLARE_SERIAL(CSystemSettings)
 
 public:
+	CX10Settings* GetX10Settings();
+	CControlCM* GetX10ControlModule();
+	UINT GetMode();
+	void SetMode( UINT );
 	BOOL IsWireless();
 	void Save();
 	BOOL InLocalMode();
@@ -31,13 +41,17 @@ public:
 	void Serialize( CArchive& );
 
 protected:
-	CCOMParallelPort *m_pPP;
+	CCOMParallelPort*	m_pPP;
+	CControlCM*			m_pX10CM;
+	CX10Settings*		m_pX10Settings;
 
 private:
-	DWORD m_dwIndexLPT;
-	DWORD m_dwMRUCount;
-	BOOL m_bLocalMode;
-	BOOL m_bWireless;
+	DWORD	m_dwIndexLPT;
+	DWORD	m_dwMRUCount;
+	BOOL	m_bLocalMode;
+	BOOL	m_bWireless;
+
+	UINT	m_uiMode;
 
 	CTypedPtrArray < CObArray, CIRRemoteControl* > m_arrayIR;
 	CStringArray	m_arrayMRU;

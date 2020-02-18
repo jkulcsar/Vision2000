@@ -81,6 +81,7 @@ void CSystemTrayApp::OnAppAbout()
 BEGIN_MESSAGE_MAP(CSystemTrayApp, CWinApp)
 	//{{AFX_MSG_MAP(CSystemTrayApp)
 	ON_COMMAND(ID_APP_ABOUT, OnAppAbout)
+	ON_COMMAND(ID_VIDEO_WINDOW, OnVideoWindow)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -126,8 +127,6 @@ BOOL CSystemTrayApp::InitInstance()
 		return FALSE;
 	m_pMainWnd = pMainFrame;
 
-	// for COM support
-	// AfxOleInit();
 
 	// Initialize the system settings CSystemSettings object
 	m_pSystemSettings = new CSystemSettings;
@@ -139,8 +138,11 @@ BOOL CSystemTrayApp::InitInstance()
 	}
 
 
-	m_pControlCamera = new CControlCamera;
-	m_pControlVCR = new CControlVCR;
+	// create the 'objects'
+	m_pControlCamera	= new CControlCamera;
+	m_pControlVCR		= new CControlVCR;
+	m_pX10Appliance		= new CX10Device;
+	m_pX10Light			= new CX10Device;
 
 
 	// Initialize the conference object
@@ -163,19 +165,6 @@ BOOL CSystemTrayApp::InitInstance()
 
 		m_pPollingThread = AfxBeginThread( PollingThreadFunc, pThreadParams ) ;
 	}
-
-
-	// put the video window next to the control panel
-	POINT pt;
-	pt.x = 0;
-	pt.y = 0;
-
-	// make the parent of the video window the desktop
-	m_hWndRemoteVideo = CreateNetMeetingWindow( NULL /*m_hWnd*/, 
-												pt.x, 
-												pt.y, 
-												_T("RemoteNoPause")
-											);
 
 
 	return TRUE;
@@ -227,6 +216,19 @@ int CSystemTrayApp::ExitInstance()
 		delete m_pControlCamera;
 		m_pControlCamera = NULL;
 	}
+
+	if( m_pX10Appliance != NULL )
+	{
+		delete m_pX10Appliance;
+		m_pX10Appliance = NULL;
+	}
+
+	if( m_pX10Light != NULL )
+	{
+		delete m_pX10Light;
+		m_pX10Light = NULL;
+	}
+
 
 	if(::IsWindow(m_hWndRemoteVideo))
 		::DestroyWindow(m_hWndRemoteVideo);
@@ -604,4 +606,35 @@ UINT CSystemTrayApp::PollingThreadFunc(LPVOID pParam)
 	}
 	else
 		return 0; // checking...
+}
+
+
+
+void CSystemTrayApp::OnVideoWindow() 
+{
+	// put the video window next to the control panel
+	POINT pt;
+	pt.x = 0;
+	pt.y = 0;
+
+	// make the parent of the video window the desktop, NOT our control sheet
+
+	m_hWndRemoteVideo = CreateNetMeetingWindow( NULL /*m_hWnd*/, 
+												pt.x, 
+												pt.y, 
+												_T("RemoteNoPause")
+											);
+}
+
+
+CX10Device* CSystemTrayApp::GetX10Appliance()
+{
+	return m_pX10Appliance;
+}
+
+
+
+CX10Device* CSystemTrayApp::GetX10Light()
+{
+	return m_pX10Light;
 }

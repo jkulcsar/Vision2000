@@ -66,9 +66,9 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 private:
-	CSystemSettings* m_pSystemSettings;
-	Conf* m_pConf;	
-	CControlCamera* m_pControlCamera;
+	CSystemSettings*	m_pSystemSettings;
+	Conf*				m_pConf;	
+	CControlCamera*		m_pControlCamera;
 };
 
 //{{AFX_INSERT_LOCATION}}

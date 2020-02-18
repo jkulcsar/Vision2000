@@ -236,37 +236,49 @@ void CCameraControlPage::OnUpdateCamera4( CCmdUI* pCmdUI )
 
 void CCameraControlPage::OnUpdateCamera5( CCmdUI* pCmdUI )
 {
-	if( m_pSystemSettings->InLocalMode() )
-			pCmdUI->Enable( TRUE );
+	if( m_pSystemSettings->GetMode() == MODE_X10 )
+		pCmdUI->Enable( FALSE );
 	else
-		pCmdUI->Enable( m_pConf->InConnection() );
+		if( m_pSystemSettings->InLocalMode() )
+				pCmdUI->Enable( TRUE );
+		else
+			pCmdUI->Enable( m_pConf->InConnection() );
 }
 
 
 void CCameraControlPage::OnUpdateCamera6( CCmdUI* pCmdUI )
 {
-	if( m_pSystemSettings->InLocalMode() )
-			pCmdUI->Enable( TRUE );
+	if( m_pSystemSettings->GetMode() == MODE_X10 )
+		pCmdUI->Enable( FALSE );
 	else
-		pCmdUI->Enable( m_pConf->InConnection() );
+		if( m_pSystemSettings->InLocalMode() )
+				pCmdUI->Enable( TRUE );
+		else
+			pCmdUI->Enable( m_pConf->InConnection() );
 }
 
 
 void CCameraControlPage::OnUpdateCamera7( CCmdUI* pCmdUI )
 {
-	if( m_pSystemSettings->InLocalMode() )
-			pCmdUI->Enable( TRUE );
+	if( m_pSystemSettings->GetMode() == MODE_X10 )
+		pCmdUI->Enable( FALSE );
 	else
-		pCmdUI->Enable( m_pConf->InConnection() );
+		if( m_pSystemSettings->InLocalMode() )
+				pCmdUI->Enable( TRUE );
+		else
+			pCmdUI->Enable( m_pConf->InConnection() );
 }
 
 
 void CCameraControlPage::OnUpdateCamera8( CCmdUI* pCmdUI )
 {
-	if( m_pSystemSettings->InLocalMode() )
-			pCmdUI->Enable( TRUE );
+	if( m_pSystemSettings->GetMode() == MODE_X10 )
+		pCmdUI->Enable( FALSE );
 	else
-		pCmdUI->Enable( m_pConf->InConnection() );
+		if( m_pSystemSettings->InLocalMode() )
+				pCmdUI->Enable( TRUE );
+		else
+			pCmdUI->Enable( m_pConf->InConnection() );
 }
 
 ///////////////////////////////////////////////////////////////////////////////

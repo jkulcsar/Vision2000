@@ -3,10 +3,14 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "Vision2000"=".\Vision2000.dsp" - Package Owner=<4>
+Project: "Vision2000"=.\Vision2000.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
+    begin source code control
+    "$/Vision2000", OBAAAAAA
+    .
+    end source code control
 }}}
 
 Package=<4>
@@ -19,10 +23,15 @@ Global:
 
 Package=<5>
 {{{
+    begin source code control
+    "$/Vision2000", OBAAAAAA
+    .
+    end source code control
 }}}
 
 Package=<3>
 {{{
+    {5E41955F-1DED-11D3-AA97-006097C0E8C9}
 }}}
 
 ###############################################################################

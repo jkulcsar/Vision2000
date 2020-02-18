@@ -71,6 +71,7 @@
 #define IDB_VIDEOCAMERA_U               194
 #define IDB_VIDEOCAMERA_D               195
 #define IDB_VIDEOCAMERA_X               196
+#define IDD_HOME_AUTOMATION             200
 #define IDC_MACHINENAME                 1000
 #define IDC_CALLHANGUP                  1001
 #define IDC_DATA                        1002
@@ -103,6 +104,7 @@
 #define IDC_CAMERA1                     1020
 #define IDC_IR_START                    1020
 #define IDC_BUTTON_HOST                 1020
+#define IDC_BUTTON_RESET                1020
 #define IDC_IR_LABEL                    1021
 #define IDC_CAMERA2                     1021
 #define IDC_CAMERA3                     1022
@@ -118,24 +120,44 @@
 #define IDC_CAMERA8                     1027
 #define IDC_JOIN_CONFERENCE             1027
 #define IDC_HOST_CONFERENCE             1028
+#define IDC_X10_MODE                    1033
+#define IDC_WIRELESS_MODE               1034
+#define IDC_WIRED_MODE                  1035
+#define IDC_COMBO_COM_PORT              1037
+#define IDC_COMBO_HOUSE_CODE            1038
+#define IDC_COMBO3                      1039
+#define IDC_COMBO_CAMERA_FROM           1039
+#define IDC_COMBO1                      1040
+#define IDC_COMBO_CODE_LAMP             1040
+#define IDC_RADIO_APPLIANCE_ON          1041
+#define IDC_RADIO_APPLIANCE_OFF         1042
+#define IDC_RADIO_LAMP_ON               1044
+#define IDC_RADIO_LAMP_OFF              1045
+#define IDC_COMBO_CODE_APPLIANCE        1046
+#define IDC_BUTTON_LAMP_DOWN            1047
+#define IDC_BUTTON_LAMP_UP              1048
 #define IDC_BUTTON_CLOSE                0x02000
 #define ID_CALL_HANGUP                  32773
 #define ID_SEND_TEXT                    32775
 #define ID_CONTROL_SHEET                32776
+#define ID_VIDEO_WINDOW                 32777
 #define IDS_TAB_CAMERA_CONTROL          57665
 #define IDS_TAB_VCR_CONTROL             57666
 #define IDS_TAB_CALL_CONTROL            57667
 #define IDS_TAB_REMOTE_CONTROL          57668
 #define IDS_TAB_SETTINGS                57669
 #define IDS_MACHINE_NAME                57670
+#define IDS_CONF_AND_PASSWORD           57671
+#define IDS_SETTINGS_FILE               57672
+#define IDS_TAB_HOME_AUTOMATION         57673
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        198
-#define _APS_NEXT_COMMAND_VALUE         32777
-#define _APS_NEXT_CONTROL_VALUE         1029
+#define _APS_NEXT_RESOURCE_VALUE        202
+#define _APS_NEXT_COMMAND_VALUE         32778
+#define _APS_NEXT_CONTROL_VALUE         1049
 #define _APS_NEXT_SYMED_VALUE           105
 #endif
 #endif

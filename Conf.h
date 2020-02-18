@@ -46,6 +46,9 @@ private:
 	BOOL m_bInConnection;
 
 public:
+	HRESULT IsHosting();
+	HRESULT CallConference( LPSTR, LPSTR, LPSTR );
+	HRESULT CreateConference( LPSTR, LPSTR );
 	HRESULT CheckDataChannel();
 	Conf(HWND);
 	virtual ~Conf();

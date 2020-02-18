@@ -27,8 +27,16 @@ CSystemSettings::CSystemSettings()
 {
 	// init the parallel port
 	m_pPP			=	new CCOMParallelPort();
+//	m_pPP			=	NULL;
+
+	// create X10 settings and ActiveX object
+	// init later, after settings loaded
+	m_pX10Settings	=	new CX10Settings();
+	m_pX10CM		=	new CControlCM();
+	
 	m_bLocalMode	=	FALSE;
-	m_bWireless		=	TRUE;	// wireless version; will be changeable from UI
+	m_bWireless		=	TRUE;			// wireless version; will be changeable from UI
+	m_uiMode		=	MODE_NONE;		// default mode: none
 }
 
 
@@ -38,6 +46,18 @@ CSystemSettings::~CSystemSettings()
 	{
 		delete m_pPP;
 		m_pPP = NULL;
+	}
+
+	if( m_pX10Settings != NULL )
+	{
+		delete m_pX10Settings;
+		m_pX10Settings= NULL;
+	}
+
+	if( m_pX10CM != NULL )
+	{
+		delete m_pX10CM;
+		m_pX10CM= NULL;
 	}
 }
 
@@ -56,6 +76,8 @@ void CSystemSettings::Serialize( CArchive& archive )
 	{
 		// do storing
         archive << m_dwIndexLPT << m_bLocalMode;
+		if( m_pX10Settings != NULL )
+			m_pX10Settings->Serialize( archive );
 		m_arrayMRU.Serialize( archive );
 		m_arrayIR.Serialize( archive );
 	}
@@ -63,6 +85,8 @@ void CSystemSettings::Serialize( CArchive& archive )
 	{
 		// do retrieve
         archive >> m_dwIndexLPT >> m_bLocalMode;
+		if( m_pX10Settings != NULL )
+			m_pX10Settings->Serialize( archive );
 		m_arrayMRU.Serialize( archive );
 		m_arrayIR.Serialize( archive );
 	}
@@ -71,12 +95,21 @@ void CSystemSettings::Serialize( CArchive& archive )
 
 BOOL CSystemSettings::Initialize()
 {
-	CFile file;
-	CFileDialog dlg(TRUE);
+	CFile		file;
+	char		chCurrentDir[ MAX_PATH ];
+	CString		strFullPath;
+	CString		strSettingsFileName;
 
-	if( dlg.DoModal() == IDOK )
+	::GetCurrentDirectory( MAX_PATH, chCurrentDir );
+	strFullPath.Empty();
+	strFullPath += chCurrentDir;
+	strSettingsFileName.LoadString( IDS_SETTINGS_FILE );
+	if( !strFullPath.IsEmpty() && !strSettingsFileName.IsEmpty() )
 	{
-		if( file.Open( dlg.GetPathName(), CFile::modeRead ) )
+		strFullPath += _T("\\");
+		strFullPath += strSettingsFileName;
+		
+		if( file.Open( strFullPath, CFile::modeRead ) )
 		{
 			CArchive archive( &file, CArchive::load );
 
@@ -88,6 +121,7 @@ BOOL CSystemSettings::Initialize()
 	}
 
 
+	// init parallel port
 	if( m_pPP != NULL )
 	{
 		if( m_dwIndexLPT == 1 )
@@ -109,6 +143,7 @@ BOOL CSystemSettings::Initialize()
 				return FALSE;
 	}
 
+
 	return TRUE;
 }
 
@@ -117,9 +152,6 @@ void CSystemSettings::Save()
 {
 	DWORD m_dwIndexLPT = 1;	// holds the index of the PP: LPTx where x is m_dwIndexLPT
 	DWORD dwLocalMode = FALSE;
-
-	CString strMRU( _T("MRU") );
-	CString strMRUValueName( _T("MRU") );
 
 	if( m_pPP != NULL )
 	{
@@ -134,12 +166,21 @@ void CSystemSettings::Save()
 	}
 
 
-	CFile file;
-	CFileDialog dlg(FALSE);
+	CFile		file;
+	char		chCurrentDir[ MAX_PATH ];
+	CString		strFullPath;
+	CString		strSettingsFileName;
 
-	if( dlg.DoModal() == IDOK )
+	::GetCurrentDirectory( MAX_PATH, chCurrentDir );
+	strFullPath.Empty();
+	strFullPath += chCurrentDir;
+	strSettingsFileName.LoadString( IDS_SETTINGS_FILE );
+	if( !strFullPath.IsEmpty() && !strSettingsFileName.IsEmpty() )
 	{
-		if( file.Open( "settings", CFile::modeCreate | CFile::modeWrite ) )
+		strFullPath += _T("\\");
+		strFullPath += strSettingsFileName;
+		
+		if( file.Open( strFullPath, CFile::modeCreate | CFile::modeWrite ) )
 		{
 			CArchive archive( &file, CArchive::store );
 
@@ -189,4 +230,29 @@ void CSystemSettings::SetLocalMode( BOOL bLocalMode )
 BOOL CSystemSettings::IsWireless()
 {
 	return m_bWireless;
+}
+
+
+
+void CSystemSettings::SetMode( UINT uiMode )
+{
+	m_uiMode = uiMode;
+}
+
+
+
+UINT CSystemSettings::GetMode()
+{
+	return m_uiMode;
+}
+
+
+CControlCM* CSystemSettings::GetX10ControlModule()
+{
+	return m_pX10CM;
+}
+
+CX10Settings* CSystemSettings::GetX10Settings()
+{
+	return m_pX10Settings;
 }

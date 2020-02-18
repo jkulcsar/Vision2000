@@ -17,8 +17,11 @@ public:
 	virtual ~CControlCamera();
 
 private:
-	BOOL m_bWireless;
-	CCOMParallelPort *m_pPP;
+	BOOL				m_bWireless;
+	UINT				m_uiMode;
+	UINT				m_uiPreviousCamera;
+
+	CCOMParallelPort	*m_pPP;
 };
 
 #endif // !defined(AFX_CONTROLCAMERA_H__CF033B41_7297_11D3_AFB2_004095D0EF62__INCLUDED_)

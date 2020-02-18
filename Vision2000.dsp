@@ -23,8 +23,8 @@ CFG=Vision2000 - Win32 Debug
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
-# PROP Scc_ProjName ""
-# PROP Scc_LocalPath ""
+# PROP Scc_ProjName ""$/Vision2000", OBAAAAAA"
+# PROP Scc_LocalPath "."
 CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
@@ -43,13 +43,14 @@ RSC=rc.exe
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /Yu"stdafx.h" /FD /c
 # ADD CPP /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /YX /FD /c
+# SUBTRACT CPP /Fr
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /win32
 # ADD BASE RSC /l 0x409 /d "NDEBUG" /d "_AFXDLL"
 # ADD RSC /l 0x409 /d "NDEBUG" /d "_AFXDLL"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
+# SUBTRACT BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /machine:I386
 # ADD LINK32 /nologo /subsystem:windows /machine:I386
@@ -68,7 +69,8 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /Yu"stdafx.h" /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR /YX /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /YX /FD /GZ /c
+# SUBTRACT CPP /Fr
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG" /d "_AFXDLL"
@@ -127,6 +129,10 @@ SOURCE=.\ControlCamera.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\controlcm.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\ControlDevice.cpp
 # End Source File
 # Begin Source File
@@ -140,6 +146,10 @@ SOURCE=.\ControlVCR.cpp
 # Begin Source File
 
 SOURCE=.\DataNotify.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\HomeAutomationPage.cpp
 # End Source File
 # Begin Source File
 
@@ -217,6 +227,14 @@ SOURCE=.\Vision2000.idl
 
 SOURCE=.\Vision2000.rc
 # End Source File
+# Begin Source File
+
+SOURCE=.\X10Device.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\X10Settings.cpp
+# End Source File
 # End Group
 # Begin Group "Header Files"
 
@@ -259,6 +277,10 @@ SOURCE=.\ControlCamera.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\controlcm.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\ControlDevice.h
 # End Source File
 # Begin Source File
@@ -272,6 +294,10 @@ SOURCE=.\ControlVCR.h
 # Begin Source File
 
 SOURCE=.\DataNotify.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\HomeAutomationPage.h
 # End Source File
 # Begin Source File
 
@@ -333,6 +359,14 @@ SOURCE=.\VCRControlPage.h
 
 SOURCE=.\Vision2000.h
 # End Source File
+# Begin Source File
+
+SOURCE=.\X10Device.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\X10Settings.h
+# End Source File
 # End Group
 # Begin Group "Resource Files"
 
@@ -348,34 +382,6 @@ SOURCE=.\res\Avercam.ico
 # Begin Source File
 
 SOURCE=.\res\bitmap1.bmp
-# End Source File
-# Begin Source File
-
-SOURCE=.\res\bmp00001.bmp
-# End Source File
-# Begin Source File
-
-SOURCE=.\res\bmp00002.bmp
-# End Source File
-# Begin Source File
-
-SOURCE=.\res\Camcord.bmp
-# End Source File
-# Begin Source File
-
-SOURCE=.\res\camera1d.bmp
-# End Source File
-# Begin Source File
-
-SOURCE=.\res\camera1f.bmp
-# End Source File
-# Begin Source File
-
-SOURCE=.\res\camera1u.bmp
-# End Source File
-# Begin Source File
-
-SOURCE=.\res\camera1x.bmp
 # End Source File
 # Begin Source File
 
@@ -396,10 +402,6 @@ SOURCE=.\res\ff_u.bmp
 # Begin Source File
 
 SOURCE=.\res\ff_x.bmp
-# End Source File
-# Begin Source File
-
-SOURCE=.\res\icon1.ico
 # End Source File
 # Begin Source File
 
@@ -531,26 +533,6 @@ SOURCE=.\res\stop_x.bmp
 # End Source File
 # Begin Source File
 
-SOURCE=.\res\vc_d.bmp
-# End Source File
-# Begin Source File
-
-SOURCE=.\res\vc_small_d.bmp
-# End Source File
-# Begin Source File
-
-SOURCE=.\res\vc_small_u.bmp
-# End Source File
-# Begin Source File
-
-SOURCE=.\res\vc_u.bmp
-# End Source File
-# Begin Source File
-
-SOURCE=.\res\vc_x.bmp
-# End Source File
-# Begin Source File
-
 SOURCE=.\res\vcr.bmp
 # End Source File
 # Begin Source File
@@ -568,10 +550,6 @@ SOURCE=.\res\vcr_u.bmp
 # Begin Source File
 
 SOURCE=.\res\vcr_x.bmp
-# End Source File
-# Begin Source File
-
-SOURCE=.\res\videocam.bmp
 # End Source File
 # Begin Source File
 
@@ -604,6 +582,15 @@ SOURCE=.\res\vision2K.ico
 # End Group
 # End Target
 # End Project
+# Section Vision2000 : {5E41955F-1DED-11D3-AA97-006097C0E8C9}
+# 	2:21:DefaultSinkHeaderFile:controlcm.h
+# 	2:16:DefaultSinkClass:CControlCM
+# End Section
 # Section Vision2000 : {00170202-0030-0000-5100-000001FD1200}
 # 	1:14:IDR_VISION2000:104
+# End Section
+# Section Vision2000 : {79401141-1DF1-11D3-AA97-006097C0E8C9}
+# 	2:5:Class:CControlCM
+# 	2:10:HeaderFile:controlcm.h
+# 	2:8:ImplFile:controlcm.cpp
 # End Section

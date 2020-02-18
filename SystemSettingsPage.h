@@ -22,7 +22,13 @@ public:
 // Dialog Data
 	//{{AFX_DATA(CSystemSettingsPage)
 	enum { IDD = IDD_SETTINGS_PAGE };
+	CComboBox	m_cbHouseCode;
+	CComboBox	m_cbCOMPort;
+	CComboBox	m_cbDeviceCodeBase;
 	CButton	m_ctlLocalMode;
+	CButton	m_ctlWirelessMode;
+	CButton	m_ctlWiredMode;
+	CButton	m_ctlX10Mode;
 	CButton	m_ctlTestPort;
 	CButton m_ctlRadioButtonLPT1;
 	CButton m_ctlRadioButtonLPT2;
@@ -47,7 +53,13 @@ protected:
 	afx_msg void OnRadioLPT2();
 	afx_msg void OnRadioLPT3();
 	afx_msg void OnLocalMode();
+	afx_msg void OnWirelessMode();
+	afx_msg void OnWiredMode();
+	afx_msg void OnX10Mode();
 	afx_msg void OnIRWizard();
+	afx_msg void OnSelendokComboCameraFrom();
+	afx_msg void OnSelendokComboComPort();
+	afx_msg void OnSelendokComboHouseCode();
 	//}}AFX_MSG
 	afx_msg LRESULT OnKickIdle(WPARAM, LPARAM);
 	afx_msg void OnUpdateLocalMode( CCmdUI* pCmdUI );
