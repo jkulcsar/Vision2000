@@ -28,6 +28,7 @@ private:
 	Conf* m_pConf;	
 
 public:
+	Conf* GetConference();
 	CSystemTrayApp();
 
 // Overrides
@@ -42,7 +43,7 @@ public:
 
 	//{{AFX_MSG(CSystemTrayApp)
 	afx_msg void OnCallHangup();
-	afx_msg void OnSendText();
+	afx_msg void OnAppAbout();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

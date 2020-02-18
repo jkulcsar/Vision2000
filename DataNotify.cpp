@@ -139,16 +139,6 @@ HRESULT STDMETHODCALLTYPE CDataNotify::DataReceived(INmMember *pMember, ULONG uS
 
 	if(m_pConf)
 	{
-/*
-		if( !strcmp(psz,"CAMERA1") )
-			m_pPP->WriteDataPort( 0x00 );
-		if( !strcmp(psz,"CAMERA2") )
-			m_pPP->WriteDataPort( 0x02 );
-		if( !strcmp(psz,"CAMERA3") )
-			m_pPP->WriteDataPort( 0x01 );
-		if( !strcmp(psz,"CAMERA4") )
-			m_pPP->WriteDataPort( 0x03 );
-*/		
 		//////////////////////////////////////////////////////////////////////////
 		// the new command model
 
@@ -164,9 +154,21 @@ HRESULT STDMETHODCALLTYPE CDataNotify::DataReceived(INmMember *pMember, ULONG uS
 
 		if( !strcmp(psz,"PLAY") )
 			m_pControlVCR->Play();		// send Play command to VCR
+		if( !strcmp(psz,"STOP") )
+			m_pControlVCR->Stop();		// send Play command to VCR
+		if( !strcmp(psz,"FF") )
+			m_pControlVCR->FF();		// send Play command to VCR
+		if( !strcmp(psz,"REW") )
+			m_pControlVCR->Rew();		// send Play command to VCR
+		if( !strcmp(psz,"REC") )
+			m_pControlVCR->Rec();		// send Play command to VCR
+		if( !strcmp(psz,"PAUSE") )
+			m_pControlVCR->Pause();		// send Play command to VCR
+		if( !strcmp(psz,"VCR") )
+			m_pControlVCR->VCR();		// send Play command to VCR
+		if( !strcmp(psz,"POWER") )
+			m_pControlVCR->Power();		// send Play command to VCR
   }
-	
-
 	return S_OK;
 }
 

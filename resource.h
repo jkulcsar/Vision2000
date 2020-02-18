@@ -26,8 +26,17 @@
 #define IDC_CAMERA1                     1008
 #define IDC_BUTTON2                     1009
 #define IDC_CAMERA2                     1009
+#define IDC_REW                         1009
 #define IDC_BUTTON3                     1010
 #define IDC_CAMERA3                     1010
+#define IDC_REC                         1010
+#define IDC_PLAY                        1011
+#define IDC_FF                          1012
+#define IDC_STOP                        1013
+#define IDC_PAUSE                       1014
+#define IDC_VCR                         1015
+#define IDC_FF8                         1016
+#define IDC_POWER                       1016
 #define IDC_BUTTON_CLOSE                0x02000
 #define ID_CALL_HANGUP                  32773
 #define ID_SEND_TEXT                    32775

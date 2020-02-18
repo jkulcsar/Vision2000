@@ -39,11 +39,16 @@ protected:
 	// Generated message map functions
 	//{{AFX_MSG(CCameraControlPage)
 	virtual BOOL OnInitDialog();
+	afx_msg void OnCamera1();
+	afx_msg void OnCamera2();
+	afx_msg void OnCamera3();
+	afx_msg void OnCamera4();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 
 private:
-	CBitmapButton m_btnCamera1;
+//	CBitmapButton m_btnCamera1;
+	Conf* m_pConf;	
 };
 
 //{{AFX_INSERT_LOCATION}}

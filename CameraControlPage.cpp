@@ -21,10 +21,16 @@ CCameraControlPage::CCameraControlPage() : CPropertyPage(CCameraControlPage::IDD
 	//{{AFX_DATA_INIT(CCameraControlPage)
 		// NOTE: the ClassWizard will add member initialization here
 	//}}AFX_DATA_INIT
+
+	// init local copy of conference object
+	CSystemTrayApp* pApp;
+	pApp = (CSystemTrayApp*) AfxGetApp();
+	m_pConf = pApp->GetConference();
 }
 
 CCameraControlPage::~CCameraControlPage()
 {
+	m_pConf = NULL;
 }
 
 void CCameraControlPage::DoDataExchange(CDataExchange* pDX)
@@ -38,6 +44,10 @@ void CCameraControlPage::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CCameraControlPage, CPropertyPage)
 	//{{AFX_MSG_MAP(CCameraControlPage)
+		ON_BN_CLICKED(IDC_CAMERA1, OnCamera1)
+		ON_BN_CLICKED(IDC_CAMERA2, OnCamera2)
+		ON_BN_CLICKED(IDC_CAMERA3, OnCamera3)
+		ON_BN_CLICKED(IDC_CAMERA4, OnCamera4)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -48,8 +58,72 @@ BOOL CCameraControlPage::OnInitDialog()
 {
 	CPropertyPage::OnInitDialog();
 	
-	m_btnCamera1.AutoLoad(IDC_CAMERA1, this );
+//	m_btnCamera1.AutoLoad(IDC_CAMERA1, this );
 	
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
+}
+
+
+void CCameraControlPage::OnCamera1() 
+{
+	if (m_pConf->InConnection()) 
+	{
+		if( m_pConf->SendText("CAMERA1") == S_OK )
+			AfxMessageBox("CAMERA1 selected", MB_OK);
+		else
+			AfxMessageBox("Command NOT sent!", MB_OK);
+	}
+	else
+	{
+		AfxMessageBox("Not in a connection!", MB_OK);
+	}
+}
+
+
+void CCameraControlPage::OnCamera2() 
+{
+	if (m_pConf->InConnection()) 
+	{
+		if( m_pConf->SendText("CAMERA2") == S_OK )
+			AfxMessageBox("CAMERA2 selected", MB_OK);
+		else
+			AfxMessageBox("Command NOT sent!", MB_OK);
+	}
+	else
+	{
+		AfxMessageBox("Not in a connection!", MB_OK);
+	}
+}
+
+
+void CCameraControlPage::OnCamera3() 
+{
+	if (m_pConf->InConnection()) 
+	{
+		if( m_pConf->SendText("CAMERA3") == S_OK )
+			AfxMessageBox("CAMERA3 selected", MB_OK);
+		else
+			AfxMessageBox("Command NOT sent!", MB_OK);
+	}
+	else
+	{
+		AfxMessageBox("Not in a connection!", MB_OK);
+	}
+}
+
+
+void CCameraControlPage::OnCamera4() 
+{
+	if (m_pConf->InConnection()) 
+	{
+		if( m_pConf->SendText("CAMERA4") == S_OK )
+			AfxMessageBox("CAMERA4 selected", MB_OK);
+		else
+			AfxMessageBox("Command NOT sent!", MB_OK);
+	}
+	else
+	{
+		AfxMessageBox("Not in a connection!", MB_OK);
+	}
 }

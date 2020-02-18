@@ -37,16 +37,13 @@ BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
 END_MESSAGE_MAP()
 
 // App command to run the dialog
-/*
+
 void CSystemTrayApp::OnAppAbout()
 {
-//	CAboutDlg aboutDlg;
-//	aboutDlg.DoModal();
-	CControlSheet csh("Vision2000", NULL );
-	csh.Create(NULL);
-//	csh.DoModal();
+	CAboutDlg aboutDlg;
+	aboutDlg.DoModal();
 }
-*/
+
 
 /////////////////////////////////////////////////////////////////////////////
 // CSystemTrayApp
@@ -54,7 +51,7 @@ void CSystemTrayApp::OnAppAbout()
 BEGIN_MESSAGE_MAP(CSystemTrayApp, CWinApp)
 	//{{AFX_MSG_MAP(CSystemTrayApp)
 	ON_COMMAND(ID_CALL_HANGUP, OnCallHangup)
-	ON_COMMAND(ID_SEND_TEXT, OnSendText)
+	ON_COMMAND(ID_APP_ABOUT, OnAppAbout)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -143,17 +140,8 @@ int CSystemTrayApp::ExitInstance()
 
 
 
-void CSystemTrayApp::OnSendText() 
+Conf* CSystemTrayApp::GetConference()
 {
-	if (m_pConf->InConnection()) 
-	{
-		if( m_pConf->SendText("CAMERA1") == S_OK )
-			AfxMessageBox("CAMERA1 selected", MB_OK);
-		else
-			AfxMessageBox("Text NOT sent!", MB_OK);
-	}
-	else
-	{
-		AfxMessageBox("Not in a connection!", MB_OK);
-	}
+	return m_pConf;
 }
+

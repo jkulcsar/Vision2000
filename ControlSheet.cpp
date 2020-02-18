@@ -84,6 +84,7 @@ BOOL CControlSheet::OnInitDialog()
 	
 	m_ButtonClose.Create( _T("Close"),
 			BS_PUSHBUTTON|WS_CHILD|WS_VISIBLE|WS_TABSTOP, rectButton, this, IDC_BUTTON_CLOSE);
+	m_ButtonClose.SetFont( GetFont() );
 		
 /*
 	m_edit.CreateEx( WS_EX_CLIENTEDGE, _T("EDIT"), NULL,
@@ -136,7 +137,7 @@ void CControlSheet::OnPaint()
 
 
 	CRect rectOk;
-	GetDlgItem(IDOK)->GetWindowRect(rectOk);
+	GetDlgItem(IDC_BUTTON_CLOSE)->GetWindowRect(rectOk);
 	ScreenToClient(rectOk);
 
 	dc.SetBkMode(TRANSPARENT);

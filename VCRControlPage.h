@@ -16,6 +16,7 @@ class CVCRControlPage : public CPropertyPage
 
 // Construction
 public:
+	Conf* m_pConf;
 	CVCRControlPage();
 	~CVCRControlPage();
 
@@ -38,6 +39,14 @@ public:
 protected:
 	// Generated message map functions
 	//{{AFX_MSG(CVCRControlPage)
+	afx_msg void OnVcr();
+	afx_msg void OnPower();
+	afx_msg void OnRew();
+	afx_msg void OnPlay();
+	afx_msg void OnFf();
+	afx_msg void OnRec();
+	afx_msg void OnStop();
+	afx_msg void OnPause();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 
