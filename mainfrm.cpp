@@ -38,7 +38,8 @@ END_MESSAGE_MAP()
 
 CMainFrame::CMainFrame()
 {
-	m_pCSh = NULL;
+	m_pCSh	=	NULL;
+	m_hIcon	=	NULL;
 }
 
 CMainFrame::~CMainFrame()
@@ -72,7 +73,12 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	// Create the tray icon
 	if (!m_TrayIcon.Create(this, WM_ICON_NOTIFY, _T("Vision2000"), NULL, IDR_POPUP_MENU))
 		return -1;
-	m_TrayIcon.SetIcon(IDR_MAINFRAME);
+
+	m_hIcon = (HICON) LoadImage( AfxGetInstanceHandle(), MAKEINTRESOURCE(IDI_VISION2000), 
+						IMAGE_ICON, 32, 32, LR_DEFAULTCOLOR  );
+
+	if( m_hIcon != NULL )
+		m_TrayIcon.SetIcon(m_hIcon);
 
 	return 0;
 }
@@ -98,8 +104,12 @@ void CMainFrame::OnControlSheet()
 {
 	m_pCSh = new CControlSheet( _T("Vision2000"), this );
 	if( m_pCSh != NULL )
-		m_pCSh->Create(this);
+		m_pCSh->Create(
+						this, 
+						WS_SYSMENU | WS_POPUP | WS_CAPTION | DS_MODALFRAME | WS_VISIBLE | WS_MINIMIZEBOX
+					);
 }
+
 
 LRESULT CMainFrame::OnIdleUpdateCmdUI(WPARAM, LPARAM)
 {
@@ -109,4 +119,5 @@ LRESULT CMainFrame::OnIdleUpdateCmdUI(WPARAM, LPARAM)
 	return 0;
 	
 }
+
 

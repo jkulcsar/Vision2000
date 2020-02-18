@@ -64,9 +64,6 @@ BOOL CControlSheet::OnInitDialog()
 {
 	BOOL bResult = CPropertySheet::OnInitDialog();
 
-    //Initialize ATL control containment code.
-    AtlAxWinInit();
-
 	CRect rectWnd, rectTab, rectButton;
 	CRect rectVideoWnd;
 	int nWidth, nHeight;
@@ -93,18 +90,6 @@ BOOL CControlSheet::OnInitDialog()
 	rectButton.top    = rectTab.bottom + (UINT)(nHeight / 2);
 	rectButton.bottom = rectTab.bottom + (UINT)(nHeight / 2) + nHeight;
 	
-//	m_ButtonClose.Create( _T("Close"),
-//			BS_PUSHBUTTON|WS_CHILD|WS_VISIBLE|WS_TABSTOP, rectButton, this, IDC_BUTTON_CLOSE);
-//	m_ButtonClose.SetFont( GetFont() );
-
-	// put the video window next to the control panel
-	POINT pt;
-	pt.x = rectVideoWnd.right;
-	pt.y = rectVideoWnd.top;
-
-	// make the parent of the video window the desktop, NOT our control sheet
-	m_hWndRemoteVideo = CreateNetMeetingWindow( NULL /*m_hWnd*/, pt.x, pt.y, _T("RemoteNoPause"));
-
 	UpdateWindow();
 
 	return bResult;
@@ -113,9 +98,6 @@ BOOL CControlSheet::OnInitDialog()
 
 void CControlSheet::OnClose() 
 {
-	if(::IsWindow(m_hWndRemoteVideo))
-		::DestroyWindow(m_hWndRemoteVideo);
-
 	CPropertySheet::OnClose();
 }
 
@@ -212,70 +194,3 @@ void CControlSheet::SetLogoFont(CString Name, int nHeight/* = 24*/,
 }
 
 
-HWND CControlSheet::CreateNetMeetingWindow(HWND hWndParent, int x, int y, LPCTSTR szMode)
-{
-	USES_CONVERSION;
-		
-	TCHAR szFormatModeString[MAX_PATH];
-	wsprintf(szFormatModeString, _T("MODE=%s"), szMode);
-
-	NmInitStruct nmis;
-	nmis.wSize = sizeof(nmis.str);
-	wcscpy(nmis.str, T2OLE(szFormatModeString));
-
-	LPOLESTR strGUIDNetMeetingActiveXControl = NULL;
-	if( S_OK != StringFromCLSID(CLSID_NetMeeting, &strGUIDNetMeetingActiveXControl) )
-		return NULL;
-
-      HWND hWndCtl = 
-		::CreateWindow("AtlAxWin",
-			// Use ATL's string conversion routine to convert to a LPTSTR from an LPOLESTR
-         OLE2T(strGUIDNetMeetingActiveXControl),
-         WS_POPUPWINDOW | WS_CAPTION | WS_SIZEBOX | WS_VISIBLE  /*| WS_GROUP*/, 
-		 x, 
-		 y, 
-		 0, 
-		 0, 
-		 hWndParent, 
-		 NULL,
-         ::GetModuleHandle(NULL), 
-		 &nmis
-		 );	
-
-		// Remember to free memory given to you by StringFromCLSID
-	CoTaskMemFree(strGUIDNetMeetingActiveXControl );
-
-	if(hWndCtl)
-	{
-			// get the IUnknown for the video window (we want to get it's size)
-		IUnknown* pUnk = NULL;
-		HRESULT hr = AtlAxGetControl(hWndCtl, &pUnk);
-		if(SUCCEEDED(hr))
-		{
-				// Now get the IOleObject interface for the netmeeting control
-			IOleObject* pOleObjVideoWindow = NULL;
-			hr = pUnk->QueryInterface(&pOleObjVideoWindow);
-			if(SUCCEEDED(hr))
-			{
-					// get the Extent
-				SIZEL sizel = {0, 0};
-				hr = pOleObjVideoWindow->GetExtent(DVASPECT_CONTENT, &sizel);
-				if(SUCCEEDED(hr))
-				{
-						// Convert the Extent from HIMETRIC to pixels.
-					SIZEL sizeInPixels = {0, 0};
-					AtlHiMetricToPixel(&sizel, &sizeInPixels);
-					::SetWindowPos(hWndCtl, NULL, 0, 0, sizeInPixels.cx, sizeInPixels.cy, SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE);
-				}
-
-					// Don't forget to release interfaces!
-				pOleObjVideoWindow->Release();
-			}
-
-				// Don't forget to release interfaces!
-			pUnk->Release();
-		}
-	}
-
-	return hWndCtl;
-}

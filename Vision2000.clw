@@ -2,13 +2,13 @@
 
 [General Info]
 Version=1
-LastClass=CPlayWizardPage
-LastTemplate=CDialog
+LastClass=CCallControlPage
+LastTemplate=CDaoRecordset
 NewFileInclude1=#include "stdafx.h"
 NewFileInclude2=#include "vision2000.h"
 LastPage=0
 
-ClassCount=20
+ClassCount=21
 Class1=CPlayWizardPage
 Class2=CStopWizardPage
 Class3=CRecordWizardPage
@@ -31,88 +31,90 @@ Class19=CAboutDlg
 Class20=CSystemTrayApp
 
 ResourceCount=17
-Resource1=IDD_PROPPAGE1
-Resource2=IDD_PROPPAGE2
-Resource3=IDD_PROPPAGE3
-Resource4=IDD_PROPPAGE4
-Resource5=IDD_PROPPAGE5
-Resource6=IDD_PROPPAGE6
-Resource7=IDD_PROPPAGE7
-Resource8=IDD_PROPPAGE8
-Resource9=IDR_POPUP_MENU
-Resource10=IDD_ABOUTBOX
-Resource11=IDD_CONTROL_SHEET
-Resource12=IDD_VCR_CONTROL_PAGE
-Resource13=IDD_CAMERA_CONTROL_PAGE
-Resource14=IDD_CALL_CONTROL_PAGE
-Resource15=IDD_IR_CONTROL_PAGE
-Resource16=IDD_SETTINGS_PAGE
-Resource17=IDR_MAINFRAME
+Resource1=IDD_IR_CONTROL_PAGE
+Resource2=IDD_CAMERA_CONTROL_PAGE
+Resource3=IDD_CONTROL_SHEET
+Resource4=IDD_ABOUTBOX
+Resource5=IDD_PROPPAGE8
+Resource6=IDD_PROPPAGE4
+Resource7=IDD_PROPPAGE2
+Resource8=IDD_VCR_CONTROL_PAGE
+Resource9=IDD_PROPPAGE7
+Resource10=IDD_PROPPAGE3
+Resource11=IDR_MAINFRAME
+Resource12=IDD_PROPPAGE5
+Resource13=IDD_PROPPAGE6
+Resource14=IDR_POPUP_MENU
+Resource15=IDD_SETTINGS_PAGE
+Resource16=IDD_PROPPAGE1
+Class21=CIRPattern
+Resource17=IDD_CALL_CONTROL_PAGE
 
 [CLS:CPlayWizardPage]
 Type=0
-BaseClass=CPropertyPage
+BaseClass=CIRRemoteControlPage
 HeaderFile=ButtonWizardPages.h
 ImplementationFile=ButtonWizardPages.cpp
-LastObject=CPlayWizardPage
 
 [CLS:CStopWizardPage]
 Type=0
-BaseClass=CPropertyPage
+BaseClass=CIRRemoteControlPage
 HeaderFile=ButtonWizardPages.h
 ImplementationFile=ButtonWizardPages.cpp
 
 [CLS:CRecordWizardPage]
 Type=0
-BaseClass=CPropertyPage
+BaseClass=CIRRemoteControlPage
 HeaderFile=ButtonWizardPages.h
 ImplementationFile=ButtonWizardPages.cpp
 
 [CLS:CPauseWizardPage]
 Type=0
-BaseClass=CPropertyPage
+BaseClass=CIRRemoteControlPage
 HeaderFile=ButtonWizardPages.h
 ImplementationFile=ButtonWizardPages.cpp
-LastObject=CPauseWizardPage
 
 [CLS:CPowerWizardPage]
 Type=0
-BaseClass=CPropertyPage
+BaseClass=CIRRemoteControlPage
 HeaderFile=ButtonWizardPages.h
 ImplementationFile=ButtonWizardPages.cpp
 
 [CLS:CFFWizardPage]
 Type=0
-BaseClass=CPropertyPage
+BaseClass=CIRRemoteControlPage
 HeaderFile=ButtonWizardPages.h
 ImplementationFile=ButtonWizardPages.cpp
 
 [CLS:CREWWizardPage]
 Type=0
-BaseClass=CPropertyPage
+BaseClass=CIRRemoteControlPage
 HeaderFile=ButtonWizardPages.h
 ImplementationFile=ButtonWizardPages.cpp
-Filter=D
-VirtualFilter=idWC
-LastObject=CREWWizardPage
 
 [CLS:CAddInWizardPage]
 Type=0
-BaseClass=CPropertyPage
+BaseClass=CIRRemoteControlPage
 HeaderFile=ButtonWizardPages.h
 ImplementationFile=ButtonWizardPages.cpp
+LastObject=CAddInWizardPage
 
 [CLS:CCallControlPage]
 Type=0
 BaseClass=CPropertyPage
 HeaderFile=CallControlPage.h
 ImplementationFile=CallControlPage.cpp
+LastObject=IDC_BUTTON_HOST
+Filter=D
+VirtualFilter=idWC
 
 [CLS:CCameraControlPage]
 Type=0
 BaseClass=CPropertyPage
 HeaderFile=CameraControlPage.h
 ImplementationFile=CameraControlPage.cpp
+LastObject=CCameraControlPage
+Filter=D
 
 [CLS:CVCRControlPage]
 Type=0
@@ -218,10 +220,18 @@ ControlCount=0
 [DLG:IDD_CALL_CONTROL_PAGE]
 Type=1
 Class=CCallControlPage
-ControlCount=3
+ControlCount=11
 Control1=IDC_STATIC,button,1342177287
-Control2=IDC_MACHINE_NAME,edit,1350631552
+Control2=IDC_MACHINE_NAME,combobox,1344340226
 Control3=IDC_CALL_HANGUP,button,1342242816
+Control4=IDC_JOIN_CONFERENCE,button,1342177289
+Control5=IDC_HOST_CONFERENCE,button,1342177289
+Control6=IDC_BUTTON_HOST,button,1342242816
+Control7=IDC_STATIC,button,1342177287
+Control8=IDC_STATIC,static,1342308352
+Control9=IDC_EDIT_COFERENCE_NAME,edit,1350631552
+Control10=IDC_STATIC,static,1342308352
+Control11=IDC_EDIT_CONFERENCE_PASSWORD,edit,1350631584
 
 [DLG:IDD_CAMERA_CONTROL_PAGE]
 Type=1
@@ -229,30 +239,34 @@ Class=CVCRControlPage
 ControlCount=17
 Control1=IDC_STATIC,button,1342177287
 Control2=IDC_STATIC,button,1342177287
-Control3=IDC_STATIC,button,1342177287
+Control3=IDC_CAMERA1,button,1342242880
 Control4=IDC_STATIC,button,1342177287
-Control5=IDC_STATIC,button,1342177287
+Control5=IDC_CAMERA2,button,1342242880
 Control6=IDC_STATIC,button,1342177287
-Control7=IDC_STATIC,button,1342177287
+Control7=IDC_CAMERA3,button,1342242880
 Control8=IDC_STATIC,button,1342177287
-Control9=IDC_STATIC,button,1342177287
-Control10=IDC_CAMERA1,button,1342242827
-Control11=IDC_CAMERA2,button,1342242827
-Control12=IDC_CAMERA5,button,1342242827
-Control13=IDC_CAMERA8,button,1342242827
-Control14=IDC_CAMERA7,button,1342242827
-Control15=IDC_CAMERA6,button,1342242827
-Control16=IDC_CAMERA3,button,1342242827
-Control17=IDC_CAMERA4,button,1342242827
+Control9=IDC_CAMERA4,button,1342242880
+Control10=IDC_STATIC,button,1342177287
+Control11=IDC_CAMERA5,button,1342242880
+Control12=IDC_STATIC,button,1342177287
+Control13=IDC_CAMERA6,button,1342242880
+Control14=IDC_STATIC,button,1342177287
+Control15=IDC_CAMERA7,button,1342242880
+Control16=IDC_STATIC,button,1342177287
+Control17=IDC_CAMERA8,button,1342242880
 
 [DLG:IDD_IR_CONTROL_PAGE]
 Type=1
 Class=CIRRemoteControlPage
-ControlCount=4
+ControlCount=8
 Control1=IDC_IR_RECORD,button,1342242816
 Control2=IDC_IR_PLAYBACK,button,1342242816
 Control3=IDC_STATIC,button,1342177287
 Control4=IDC_IR_LABEL,static,1342308352
+Control5=IDC_IR_START,button,1342242816
+Control6=IDC_IR_FIRST,button,1342242816
+Control7=IDC_IR_SECOND,button,1342242816
+Control8=IDC_IR_THIRD,button,1342242816
 
 [DLG:IDD_SETTINGS_PAGE]
 Type=1
@@ -317,4 +331,17 @@ CommandCount=3
 Type=1
 Class=?
 CommandCount=0
+
+[CLS:CIRPattern]
+Type=0
+HeaderFile=IRPattern.h
+ImplementationFile=IRPattern.cpp
+BaseClass=CDaoRecordset
+Filter=N
+VirtualFilter=x
+
+[DB:CIRPattern]
+DB=1
+DBType=DAO
+ColumnCount=0
 

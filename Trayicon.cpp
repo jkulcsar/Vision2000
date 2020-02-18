@@ -228,7 +228,7 @@ CWnd* CTrayIcon::GetNotificationWnd() const
 /////////////////////////////////////////////////////////////////////////////
 // CTrayIcon implentation of OnTrayNotification
 
-LRESULT CTrayIcon::OnTrayNotification(UINT wParam, LONG lParam) 
+LRESULT CTrayIcon::OnTrayNotification(WPARAM wParam, LPARAM lParam) 
 {
 	//Return quickly if its not for this tray icon
 	if (wParam != m_tnd.uID)

@@ -177,14 +177,6 @@ SOURCE=.\PreviewWnd.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\RegistryKey.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\RegKeyIterator.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\SetupVCRWizardSheet.cpp
 # End Source File
 # Begin Source File
@@ -224,10 +216,6 @@ SOURCE=.\Vision2000.idl
 # Begin Source File
 
 SOURCE=.\Vision2000.rc
-# End Source File
-# Begin Source File
-
-SOURCE=.\Win32Exception.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -283,15 +271,7 @@ SOURCE=.\ControlVCR.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\CountedRegKey.hpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\DataNotify.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ExpandableBuffer.hpp
 # End Source File
 # Begin Source File
 
@@ -316,18 +296,6 @@ SOURCE=.\Mgrntfy.h
 # Begin Source File
 
 SOURCE=.\PreviewWnd.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ReferenceCounted.hpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\RegistryKey.hpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\RegKeyIterator.hpp
 # End Source File
 # Begin Source File
 
@@ -365,10 +333,6 @@ SOURCE=.\VCRControlPage.h
 
 SOURCE=.\Vision2000.h
 # End Source File
-# Begin Source File
-
-SOURCE=.\Win32Exception.hpp
-# End Source File
 # End Group
 # Begin Group "Resource Files"
 
@@ -392,6 +356,10 @@ SOURCE=.\res\bmp00001.bmp
 # Begin Source File
 
 SOURCE=.\res\bmp00002.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\Camcord.bmp
 # End Source File
 # Begin Source File
 
@@ -432,6 +400,14 @@ SOURCE=.\res\ff_x.bmp
 # Begin Source File
 
 SOURCE=.\res\icon1.ico
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\idr_main.ico
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\main.ico
 # End Source File
 # Begin Source File
 
@@ -592,6 +568,10 @@ SOURCE=.\res\vcr_u.bmp
 # Begin Source File
 
 SOURCE=.\res\vcr_x.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\videocam.bmp
 # End Source File
 # Begin Source File
 

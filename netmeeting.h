@@ -2,7 +2,7 @@
 
 
 /* File created by MIDL compiler version 5.01.0164 */
-/* at Sat Feb 19 16:59:54 2000
+/* at Sat Oct 21 21:40:32 2000
  */
 /* Compiler settings for F:\work\programming\wireless\Vision2000\netmeeting.idl:
     Os (OptLev=s), W1, Zp8, env=Win32, ms_ext, c_ext

@@ -13,14 +13,6 @@
 #include "IRRemoteControlPage.h"
 #include "SystemSettingsPage.h"
 
-/////////////////////////////////////////////////////////////////////////////
-// NmInitStruct
-
-struct NmInitStruct
-{
-	WORD wSize;
-	OLECHAR str[MAX_PATH];
-};
 
 
 
@@ -32,7 +24,6 @@ class CControlSheet : public CPropertySheet
 	DECLARE_DYNAMIC(CControlSheet)
 
 private:
-	HWND CreateNetMeetingWindow(HWND hWndParent, int x, int y, LPCTSTR szMode);
 	CCameraControlPage		m_CameraControlPage;
 	CVCRControlPage			m_VCRControlPage;
 	CCallControlPage		m_CallControlPage;
@@ -43,9 +34,6 @@ private:
 	CEdit m_edit;
 	CString m_strLogoText;
 	CFont m_fontLogo;
-
-	HWND m_hWndRemoteVideo;
-	HWND m_hWndLocalVideo;
 
 
 // Construction

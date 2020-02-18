@@ -9,6 +9,9 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
+// forward declaration of class CIRRemoteControl
+class CIRRemoteControl;
+
 class CControlVCR
 {
 public:
@@ -31,6 +34,7 @@ private:
 	BOOL m_bURCInitialized;		// URC = Universal Remote Control
 
 	CCOMParallelPort *m_pPP;
+	CTypedPtrArray < CObArray, CIRRemoteControl* >* m_pArrayIR;
 
 };
 

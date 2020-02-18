@@ -92,7 +92,7 @@ CSystemTrayApp::CSystemTrayApp()
 	m_pConf				=	NULL;
 	m_pSystemSettings	=	NULL;
 	m_pPollingThread	=	NULL;
-	m_bContinuePolling	=	TRUE;	// start polling as soon as the thread is started
+	m_bContinuePolling	=	TRUE;	// start polling as soon as the app is started
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -104,6 +104,7 @@ CSystemTrayApp theApp;
 
 BOOL CSystemTrayApp::InitInstance()
 {
+	AfxEnableControlContainer();
 
 	if (!InitATL())
 		return FALSE;
@@ -163,6 +164,20 @@ BOOL CSystemTrayApp::InitInstance()
 		m_pPollingThread = AfxBeginThread( PollingThreadFunc, pThreadParams ) ;
 	}
 
+
+	// put the video window next to the control panel
+	POINT pt;
+	pt.x = 0;
+	pt.y = 0;
+
+	// make the parent of the video window the desktop
+	m_hWndRemoteVideo = CreateNetMeetingWindow( NULL /*m_hWnd*/, 
+												pt.x, 
+												pt.y, 
+												_T("RemoteNoPause")
+											);
+
+
 	return TRUE;
 }
 
@@ -213,6 +228,8 @@ int CSystemTrayApp::ExitInstance()
 		m_pControlCamera = NULL;
 	}
 
+	if(::IsWindow(m_hWndRemoteVideo))
+		::DestroyWindow(m_hWndRemoteVideo);
 
 	if (m_bATLInited)
 	{
@@ -360,6 +377,84 @@ CControlVCR* CSystemTrayApp::GetControlVCR()
 }
 
 
+HWND CSystemTrayApp::CreateNetMeetingWindow(HWND hWndParent, int x, int y, LPCTSTR szMode)
+{
+	USES_CONVERSION;
+		
+	TCHAR szFormatModeString[MAX_PATH];
+	wsprintf(szFormatModeString, _T("MODE=%s"), szMode);
+
+	NmInitStruct nmis;
+	nmis.wSize = sizeof(nmis.str);
+	wcscpy(nmis.str, T2OLE(szFormatModeString));
+
+	LPOLESTR strGUIDNetMeetingActiveXControl = NULL;
+	if( S_OK != StringFromCLSID(CLSID_NetMeeting, &strGUIDNetMeetingActiveXControl) )
+		return NULL;
+
+//	RECT rectVideo;
+//	GetWindowRect( &rectVideo );
+
+//	m_AxWnd.Create( m_hWnd, rectVideo, NULL, WS_POPUPWINDOW | WS_CAPTION | WS_SIZEBOX | WS_VISIBLE );
+//	m_AxWnd.CreateControl( strGUIDNetMeetingActiveXControl );
+
+      HWND hWndCtl = 
+		::CreateWindow("AtlAxWin",
+		// Use ATL's string conversion routine to convert to a LPTSTR from an LPOLESTR
+         OLE2T(strGUIDNetMeetingActiveXControl),
+         WS_POPUPWINDOW | WS_CAPTION | WS_SIZEBOX | WS_VISIBLE, 
+		 x, 
+		 y, 
+		 0, 
+		 0, 
+		 hWndParent, 
+		 NULL,
+       ::GetModuleHandle(NULL), 
+		 &nmis
+		 );	
+
+	// Remember to free memory given to you by StringFromCLSID
+	CoTaskMemFree(strGUIDNetMeetingActiveXControl );
+
+	if(hWndCtl)
+	{
+			// get the IUnknown for the video window (we want to get it's size)
+		IUnknown* pUnk = NULL;
+		HRESULT hr = AtlAxGetControl(hWndCtl, &pUnk);
+		if(SUCCEEDED(hr))
+		{
+				// Now get the IOleObject interface for the netmeeting control
+			IOleObject* pOleObjVideoWindow = NULL;
+			hr = pUnk->QueryInterface(&pOleObjVideoWindow);
+			if(SUCCEEDED(hr))
+			{
+					// get the Extent
+				SIZEL sizel = {0, 0};
+				hr = pOleObjVideoWindow->GetExtent(DVASPECT_CONTENT, &sizel);
+				if(SUCCEEDED(hr))
+				{
+						// Convert the Extent from HIMETRIC to pixels.
+					SIZEL sizeInPixels = {0, 0};
+					AtlHiMetricToPixel(&sizel, &sizeInPixels);
+					::SetWindowPos(hWndCtl, NULL, 0, 0, sizeInPixels.cx, sizeInPixels.cy, SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE);
+				}
+
+					// Don't forget to release interfaces!
+				pOleObjVideoWindow->Release();
+			}
+
+				// Don't forget to release interfaces!
+			pUnk->Release();
+		}
+	}
+
+	return hWndCtl;
+
+//	return m_AxWnd.m_hWnd;
+}
+
+
+
 //////////////////////////////////////////////////////////////////////////////
 // Polling Thread related
 UINT CSystemTrayApp::PollingThreadFunc(LPVOID pParam)
@@ -383,119 +478,121 @@ UINT CSystemTrayApp::PollingThreadFunc(LPVOID pParam)
 			{
 				CCOMParallelPort* pPP = pSystemSettings->GetParallelPort();
 				BOOL bWireless = pSystemSettings->IsWireless();
-				if( pPP->IsEnabled() )
+				if( pPP != NULL )
 				{
-					if( bWireless )		// wireless version
+					if( pPP->IsEnabled() )
 					{
+						if( bWireless )		// wireless version
+						{
 /*
-						BYTE bStatusPort = 0; 
-						BYTE bControlPort = 0;
-						BYTE bInterruptMask = 0x40; //we're looking for bit 6 of the status port (S6)
-						bStatusPort = pPP->ReadStatusPort();
-						bControlPort = pPP->ReadControlPort();
-						//if( (bStatusPort & bInterruptMask) == 0 ) // interrupt detected !
-						if( ((bStatusPort  & 0x40) != 0) ||
-							((bStatusPort  & 0x80) != 0) ||
-							((bStatusPort  & 0x20) != 0) ||
-							((bStatusPort  & 0x10) != 0) ||
-							((bControlPort & 0x01) != 0) ||
-							((bControlPort & 0x02) != 0) ||
-							((bControlPort & 0x04) != 0) ||
-							((bControlPort & 0x08) != 0)
-						  )
-						{
-							//m_criticalSection.Lock();
-							// first, find out which camera triggered the interrupt
-							// check S6 if camera1
-							if( (bStatusPort & 0x40) != 0 )
-								uiCameraID = 1;
-							// check S7 if camera2
-							if( (bStatusPort & 0x80) != 0 )
-								uiCameraID = 2;
-							// check S5 if camera3
-							if( (bStatusPort & 0x20) != 0 )
-								uiCameraID = 3;
-							// check S3 if camera4
-							if( (bStatusPort & 0x10) != 0 )
-								uiCameraID = 4;
-							// check C0 if camera8
-							if( (bControlPort & 0x01) != 0 )
-								uiCameraID = 8;
-							// check C1 if camera7
-							if( (bControlPort & 0x02) != 0 )
-								uiCameraID = 7;
-							// check C2 if camera6
-							if( (bControlPort & 0x04) != 0 )
-								uiCameraID = 6;
-							// check C3 if camera5
-							if( (bControlPort & 0x08) != 0 )
-								uiCameraID = 5;
+							BYTE bStatusPort = 0; 
+							BYTE bControlPort = 0;
+							BYTE bInterruptMask = 0x40; //we're looking for bit 6 of the status port (S6)
+							bStatusPort = pPP->ReadStatusPort();
+							bControlPort = pPP->ReadControlPort();
+							//if( (bStatusPort & bInterruptMask) == 0 ) // interrupt detected !
+							if( ((bStatusPort  & 0x40) != 0) ||
+								((bStatusPort  & 0x80) != 0) ||
+								((bStatusPort  & 0x20) != 0) ||
+								((bStatusPort  & 0x10) != 0) ||
+								((bControlPort & 0x01) != 0) ||
+								((bControlPort & 0x02) != 0) ||
+								((bControlPort & 0x04) != 0) ||
+								((bControlPort & 0x08) != 0)
+							  )
+							{
+								//m_criticalSection.Lock();
+								// first, find out which camera triggered the interrupt
+								// check S6 if camera1
+								if( (bStatusPort & 0x40) != 0 )
+									uiCameraID = 1;
+								// check S7 if camera2
+								if( (bStatusPort & 0x80) != 0 )
+									uiCameraID = 2;
+								// check S5 if camera3
+								if( (bStatusPort & 0x20) != 0 )
+									uiCameraID = 3;
+								// check S3 if camera4
+								if( (bStatusPort & 0x10) != 0 )
+									uiCameraID = 4;
+								// check C0 if camera8
+								if( (bControlPort & 0x01) != 0 )
+									uiCameraID = 8;
+								// check C1 if camera7
+								if( (bControlPort & 0x02) != 0 )
+									uiCameraID = 7;
+								// check C2 if camera6
+								if( (bControlPort & 0x04) != 0 )
+									uiCameraID = 6;
+								// check C3 if camera5
+								if( (bControlPort & 0x08) != 0 )
+									uiCameraID = 5;
 
-							// in order to issue commands, we must first go in LOCAL MODE
-							BOOL bOldMode = pSystemSettings->InLocalMode();
-							pSystemSettings->SetLocalMode( TRUE );
-							pControlCamera->Show( uiCameraID );
-							pControlVCR->Rec();
-							pSystemSettings->SetLocalMode( bOldMode );
+								// in order to issue commands, we must first go in LOCAL MODE
+								BOOL bOldMode = pSystemSettings->InLocalMode();
+								pSystemSettings->SetLocalMode( TRUE );
+								pControlCamera->Show( uiCameraID );
+								pControlVCR->Rec();
+								pSystemSettings->SetLocalMode( bOldMode );
 
-							// now clear the interrupt ( D7 in the wireless case ! )
-							BYTE bFlipFlopClearBit = 0x7F;
-							BYTE bFlipFlopSetBit = 0xFF;
-							BYTE bDataPort = pPP->ReadDataPort();
+								// now clear the interrupt ( D7 in the wireless case ! )
+								BYTE bFlipFlopClearBit = 0x7F;
+								BYTE bFlipFlopSetBit = 0xFF;
+								BYTE bDataPort = pPP->ReadDataPort();
 
-							pPP->WriteDataPort( bDataPort & bFlipFlopClearBit );
-							pPP->WriteDataPort( bDataPort & bFlipFlopSetBit );
-
-						}
+								pPP->WriteDataPort( bDataPort & bFlipFlopClearBit );
+								pPP->WriteDataPort( bDataPort & bFlipFlopSetBit );
+							}
 */
-					}
-					else				// wired version
-					{
-						BYTE bStatusPort = 0; 
-						BYTE bInterruptMask = 0x40; //we're looking for bit 6 of the status port (S6)
-						bStatusPort = pPP->ReadStatusPort();
-						//if( (bStatusPort & bInterruptMask) == 0 ) // interrupt detected !
-						if( ((bStatusPort & 0x08) != 0) ||
-							((bStatusPort & 0x10) != 0) ||
-							((bStatusPort & 0x20) != 0) ||
-							((bStatusPort & 0x80) != 0)
-							)
+						}
+						else				// wired version
 						{
-							//m_criticalSection.Lock();
-							// first, find out which camera triggered the interrupt
-							// check S3 if camera1
-							if( (bStatusPort & 0x08) != 0 )
-								uiCameraID = 1;
-							// check S4 if camera2
-							if( (bStatusPort & 0x10) != 0 )
-								uiCameraID = 2;
-							// check S5 if camera3
-							if( (bStatusPort & 0x20) != 0 )
-								uiCameraID = 3;
-							// check S7 if camera4
-							if( (bStatusPort & 0x80) != 0 )
-								uiCameraID = 4;
+							BYTE bStatusPort = 0; 
+							BYTE bInterruptMask = 0x40; //we're looking for bit 6 of the status port (S6)
+							bStatusPort = pPP->ReadStatusPort();
+							//if( (bStatusPort & bInterruptMask) == 0 ) // interrupt detected !
+							if( ((bStatusPort & 0x08) != 0) ||
+								((bStatusPort & 0x10) != 0) ||
+								((bStatusPort & 0x20) != 0) ||
+								((bStatusPort & 0x80) != 0)
+								)
+							{
+								//m_criticalSection.Lock();
+								// first, find out which camera triggered the interrupt
+								// check S3 if camera1
+								if( (bStatusPort & 0x08) != 0 )
+									uiCameraID = 1;
+								// check S4 if camera2
+								if( (bStatusPort & 0x10) != 0 )
+									uiCameraID = 2;
+								// check S5 if camera3
+								if( (bStatusPort & 0x20) != 0 )
+									uiCameraID = 3;
+								// check S7 if camera4
+								if( (bStatusPort & 0x80) != 0 )
+									uiCameraID = 4;
 
 
 
-							// in order to issue commands, we must first go in LOCAL MODE
-							BOOL bOldMode = pSystemSettings->InLocalMode();
-							pSystemSettings->SetLocalMode( TRUE );
-							pControlCamera->Show( uiCameraID );
-							pControlVCR->Rec();
-							pControlVCR->Rec();
-							pSystemSettings->SetLocalMode( bOldMode );
+								// in order to issue commands, we must first go in LOCAL MODE
+								BOOL bOldMode = pSystemSettings->InLocalMode();
+								pSystemSettings->SetLocalMode( TRUE );
+								pControlCamera->Show( uiCameraID );
+								pControlVCR->Rec();
+								pControlVCR->Rec();
+								pSystemSettings->SetLocalMode( bOldMode );
 
-							// now clear the interrupt ( C0/ in the wired version ! )
-							BYTE bFlipFlopClearBit = 0xFE;
-							BYTE bFlipFlopSetBit = 0xFF;
-							BYTE bControlPort = pPP->ReadControlPort();
+								// now clear the interrupt ( C0/ in the wired version ! )
+								BYTE bFlipFlopClearBit = 0xFE;
+								BYTE bFlipFlopSetBit = 0xFF;
+								BYTE bControlPort = pPP->ReadControlPort();
 
-							pPP->WriteControlPort( bControlPort & bFlipFlopClearBit );
-							pPP->WriteControlPort( bControlPort & bFlipFlopSetBit );
+								pPP->WriteControlPort( bControlPort & bFlipFlopClearBit );
+								pPP->WriteControlPort( bControlPort & bFlipFlopSetBit );
 	
-							//m_criticalSection.Unlock();
-						}	// end of wired version
+								//m_criticalSection.Unlock();
+							}	// end of wired version
+						}
 					}
 				}
 			}

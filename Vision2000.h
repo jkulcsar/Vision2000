@@ -17,6 +17,18 @@
 
 #include "HyperLink.h"		// for the hyperlink feature in the About Box.
 
+
+/////////////////////////////////////////////////////////////////////////////
+// NmInitStruct
+
+struct NmInitStruct
+{
+	WORD wSize;
+	OLECHAR str[MAX_PATH];
+};
+
+
+
 /////////////////////////////////////////////////////////////////////////////
 // CSystemTrayApp:
 // See SystemTray.cpp for the implementation of this class
@@ -32,6 +44,13 @@ private:
 
 	BOOL m_bATLInited;
 	BOOL InitATL();
+
+private:
+	HWND CreateNetMeetingWindow(HWND hWndParent, int x, int y, LPCTSTR szMode);
+	HWND m_hWndRemoteVideo;
+	HWND m_hWndLocalVideo;
+
+
 
 	// the main conference object
 	// it is created and intialized by the CWinApp object

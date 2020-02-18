@@ -12,6 +12,8 @@
 #include "TrayIcon.h"
 #include "ControlSheet.h"	// Added by ClassView
 
+
+
 class CMainFrame : public CFrameWnd
 {
 public:
@@ -48,7 +50,9 @@ protected:
 	afx_msg LONG OnTrayNotification(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnIdleUpdateCmdUI(WPARAM, LPARAM);
 	DECLARE_MESSAGE_MAP()
+
 private:
+	HICON m_hIcon;
 	CControlSheet* m_pCSh;
 };
 

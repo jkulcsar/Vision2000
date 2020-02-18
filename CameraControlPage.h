@@ -20,16 +20,16 @@ public:
 	~CCameraControlPage();
 
 // Dialog Data
-	//{{AFX_DATA(CVCRControlPage)
+	//{{AFX_DATA(CCameraControlPage)
 	enum { IDD = IDD_CAMERA_CONTROL_PAGE };
-	CBitmapButton	m_btnCamera1;
-	CBitmapButton	m_btnCamera2;
-	CBitmapButton	m_btnCamera3;
-	CBitmapButton	m_btnCamera4;
-	CBitmapButton	m_btnCamera5;
-	CBitmapButton	m_btnCamera6;
-	CBitmapButton	m_btnCamera7;
-	CBitmapButton	m_btnCamera8;
+	CButton m_btnCamera1;
+	CButton m_btnCamera2;
+	CButton m_btnCamera3;
+	CButton m_btnCamera4;
+	CButton m_btnCamera5;
+	CButton m_btnCamera6;
+	CButton m_btnCamera7;
+	CButton m_btnCamera8;
 	//}}AFX_DATA
 
 

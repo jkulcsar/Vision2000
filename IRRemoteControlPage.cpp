@@ -28,11 +28,16 @@ CIRRemoteControlPage::CIRRemoteControlPage() : CPropertyPage(CIRRemoteControlPag
 
 CIRRemoteControlPage::~CIRRemoteControlPage()
 {
+/*	do not destroy the CIRRemoteControl object here !
+	the pointer to this newly allocated object is stored in CArray, 
+	it will be destroyed there !
+
 	if( m_pIRRemoteControl != NULL )
 	{
 		delete m_pIRRemoteControl;
 		m_pIRRemoteControl = NULL;
 	}
+*/
 }
 
 

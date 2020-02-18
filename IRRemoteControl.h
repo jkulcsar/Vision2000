@@ -10,16 +10,23 @@
 #endif // _MSC_VER > 1000
 
 
-class CIRRemoteControl
+class CIRRemoteControl : public CObject
 {
+	DECLARE_SERIAL(CIRRemoteControl)
+
 public:
 	void Playback();
 	void Record();
+
 	CIRRemoteControl();
 	virtual ~CIRRemoteControl();
 
+	void Serialize( CArchive& archive );
+
 private:
-	BYTE*				m_pbData;
+	BYTE* m_pbyteData;
+//	BYTE*				m_pbData;
+	CByteArray			m_byteDataArray;
 	DWORD				m_dwLength;
 	CCOMParallelPort	*m_pPP;
 

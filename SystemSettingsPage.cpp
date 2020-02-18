@@ -69,10 +69,15 @@ END_MESSAGE_MAP()
 void CSystemSettingsPage::OnTestPort() 
 {
 	CCOMParallelPort* pPP = m_pSystemSettings->GetParallelPort();
-	if( pPP->TestPort() )
-		AfxMessageBox("Test passed!");
+	if( pPP != NULL )
+	{
+		if( pPP->TestPort() )
+			AfxMessageBox("Test passed!");
+		else
+			AfxMessageBox("Test failed!");
+	}
 	else
-		AfxMessageBox("Test failed!");
+		AfxMessageBox("There is no valid parallel port set up!");
 }
 
 BOOL CSystemSettingsPage::OnInitDialog() 
@@ -86,14 +91,18 @@ BOOL CSystemSettingsPage::OnInitDialog()
 	else
 		m_ctlLocalMode.SetCheck(FALSE);
 
-	if( !strcmp( pPP->GetName(), "LPT1" ) && pPP->IsEnabled() )
-		CheckLPT1();
+	// check if we have a PP first
+	if( pPP != NULL )
+	{
+		if( !strcmp( pPP->GetName(), "LPT1" ) && pPP->IsEnabled() )
+			CheckLPT1();
 
-	if( !strcmp( pPP->GetName(), "LPT2" ) && pPP->IsEnabled() )
-		CheckLPT2();
+		if( !strcmp( pPP->GetName(), "LPT2" ) && pPP->IsEnabled() )
+			CheckLPT2();
 
-	if( !strcmp( pPP->GetName(), "LPT3" ) && pPP->IsEnabled() )
-		CheckLPT3();	
+		if( !strcmp( pPP->GetName(), "LPT3" ) && pPP->IsEnabled() )
+			CheckLPT3();	
+	}
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
@@ -103,39 +112,54 @@ void CSystemSettingsPage::OnRadioLPT1()
 {
 	CCOMParallelPort* pPP = m_pSystemSettings->GetParallelPort();
 
-	if( !pPP->InitializeAt(LPT1) )
-		UnCheckAll();
-	else
+	if( pPP != NULL )
 	{
-		pPP->SetName("LPT1");
-		CheckLPT1();
+		if( !pPP->InitializeAt(LPT1) )
+			UnCheckAll();
+		else
+		{
+			pPP->SetName("LPT1");
+			CheckLPT1();
+		}
 	}
+	else
+		UnCheckAll();
 }
 
 void CSystemSettingsPage::OnRadioLPT2() 
 {
 	CCOMParallelPort* pPP = m_pSystemSettings->GetParallelPort();
 
-	if( !pPP->InitializeAt(LPT2) )
-		UnCheckAll();
-	else
+	if( pPP != NULL )
 	{
-		pPP->SetName("LPT2");
-		CheckLPT2();
+		if( !pPP->InitializeAt(LPT2) )
+			UnCheckAll();
+		else
+		{
+			pPP->SetName("LPT2");
+			CheckLPT2();
+		}
 	}
+	else
+		UnCheckAll();
 }
 
 void CSystemSettingsPage::OnRadioLPT3() 
 {
 	CCOMParallelPort* pPP = m_pSystemSettings->GetParallelPort();
 
-	if( !pPP->InitializeAt(LPT3) )
-		UnCheckAll();
-	else
+	if( pPP != NULL )
 	{
-		pPP->SetName("LPT3");
-		CheckLPT3();
+		if( !pPP->InitializeAt(LPT3) )
+			UnCheckAll();
+		else
+		{
+			pPP->SetName("LPT3");
+			CheckLPT3();
+		}
 	}
+	else
+		UnCheckAll();
 }
 
 

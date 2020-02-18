@@ -83,30 +83,19 @@ END_MESSAGE_MAP()
 BOOL CCameraControlPage::OnInitDialog() 
 {
 	CPropertyPage::OnInitDialog();
-	
-	m_btnCamera1.LoadBitmaps( IDB_CAMERA_SMALL_U, IDB_CAMERA_SMALL_D );
-	m_btnCamera1.SizeToContent();
 
-	m_btnCamera2.LoadBitmaps( IDB_CAMERA_SMALL_U, IDB_CAMERA_SMALL_D );
-	m_btnCamera2.SizeToContent();
-
-	m_btnCamera3.LoadBitmaps( IDB_CAMERA_SMALL_U, IDB_CAMERA_SMALL_D );
-	m_btnCamera3.SizeToContent();
-
-	m_btnCamera4.LoadBitmaps( IDB_CAMERA_SMALL_U, IDB_CAMERA_SMALL_D );
-	m_btnCamera4.SizeToContent();
-
-	m_btnCamera5.LoadBitmaps( IDB_CAMERA_SMALL_U, IDB_CAMERA_SMALL_D );
-	m_btnCamera5.SizeToContent();
-
-	m_btnCamera6.LoadBitmaps( IDB_CAMERA_SMALL_U, IDB_CAMERA_SMALL_D );
-	m_btnCamera6.SizeToContent();
-
-	m_btnCamera7.LoadBitmaps( IDB_CAMERA_SMALL_U, IDB_CAMERA_SMALL_D );
-	m_btnCamera7.SizeToContent();
-
-	m_btnCamera8.LoadBitmaps( IDB_CAMERA_SMALL_U, IDB_CAMERA_SMALL_D );
-	m_btnCamera8.SizeToContent();
+	HICON hIcon = AfxGetApp()->LoadIcon( MAKEINTRESOURCE(IDI_SMALL_CAMERA) );
+	if( hIcon != NULL )
+	{
+		m_btnCamera1.SetIcon( hIcon );
+		m_btnCamera2.SetIcon( hIcon );
+		m_btnCamera3.SetIcon( hIcon );
+		m_btnCamera4.SetIcon( hIcon );
+		m_btnCamera5.SetIcon( hIcon );
+		m_btnCamera6.SetIcon( hIcon );
+		m_btnCamera7.SetIcon( hIcon );
+		m_btnCamera8.SetIcon( hIcon );
+	}
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE

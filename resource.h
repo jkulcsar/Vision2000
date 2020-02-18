@@ -39,9 +39,9 @@
 #define IDB_REC_U                       155
 #define IDB_STOP_D                      156
 #define IDB_VCR_U                       157
-#define IDB_VIDEOCAMERA_U               159
+#define IDB_VIDEOCAMERA_U_BAK           159
 #define IDB_FF_D                        160
-#define IDB_VIDEOCAMERA_D               161
+#define IDB_VIDEOCAMERA_D_BAK           161
 #define IDB_PAUSE_D                     162
 #define IDB_PLAY_D                      163
 #define IDB_POWER_D                     165
@@ -60,46 +60,38 @@
 #define IDB_REW_X                       182
 #define IDB_STOP_X                      183
 #define IDB_VCR_X                       184
-#define IDB_VIDEOCAMERA_X               185
+#define IDB_VIDEOCAMERA_X_BAK           185
 #define IDD_SETTINGS_PAGE               186
 #define IDB_CAMERA_SMALL_U              188
 #define IDB_CAMERA_SMALL_D              189
 #define IDI_SMALL_CAMERA                190
 #define IDB_BITMAP1_U                   191
 #define IDB_BITMAP1_D                   192
+#define IDB_VIDEOCAMERA                 194
+#define IDB_VIDEOCAMERA_U               194
+#define IDB_VIDEOCAMERA_D               195
+#define IDB_VIDEOCAMERA_X               196
 #define IDC_MACHINENAME                 1000
 #define IDC_CALLHANGUP                  1001
 #define IDC_DATA                        1002
 #define IDC_SEND_DATA                   1002
 #define IDC_OPEN_DATA                   1003
-#define IDC_CAMERA_1                    1004
-#define IDC_CAMERA_2                    1005
-#define IDC_CAMERA_3                    1006
-#define IDC_CAMERA_4                    1007
-#define IDC_CAMERA3                     1007
-#define IDC_CAMERA1                     1008
 #define IDC_CALL_HANGUP                 1008
 #define IDC_EMAIL                       1008
 #define IDC_IR_RECORD                   1008
 #define IDC_TEST_PORT                   1008
-#define IDC_CAMERA2                     1009
 #define IDC_REW                         1009
 #define IDC_WEBSITE                     1009
 #define IDC_IR_PLAYBACK                 1009
 #define IDC_REC                         1010
-#define IDC_CAMERA5                     1010
 #define IDC_PLAY                        1011
-#define IDC_CAMERA8                     1011
 #define IDC_FF                          1012
 #define IDC_EDIT1                       1012
 #define IDC_MACHINE_NAME                1012
-#define IDC_CAMERA7                     1012
 #define IDC_STOP                        1013
 #define IDC_STATIC_ICON                 1013
-#define IDC_CAMERA6                     1013
 #define IDC_PAUSE                       1014
 #define IDC_VCR                         1015
-#define IDC_CAMERA4                     1015
 #define IDC_POWER                       1016
 #define IDC_RADIO_LPT1                  1016
 #define IDC_RADIO_LPT2                  1017
@@ -108,7 +100,24 @@
 #define IDC_LOCAL_MODE                  1019
 #define IDC_BUTTON1                     1020
 #define IDC_IR_WIZARD                   1020
+#define IDC_CAMERA1                     1020
+#define IDC_IR_START                    1020
+#define IDC_BUTTON_HOST                 1020
 #define IDC_IR_LABEL                    1021
+#define IDC_CAMERA2                     1021
+#define IDC_CAMERA3                     1022
+#define IDC_CAMERA4                     1023
+#define IDC_IR_FIRST                    1023
+#define IDC_CAMERA5                     1024
+#define IDC_IR_SECOND                   1024
+#define IDC_CAMERA6                     1025
+#define IDC_IR_THIRD                    1025
+#define IDC_EDIT_COFERENCE_NAME         1025
+#define IDC_CAMERA7                     1026
+#define IDC_EDIT_CONFERENCE_PASSWORD    1026
+#define IDC_CAMERA8                     1027
+#define IDC_JOIN_CONFERENCE             1027
+#define IDC_HOST_CONFERENCE             1028
 #define IDC_BUTTON_CLOSE                0x02000
 #define ID_CALL_HANGUP                  32773
 #define ID_SEND_TEXT                    32775
@@ -118,14 +127,15 @@
 #define IDS_TAB_CALL_CONTROL            57667
 #define IDS_TAB_REMOTE_CONTROL          57668
 #define IDS_TAB_SETTINGS                57669
+#define IDS_MACHINE_NAME                57670
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        193
+#define _APS_NEXT_RESOURCE_VALUE        198
 #define _APS_NEXT_COMMAND_VALUE         32777
-#define _APS_NEXT_CONTROL_VALUE         1022
+#define _APS_NEXT_CONTROL_VALUE         1029
 #define _APS_NEXT_SYMED_VALUE           105
 #endif
 #endif

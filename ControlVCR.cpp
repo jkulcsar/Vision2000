@@ -26,6 +26,8 @@ CControlVCR::CControlVCR()
 	pApp = (CSystemTrayApp*) AfxGetApp();
 	m_pPP = pApp->GetSystemSettings()->GetParallelPort();
 	m_bWireless = pApp->GetSystemSettings()->IsWireless();
+	m_pArrayIR = pApp->GetSystemSettings()->GetArrayIR();
+
 }
 
 CControlVCR::~CControlVCR()
@@ -39,14 +41,9 @@ void CControlVCR::Play()
 	if( m_bWireless )	// wireless case
 	{
 		// send IR command
-		// init local copy InfraRed array object (from the system settings)
-		CSystemTrayApp* pApp;
-		CArray< CIRRemoteControl*, CIRRemoteControl* >* pArrayIR ;
-		pApp = (CSystemTrayApp*) AfxGetApp();
-		pArrayIR = pApp->GetSystemSettings()->GetArrayIR();
-		
-		if( pArrayIR->GetAt(0) != NULL )
-			pArrayIR->GetAt(0)->Playback();
+		if( m_pArrayIR->GetSize() > 0 )
+			if( m_pArrayIR->GetAt(0) != NULL )
+				m_pArrayIR->GetAt(0)->Playback();
 	}
 	else
 	{
@@ -94,14 +91,9 @@ void CControlVCR::Stop()
 	if( m_bWireless )	// wireless case
 	{
 		// send IR command
-		// init local copy InfraRed array object (from the system settings)
-		CSystemTrayApp* pApp;
-		CArray< CIRRemoteControl*, CIRRemoteControl* >* pArrayIR ;
-		pApp = (CSystemTrayApp*) AfxGetApp();
-		pArrayIR = pApp->GetSystemSettings()->GetArrayIR();
-		
-		if( pArrayIR->GetAt(4) != NULL )
-			pArrayIR->GetAt(4)->Playback();
+		if( m_pArrayIR->GetSize() > 0 )
+			if( m_pArrayIR->GetAt(1) != NULL )
+				m_pArrayIR->GetAt(1)->Playback();
 	}
 	else
 	{
@@ -148,14 +140,9 @@ void CControlVCR::FF()
 	if( m_bWireless )	// wireless case
 	{
 		// send IR command
-		// init local copy InfraRed array object (from the system settings)
-		CSystemTrayApp* pApp;
-		CArray< CIRRemoteControl*, CIRRemoteControl* >* pArrayIR ;
-		pApp = (CSystemTrayApp*) AfxGetApp();
-		pArrayIR = pApp->GetSystemSettings()->GetArrayIR();
-		
-		if( pArrayIR->GetAt(5) != NULL )
-			pArrayIR->GetAt(5)->Playback();
+		if( m_pArrayIR->GetSize() > 0 )
+			if( m_pArrayIR->GetAt(5) != NULL )
+				m_pArrayIR->GetAt(5)->Playback();
 	}
 	else
 	{
@@ -202,14 +189,9 @@ void CControlVCR::Rew()
 	if( m_bWireless )	// wireless case
 	{
 		// send IR command
-		// init local copy InfraRed array object (from the system settings)
-		CSystemTrayApp* pApp;
-		CArray< CIRRemoteControl*, CIRRemoteControl* >* pArrayIR ;
-		pApp = (CSystemTrayApp*) AfxGetApp();
-		pArrayIR = pApp->GetSystemSettings()->GetArrayIR();
-		
-		if( pArrayIR->GetAt(6) != NULL )
-			pArrayIR->GetAt(6)->Playback();
+		if( m_pArrayIR->GetSize() > 0 )
+			if( m_pArrayIR->GetAt(6) != NULL )
+				m_pArrayIR->GetAt(6)->Playback();
 	}
 	else
 	{
@@ -256,14 +238,9 @@ void CControlVCR::Rec()
 	if( m_bWireless )	// wireless case
 	{
 		// send IR command
-		// init local copy InfraRed array object (from the system settings)
-		CSystemTrayApp* pApp;
-		CArray< CIRRemoteControl*, CIRRemoteControl* >* pArrayIR ;
-		pApp = (CSystemTrayApp*) AfxGetApp();
-		pArrayIR = pApp->GetSystemSettings()->GetArrayIR();
-		
-		if( pArrayIR->GetAt(3) != NULL )
-			pArrayIR->GetAt(3)->Playback();
+		if( m_pArrayIR->GetSize() > 0 )
+			if( m_pArrayIR->GetAt(2) != NULL )
+				m_pArrayIR->GetAt(2)->Playback();
 	}
 	else
 	{
@@ -310,14 +287,9 @@ void CControlVCR::Pause()
 	if( m_bWireless )	// wireless case
 	{
 		// send IR command
-		// init local copy InfraRed array object (from the system settings)
-		CSystemTrayApp* pApp;
-		CArray< CIRRemoteControl*, CIRRemoteControl* >* pArrayIR ;
-		pApp = (CSystemTrayApp*) AfxGetApp();
-		pArrayIR = pApp->GetSystemSettings()->GetArrayIR();
-		
-		if( pArrayIR->GetAt(1) != NULL )
-			pArrayIR->GetAt(1)->Playback();
+		if( m_pArrayIR->GetSize() > 0 )
+			if( m_pArrayIR->GetAt(3) != NULL )
+				m_pArrayIR->GetAt(3)->Playback();
 	}
 	else
 	{
@@ -438,14 +410,9 @@ void CControlVCR::Power()
 	if( m_bWireless )	// wireless case
 	{
 		// send IR command
-		// init local copy InfraRed array object (from the system settings)
-		CSystemTrayApp* pApp;
-		CArray< CIRRemoteControl*, CIRRemoteControl* >* pArrayIR ;
-		pApp = (CSystemTrayApp*) AfxGetApp();
-		pArrayIR = pApp->GetSystemSettings()->GetArrayIR();
-		
-		if( pArrayIR->GetAt(2) != NULL )
-			pArrayIR->GetAt(2)->Playback();
+		if( m_pArrayIR->GetSize() > 0 )
+			if( m_pArrayIR->GetAt(4) != NULL )
+				m_pArrayIR->GetAt(4)->Playback();
 	}
 	else
 	{

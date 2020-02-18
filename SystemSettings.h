@@ -11,27 +11,36 @@
 
 #include "IRRemoteControl.h"
 
-class CSystemSettings  
+class CSystemSettings : public CObject
 {
+	DECLARE_SERIAL(CSystemSettings)
+
 public:
 	BOOL IsWireless();
 	void Save();
 	BOOL InLocalMode();
 	CCOMParallelPort* GetParallelPort();
-	CArray< CIRRemoteControl*, CIRRemoteControl* >* GetArrayIR();
+	CTypedPtrArray < CObArray, CIRRemoteControl* >* GetArrayIR();
+	CStringArray* GetMRU();
 	void SetLocalMode( BOOL );
 	BOOL Initialize();
+	
 	CSystemSettings();
 	virtual ~CSystemSettings();
+
+	void Serialize( CArchive& );
 
 protected:
 	CCOMParallelPort *m_pPP;
 
 private:
+	DWORD m_dwIndexLPT;
+	DWORD m_dwMRUCount;
 	BOOL m_bLocalMode;
 	BOOL m_bWireless;
 
-	CArray< CIRRemoteControl*, CIRRemoteControl* > m_arrayIR;
+	CTypedPtrArray < CObArray, CIRRemoteControl* > m_arrayIR;
+	CStringArray	m_arrayMRU;
 };
 
 #endif // !defined(AFX_SYSTEMSETTINGS_H__8D1F7A82_B9A1_11D3_8F6A_004033D21526__INCLUDED_)

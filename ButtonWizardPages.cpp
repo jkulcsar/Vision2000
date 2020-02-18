@@ -365,22 +365,65 @@ LRESULT CPlayWizardPage::OnWizardNext()
 {
 	// init local copy InfraRed array object (from the system settings)
 	CSystemTrayApp* pApp;
-	CArray< CIRRemoteControl*, CIRRemoteControl* >* pArrayIR ;
+	CTypedPtrArray < CObArray, CIRRemoteControl* >* pArrayIR ;
 	pApp = (CSystemTrayApp*) AfxGetApp();
 	pArrayIR = pApp->GetSystemSettings()->GetArrayIR();
-	pArrayIR->Add( GetIRRemoteControl() );
+
+	if( pArrayIR->GetSize() < 7 )
+		pArrayIR->Add( GetIRRemoteControl() );
+	else
+		pArrayIR->SetAt( 0, GetIRRemoteControl() );
 
 	return CPropertyPage::OnWizardNext();
 }
+
+
+LRESULT CStopWizardPage::OnWizardNext() 
+{
+	// init local copy InfraRed array object (from the system settings)
+	CSystemTrayApp* pApp;
+	CTypedPtrArray < CObArray, CIRRemoteControl* >* pArrayIR ;
+	pApp = (CSystemTrayApp*) AfxGetApp();
+	pArrayIR = pApp->GetSystemSettings()->GetArrayIR();
+	
+	if( pArrayIR->GetSize() < 7 )
+		pArrayIR->Add( GetIRRemoteControl() );
+	else
+		pArrayIR->SetAt( 1, GetIRRemoteControl() );
+
+	return CPropertyPage::OnWizardNext();
+}
+
+
+LRESULT CRecordWizardPage::OnWizardNext() 
+{
+	// init local copy InfraRed array object (from the system settings)
+	CSystemTrayApp* pApp;
+	CTypedPtrArray < CObArray, CIRRemoteControl* >* pArrayIR ;
+	pApp = (CSystemTrayApp*) AfxGetApp();
+	pArrayIR = pApp->GetSystemSettings()->GetArrayIR();
+	
+	if( pArrayIR->GetSize() < 7 )
+		pArrayIR->Add( GetIRRemoteControl() );
+	else
+		pArrayIR->SetAt( 2, GetIRRemoteControl() );
+
+	return CPropertyPage::OnWizardNext();
+}
+
 
 LRESULT CPauseWizardPage::OnWizardNext() 
 {
 	// init local copy InfraRed array object (from the system settings)
 	CSystemTrayApp* pApp;
-	CArray< CIRRemoteControl*, CIRRemoteControl* >* pArrayIR ;
+	CTypedPtrArray < CObArray, CIRRemoteControl* >* pArrayIR ;
 	pApp = (CSystemTrayApp*) AfxGetApp();
 	pArrayIR = pApp->GetSystemSettings()->GetArrayIR();
-	pArrayIR->Add( GetIRRemoteControl() );
+	
+	if( pArrayIR->GetSize() < 7 )
+		pArrayIR->Add( GetIRRemoteControl() );
+	else
+		pArrayIR->SetAt( 3, GetIRRemoteControl() );
 	
 	return CPropertyPage::OnWizardNext();
 }
@@ -389,34 +432,14 @@ LRESULT CPowerWizardPage::OnWizardNext()
 {
 	// init local copy InfraRed array object (from the system settings)
 	CSystemTrayApp* pApp;
-	CArray< CIRRemoteControl*, CIRRemoteControl* >* pArrayIR ;
+	CTypedPtrArray < CObArray, CIRRemoteControl* >* pArrayIR ;
 	pApp = (CSystemTrayApp*) AfxGetApp();
 	pArrayIR = pApp->GetSystemSettings()->GetArrayIR();
-	pArrayIR->Add( GetIRRemoteControl() );
-
-	return CPropertyPage::OnWizardNext();
-}
-
-LRESULT CRecordWizardPage::OnWizardNext() 
-{
-	// init local copy InfraRed array object (from the system settings)
-	CSystemTrayApp* pApp;
-	CArray< CIRRemoteControl*, CIRRemoteControl* >* pArrayIR ;
-	pApp = (CSystemTrayApp*) AfxGetApp();
-	pArrayIR = pApp->GetSystemSettings()->GetArrayIR();
-	pArrayIR->Add( GetIRRemoteControl() );
-
-	return CPropertyPage::OnWizardNext();
-}
-
-LRESULT CStopWizardPage::OnWizardNext() 
-{
-	// init local copy InfraRed array object (from the system settings)
-	CSystemTrayApp* pApp;
-	CArray< CIRRemoteControl*, CIRRemoteControl* >* pArrayIR ;
-	pApp = (CSystemTrayApp*) AfxGetApp();
-	pArrayIR = pApp->GetSystemSettings()->GetArrayIR();
-	pArrayIR->Add( GetIRRemoteControl() );
+	
+	if( pArrayIR->GetSize() < 7 )
+		pArrayIR->Add( GetIRRemoteControl() );
+	else
+		pArrayIR->SetAt( 4, GetIRRemoteControl() );
 
 	return CPropertyPage::OnWizardNext();
 }
@@ -426,10 +449,14 @@ LRESULT CFFWizardPage::OnWizardNext()
 {
 	// init local copy InfraRed array object (from the system settings)
 	CSystemTrayApp* pApp;
-	CArray< CIRRemoteControl*, CIRRemoteControl* >* pArrayIR ;
+	CTypedPtrArray < CObArray, CIRRemoteControl* >* pArrayIR ;
 	pApp = (CSystemTrayApp*) AfxGetApp();
 	pArrayIR = pApp->GetSystemSettings()->GetArrayIR();
-	pArrayIR->Add( GetIRRemoteControl() );
+
+	if( pArrayIR->GetSize() < 7 )
+		pArrayIR->Add( GetIRRemoteControl() );
+	else
+		pArrayIR->SetAt( 5, GetIRRemoteControl() );
 
 	return CPropertyPage::OnWizardNext();
 }
@@ -439,10 +466,15 @@ BOOL CREWWizardPage::OnWizardFinish()
 {
 	// init local copy InfraRed array object (from the system settings)
 	CSystemTrayApp* pApp;
-	CArray< CIRRemoteControl*, CIRRemoteControl* >* pArrayIR ;
+	CTypedPtrArray < CObArray, CIRRemoteControl* >* pArrayIR ;
 	pApp = (CSystemTrayApp*) AfxGetApp();
 	pArrayIR = pApp->GetSystemSettings()->GetArrayIR();
-	pArrayIR->Add( GetIRRemoteControl() );
+
+	if( pArrayIR->GetSize() < 7 )
+		pArrayIR->Add( GetIRRemoteControl() );
+	else
+		pArrayIR->SetAt( 6, GetIRRemoteControl() );
+
 
 	return CPropertyPage::OnWizardFinish();
 }

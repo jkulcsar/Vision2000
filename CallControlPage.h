@@ -22,8 +22,7 @@ public:
 // Dialog Data
 	//{{AFX_DATA(CCallControlPage)
 	enum { IDD = IDD_CALL_CONTROL_PAGE };
-		// NOTE - ClassWizard will add data members here.
-		//    DO NOT EDIT what you see in these blocks of generated code !
+	CComboBox	m_ctlMachineName;
 	//}}AFX_DATA
 
 
@@ -39,13 +38,20 @@ protected:
 	// Generated message map functions
 	//{{AFX_MSG(CCallControlPage)
 	afx_msg void OnCallHangup();
+	virtual BOOL OnInitDialog();
+	afx_msg void OnHostConference();
+	afx_msg void OnJoinConference();
+	afx_msg void OnHost();
 	//}}AFX_MSG
 	afx_msg LRESULT OnKickIdle(WPARAM, LPARAM);
 	afx_msg void OnUpdateCallHangup( CCmdUI* pCmdUI );
 	afx_msg void OnUpdateMachineName( CCmdUI* pCmdUI );
+	afx_msg void OnUpdateHostConference( CCmdUI* pCmdUI );
+	afx_msg void OnUpdateJoinConference( CCmdUI* pCmdUI );
 	DECLARE_MESSAGE_MAP()
 
 private:
+	DWORD m_dwInsertIndex;
 	Conf* m_pConf;
 	CSystemSettings* m_pSystemSettings;
 };
