@@ -24,13 +24,18 @@ CDataNotify::CDataNotify()
 CDataNotify::CDataNotify(Conf *pConf)
 {
 	m_pConf = pConf;
+
+	// init the parallel port
+	m_pPP = new CCOMParallelPort();
+	m_pPP->Initialize();
+
 }
 
 
 
 CDataNotify::~CDataNotify()
 {
-
+	if( m_pPP != NULL ) delete m_pPP;
 }
 
 
@@ -115,14 +120,25 @@ HRESULT STDMETHODCALLTYPE CDataNotify::DataSent(INmMember *pMember, ULONG uSize,
 
 HRESULT STDMETHODCALLTYPE CDataNotify::DataReceived(INmMember *pMember, ULONG uSize, LPBYTE pb, ULONG dwFlags)
 {
-	LPTSTR psz;
-
+	LPTSTR	psz;
+	
 	// Warning : Doesn't handle broken packets
 	// TODO: Check dwFlags & NM_DF_SEGMENT_END
 
 	psz = (LPTSTR) pb;
 
-	AfxMessageBox(psz, MB_OK);
+	if(m_pConf && m_pPP)
+	{
+		if( !strcmp(psz,"CAMERA1") )
+			m_pPP->WriteDataPort( 0x00 );
+		if( !strcmp(psz,"CAMERA2") )
+			m_pPP->WriteDataPort( 0x02 );
+		if( !strcmp(psz,"CAMERA3") )
+			m_pPP->WriteDataPort( 0x01 );
+		if( !strcmp(psz,"CAMERA4") )
+			m_pPP->WriteDataPort( 0x03 );
+	}
+	
 
 	return S_OK;
 }

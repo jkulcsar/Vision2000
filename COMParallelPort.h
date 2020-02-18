@@ -23,6 +23,9 @@ class CCOMParallelPort
 		LPUNKNOWN		m_pUnk;
 
 	public:
+		void WriteDataPort(BYTE);
+		void Initialize();
+		BOOL IsEnabled();
 		CCOMParallelPort();
 		virtual ~CCOMParallelPort();
 

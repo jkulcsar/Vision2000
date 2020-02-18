@@ -1,7 +1,5 @@
 // Vision2000Dlg.h : header file
 //
-#include "COMParallelPort.h";
-
 #if !defined(AFX_VISION2000DLG_H__1FAE7147_4B4C_11D3_AFB1_004095D0EF62__INCLUDED_)
 #define AFX_VISION2000DLG_H__1FAE7147_4B4C_11D3_AFB1_004095D0EF62__INCLUDED_
 
@@ -46,11 +44,14 @@ protected:
 	afx_msg void OnCallhangup();
 	afx_msg void OnOpenData();
 	afx_msg void OnSendData();
+	afx_msg void OnCamera1();
+	afx_msg void OnCamera2();
+	afx_msg void OnCamera3();
+	afx_msg void OnCamera4();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 private:
 	Conf* pConf;
-	CCOMParallelPort*	m_pPP;
 };
 
 //{{AFX_INSERT_LOCATION}}

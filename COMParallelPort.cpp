@@ -63,3 +63,23 @@ CCOMParallelPort::~CCOMParallelPort()
 	if( m_pGet != NULL ) m_pGet->Release();
 	if( m_pSet != NULL ) m_pSet->Release();
 }
+
+BOOL CCOMParallelPort::IsEnabled()
+{
+	if( m_pTest != NULL )
+		return m_pTest->IsEnabled();
+	else
+		return FALSE;
+}
+
+void CCOMParallelPort::Initialize()
+{
+	m_pSet->SetAddress( 0x378 );
+	m_pTest->TestPort();
+}
+
+void CCOMParallelPort::WriteDataPort( BYTE byteToWrite )
+{
+	if( m_pWrite != NULL )
+		m_pWrite->WriteDataPort( byteToWrite );
+}

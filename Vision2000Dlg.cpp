@@ -2,7 +2,6 @@
 //
 
 #include "stdafx.h"
-//#include "COMParallelPort.h"
 #include "Vision2000.h"
 #include "Vision2000Dlg.h"
 
@@ -74,7 +73,6 @@ CVision2000Dlg::CVision2000Dlg(CWnd* pParent /*=NULL*/)
 
 	// initialize private members
 	pConf = NULL;
-	m_pPP = NULL;
 }
 
 void CVision2000Dlg::DoDataExchange(CDataExchange* pDX)
@@ -91,13 +89,17 @@ BEGIN_MESSAGE_MAP(CVision2000Dlg, CDialog)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	ON_WM_CLOSE()
-	ON_MESSAGE(WM_DISCONNECTED, OnDisconnected)
-	ON_MESSAGE(WM_CONNECTING, OnConnect)
-	ON_MESSAGE(WM_CONNECTED, OnConnect)
 	ON_BN_CLICKED(IDC_CALLHANGUP, OnCallhangup)
 	ON_BN_CLICKED(IDC_OPEN_DATA, OnOpenData)
 	ON_BN_CLICKED(IDC_SEND_DATA, OnSendData)
+	ON_BN_CLICKED(IDC_CAMERA_1, OnCamera1)
+	ON_BN_CLICKED(IDC_CAMERA_2, OnCamera2)
+	ON_BN_CLICKED(IDC_CAMERA_3, OnCamera3)
+	ON_BN_CLICKED(IDC_CAMERA_4, OnCamera4)
 	//}}AFX_MSG_MAP
+	ON_MESSAGE(WM_DISCONNECTED, OnDisconnected)
+	ON_MESSAGE(WM_CONNECTING, OnConnect)
+	ON_MESSAGE(WM_CONNECTED, OnConnect)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -231,13 +233,6 @@ void CVision2000Dlg::OnCallhangup()
 			pConf->Call((LPTSTR)(LPCTSTR)strMachineName);
 		else
 			AfxMessageBox("Enter a machine name first!", MB_OK);
-		
-		m_pPP = new CCOMParallelPort();
-	}
-	else
-	{
-		pConf->HangUp();
-		if( m_pPP != NULL ) delete m_pPP;
 	}
 }
 
@@ -260,8 +255,70 @@ void CVision2000Dlg::OnSendData()
 {
 	if (pConf->InConnection()) 
 	{
-		if( pConf->SendText("Te iubesc, piszu!") == S_OK )
+		if( pConf->SendText("Generic text, here !") == S_OK )
 			AfxMessageBox("Text sent successfully!", MB_OK);
+		else
+			AfxMessageBox("Text NOT sent!", MB_OK);
+	}
+	else
+	{
+		AfxMessageBox("Not in a connection!", MB_OK);
+	}
+}
+
+// 	if( m_pPP->IsEnabled() )
+
+void CVision2000Dlg::OnCamera1() 
+{
+	if (pConf->InConnection()) 
+	{
+		if( pConf->SendText("CAMERA1") == S_OK )
+			AfxMessageBox("CAMERA1 selected", MB_OK);
+		else
+			AfxMessageBox("Text NOT sent!", MB_OK);
+	}
+	else
+	{
+		AfxMessageBox("Not in a connection!", MB_OK);
+	}
+}
+
+void CVision2000Dlg::OnCamera2() 
+{
+	if (pConf->InConnection()) 
+	{
+		if( pConf->SendText("CAMERA2") == S_OK )
+			AfxMessageBox("CAMERA2 selected", MB_OK);
+		else
+			AfxMessageBox("Text NOT sent!", MB_OK);
+	}
+	else
+	{
+		AfxMessageBox("Not in a connection!", MB_OK);
+	}
+}
+
+void CVision2000Dlg::OnCamera3() 
+{
+	if (pConf->InConnection()) 
+	{
+		if( pConf->SendText("CAMERA3") == S_OK )
+			AfxMessageBox("CAMERA3 selected", MB_OK);
+		else
+			AfxMessageBox("Text NOT sent!", MB_OK);
+	}
+	else
+	{
+		AfxMessageBox("Not in a connection!", MB_OK);
+	}
+}
+
+void CVision2000Dlg::OnCamera4() 
+{
+	if (pConf->InConnection()) 
+	{
+		if( pConf->SendText("CAMERA4") == S_OK )
+			AfxMessageBox("CAMERA4 selected", MB_OK);
 		else
 			AfxMessageBox("Text NOT sent!", MB_OK);
 	}
