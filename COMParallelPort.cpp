@@ -105,6 +105,13 @@ void CCOMParallelPort::WriteDataPort( BYTE byteToWrite )
 }
 
 
+void CCOMParallelPort::WriteControlPort( BYTE byteToWrite )
+{
+	if( m_pWrite != NULL )
+		m_pWrite->WriteControlPort( byteToWrite );
+}
+
+
 BYTE CCOMParallelPort::ReadDataPort()
 {
 	if( m_pRead != NULL )
@@ -117,6 +124,15 @@ BYTE CCOMParallelPort::ReadStatusPort()
 {
 	if( m_pRead != NULL )
 		return m_pRead->ReadStatusPort();
+	else
+		return FALSE;
+}
+
+
+BYTE CCOMParallelPort::ReadControlPort()
+{
+	if( m_pRead != NULL )
+		return m_pRead->ReadControlPort();
 	else
 		return FALSE;
 }

@@ -82,11 +82,18 @@ END_MESSAGE_MAP()
 
 void CVCRControlPage::OnVcr() 
 {
+	// unlike the other buttons, we have to press the REC button TWICE
 	if( m_pSystemSettings->InLocalMode() )
+	{
 		m_pControlVCR->VCR();
+		m_pControlVCR->VCR();
+	}
 	else
 		if (m_pConf->InConnection()) 
+		{
 			m_pConf->SendText("VCR");
+			m_pConf->SendText("VCR");
+		}
 }
 
 void CVCRControlPage::OnPower() 
@@ -178,8 +185,8 @@ BOOL CVCRControlPage::OnInitDialog()
 	m_btnPower.LoadBitmaps( IDB_POWER_U, IDB_POWER_D, IDB_POWER_U, IDB_POWER_X );
 	m_btnPower.SizeToContent();
 
-//	m_btnVCR.LoadBitmaps( IDB_VCR_U, IDB_VCR_D, IDB_VCR_U, IDB_VCR_X );
-//	m_btnVCR.SizeToContent();
+	m_btnVCR.LoadBitmaps( IDB_VCR_U, IDB_VCR_D, IDB_VCR_U, IDB_VCR_X );
+	m_btnVCR.SizeToContent();
 
 
 
@@ -267,6 +274,7 @@ void CVCRControlPage::OnUpdateVcr( CCmdUI* pCmdUI )
 			pCmdUI->Enable( TRUE );
 	else
 		pCmdUI->Enable( m_pConf->InConnection() );
+	
 }
 
 ///////////////////////////////////////////////////////////////////////////////

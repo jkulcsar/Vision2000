@@ -21,6 +21,8 @@ public:
 	CIRRemoteControlPage();
 	~CIRRemoteControlPage();
 
+	CIRRemoteControl* GetIRRemoteControl();
+
 // Dialog Data
 	//{{AFX_DATA(CIRRemoteControlPage)
 	enum { IDD = IDD_IR_CONTROL_PAGE };

@@ -25,8 +25,9 @@
 class CSystemTrayApp : public CWinApp
 {
 private:
-	CWinThread*	m_pPollingThread;			// interrupt polling thread
-	BOOL		m_bContinuePolling;			// flag to continue or not
+	CWinThread*			m_pPollingThread;			// interrupt polling thread
+	BOOL				m_bContinuePolling;			// flag to continue or not
+	CCriticalSection	m_criticalSection;
 	static UINT PollingThreadFunc(LPVOID);	// the polling thread function
 
 	BOOL m_bATLInited;
@@ -108,7 +109,9 @@ private:
 typedef struct tagTHREADPARAMS
 {
 	BOOL*	pContinueFlag;
-	LPARAM	lParam;
+	LPARAM	lParam1;
+	LPARAM	lParam2;
+	LPARAM	lParam3;
 } THREADPARAMS;
 
 

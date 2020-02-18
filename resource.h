@@ -7,6 +7,15 @@
 #define IDS_ABOUTBOX                    101
 #define IDD_VISION2000_DIALOG           102
 #define IDR_VISION2000                  104
+#define IDS_PROPSHT_CAPTION             105
+#define IDD_PROPPAGE1                   106
+#define IDD_PROPPAGE2                   107
+#define IDD_PROPPAGE3                   108
+#define IDD_PROPPAGE4                   109
+#define IDD_PROPPAGE5                   110
+#define IDD_PROPPAGE6                   111
+#define IDD_PROPPAGE7                   112
+#define IDD_PROPPAGE8                   113
 #define IDR_MAINFRAME                   128
 #define IDR_POPUP_MENU                  129
 #define IDD_CONTROL_SHEET               133
@@ -53,6 +62,11 @@
 #define IDB_VCR_X                       184
 #define IDB_VIDEOCAMERA_X               185
 #define IDD_SETTINGS_PAGE               186
+#define IDB_CAMERA_SMALL_U              188
+#define IDB_CAMERA_SMALL_D              189
+#define IDI_SMALL_CAMERA                190
+#define IDB_BITMAP1_U                   191
+#define IDB_BITMAP1_D                   192
 #define IDC_MACHINENAME                 1000
 #define IDC_CALLHANGUP                  1001
 #define IDC_DATA                        1002
@@ -61,37 +75,40 @@
 #define IDC_CAMERA_1                    1004
 #define IDC_CAMERA_2                    1005
 #define IDC_CAMERA_3                    1006
-#define IDC_BUTTON4                     1007
 #define IDC_CAMERA_4                    1007
-#define IDC_CAMERA4                     1007
-#define IDC_BUTTON1                     1008
+#define IDC_CAMERA3                     1007
 #define IDC_CAMERA1                     1008
 #define IDC_CALL_HANGUP                 1008
 #define IDC_EMAIL                       1008
 #define IDC_IR_RECORD                   1008
 #define IDC_TEST_PORT                   1008
-#define IDC_BUTTON2                     1009
 #define IDC_CAMERA2                     1009
 #define IDC_REW                         1009
 #define IDC_WEBSITE                     1009
 #define IDC_IR_PLAYBACK                 1009
-#define IDC_BUTTON3                     1010
-#define IDC_CAMERA3                     1010
 #define IDC_REC                         1010
+#define IDC_CAMERA5                     1010
 #define IDC_PLAY                        1011
+#define IDC_CAMERA8                     1011
 #define IDC_FF                          1012
 #define IDC_EDIT1                       1012
 #define IDC_MACHINE_NAME                1012
+#define IDC_CAMERA7                     1012
 #define IDC_STOP                        1013
 #define IDC_STATIC_ICON                 1013
+#define IDC_CAMERA6                     1013
 #define IDC_PAUSE                       1014
 #define IDC_VCR                         1015
+#define IDC_CAMERA4                     1015
 #define IDC_POWER                       1016
 #define IDC_RADIO_LPT1                  1016
 #define IDC_RADIO_LPT2                  1017
 #define IDC_RADIO_LPT3                  1018
 #define IDC_CHECK1                      1019
 #define IDC_LOCAL_MODE                  1019
+#define IDC_BUTTON1                     1020
+#define IDC_IR_WIZARD                   1020
+#define IDC_IR_LABEL                    1021
 #define IDC_BUTTON_CLOSE                0x02000
 #define ID_CALL_HANGUP                  32773
 #define ID_SEND_TEXT                    32775
@@ -106,9 +123,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        187
+#define _APS_NEXT_RESOURCE_VALUE        193
 #define _APS_NEXT_COMMAND_VALUE         32777
-#define _APS_NEXT_CONTROL_VALUE         1020
+#define _APS_NEXT_CONTROL_VALUE         1022
 #define _APS_NEXT_SYMED_VALUE           105
 #endif
 #endif

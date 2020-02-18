@@ -2,9 +2,9 @@
 
 
 /* File created by MIDL compiler version 5.01.0164 */
-/* at Fri Jan 07 02:45:39 2000
+/* at Sat Feb 19 16:59:52 2000
  */
-/* Compiler settings for F:\work\programming\Vision2000\Vision2000.idl:
+/* Compiler settings for F:\work\programming\wireless\Vision2000\Vision2000.idl:
     Oicf (OptLev=i2), W1, Zp8, env=Win32, ms_ext, c_ext
     error checks: allocation ref bounds_check enum stub_data 
 */

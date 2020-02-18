@@ -136,6 +136,14 @@ HRESULT STDMETHODCALLTYPE CDataNotify::DataReceived(INmMember *pMember, ULONG uS
 			m_pControlCamera->Show(3);	// show camera 3
 		if( !strcmp(psz,"CAMERA4") )
 			m_pControlCamera->Show(4);	// show camera 4
+		if( !strcmp(psz,"CAMERA5") )
+			m_pControlCamera->Show(5);	// show camera 5
+		if( !strcmp(psz,"CAMERA6") )
+			m_pControlCamera->Show(6);	// show camera 6
+		if( !strcmp(psz,"CAMERA7") )
+			m_pControlCamera->Show(7);	// show camera 7
+		if( !strcmp(psz,"CAMERA8") )
+			m_pControlCamera->Show(8);	// show camera 8
 
 
 		if( !strcmp(psz,"PLAY") )

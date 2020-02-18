@@ -5,6 +5,10 @@
 #include "vision2000.h"
 #include "SystemSettingsPage.h"
 
+#include "SetupVCRWizardSheet.h"
+
+#include <afxpriv.h>
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -52,7 +56,11 @@ BEGIN_MESSAGE_MAP(CSystemSettingsPage, CPropertyPage)
 	ON_BN_CLICKED(IDC_RADIO_LPT2, OnRadioLPT2)
 	ON_BN_CLICKED(IDC_RADIO_LPT3, OnRadioLPT3)
 	ON_BN_CLICKED(IDC_LOCAL_MODE, OnLocalMode)
+	ON_BN_CLICKED(IDC_IR_WIZARD, OnIRWizard)
 	//}}AFX_MSG_MAP
+	ON_MESSAGE(WM_KICKIDLE, OnKickIdle)
+	ON_UPDATE_COMMAND_UI( IDC_LOCAL_MODE, OnUpdateLocalMode )
+
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -165,4 +173,35 @@ void CSystemSettingsPage::OnLocalMode()
 		m_pSystemSettings->SetLocalMode( TRUE );
 	else
 		m_pSystemSettings->SetLocalMode( FALSE );
+}
+
+
+LRESULT CSystemSettingsPage::OnKickIdle(WPARAM, LPARAM)
+{
+	UpdateDialogControls( this, FALSE );
+	return 0;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// CSystemSettingsPage::OnUpdate???? functions
+
+void CSystemSettingsPage::OnUpdateLocalMode( CCmdUI* pCmdUI )
+{
+	if( m_pSystemSettings->InLocalMode() )
+			pCmdUI->SetCheck( TRUE );
+	else
+		pCmdUI->SetCheck( FALSE );
+}
+
+
+
+void CSystemSettingsPage::OnIRWizard() 
+{
+	CSetupVCRWizardSheet propSheet;
+
+	propSheet.DoModal();
+
+	// This is where you would retrieve information from the property
+	// sheet if propSheet.DoModal() returned IDOK.  We aren't doing
+	// anything for simplicity.
 }

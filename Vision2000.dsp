@@ -91,6 +91,10 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
+SOURCE=.\ButtonWizardPages.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\CallControlPage.cpp
 # End Source File
 # Begin Source File
@@ -169,6 +173,22 @@ SOURCE=.\netmeeting.idl
 # End Source File
 # Begin Source File
 
+SOURCE=.\PreviewWnd.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\RegistryKey.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\RegKeyIterator.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\SetupVCRWizardSheet.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\StdAfx.cpp
 # ADD CPP /Yc"stdafx.h"
 # End Source File
@@ -183,6 +203,10 @@ SOURCE=.\SystemSettingsPage.cpp
 # Begin Source File
 
 SOURCE=.\trayicon.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Utils.cpp
 # End Source File
 # Begin Source File
 
@@ -201,10 +225,18 @@ SOURCE=.\Vision2000.idl
 
 SOURCE=.\Vision2000.rc
 # End Source File
+# Begin Source File
+
+SOURCE=.\Win32Exception.cpp
+# End Source File
 # End Group
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
+# Begin Source File
+
+SOURCE=.\ButtonWizardPages.h
+# End Source File
 # Begin Source File
 
 SOURCE=.\CallControlPage.h
@@ -251,7 +283,15 @@ SOURCE=.\ControlVCR.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\CountedRegKey.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\DataNotify.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ExpandableBuffer.hpp
 # End Source File
 # Begin Source File
 
@@ -275,7 +315,27 @@ SOURCE=.\Mgrntfy.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\PreviewWnd.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ReferenceCounted.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\RegistryKey.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\RegKeyIterator.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Resource.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SetupVCRWizardSheet.h
 # End Source File
 # Begin Source File
 
@@ -295,11 +355,19 @@ SOURCE=.\trayicon.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Utils.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\VCRControlPage.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\Vision2000.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Win32Exception.hpp
 # End Source File
 # End Group
 # Begin Group "Resource Files"
@@ -308,6 +376,10 @@ SOURCE=.\Vision2000.h
 # Begin Source File
 
 SOURCE=.\res\Arw01rt.ico
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\Avercam.ico
 # End Source File
 # Begin Source File
 
@@ -484,6 +556,14 @@ SOURCE=.\res\stop_x.bmp
 # Begin Source File
 
 SOURCE=.\res\vc_d.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\vc_small_d.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\vc_small_u.bmp
 # End Source File
 # Begin Source File
 

@@ -156,7 +156,9 @@ BOOL CSystemTrayApp::InitInstance()
 	{
 		THREADPARAMS*	pThreadParams = new THREADPARAMS;
 		pThreadParams->pContinueFlag = &m_bContinuePolling;
-		pThreadParams->lParam = (LPARAM) m_pSystemSettings;
+		pThreadParams->lParam1 = (LPARAM) m_pSystemSettings;
+		pThreadParams->lParam2 = (LPARAM) m_pControlCamera;
+		pThreadParams->lParam3 = (LPARAM) m_pControlVCR;
 
 		m_pPollingThread = AfxBeginThread( PollingThreadFunc, pThreadParams ) ;
 	}
@@ -169,6 +171,9 @@ BOOL CSystemTrayApp::InitInstance()
 
 int CSystemTrayApp::ExitInstance() 
 {
+	// Before exit, save current settings
+	m_pSystemSettings->Save();
+	
 	// Hangup if in a call
 	if (m_pConf->InConnection())
 		m_pConf->HangUp();
@@ -182,10 +187,13 @@ int CSystemTrayApp::ExitInstance()
 
 	/////////////////////////////////////////////////////////////////////////
 	// we must terminate the polling thread before destroying the CSystemSettings object
-	HANDLE hThread = m_pPollingThread->m_hThread;
-	m_bContinuePolling = FALSE;
-	::WaitForSingleObject( hThread, INFINITE );
-	m_pPollingThread = NULL;
+	if( m_pPollingThread != NULL )
+	{
+		HANDLE hThread = m_pPollingThread->m_hThread;
+		m_bContinuePolling = FALSE;
+		::WaitForSingleObject( hThread, INFINITE );
+		m_pPollingThread = NULL;
+	}
 
 	if(m_pSystemSettings != NULL)
 	{
@@ -356,13 +364,15 @@ CControlVCR* CSystemTrayApp::GetControlVCR()
 // Polling Thread related
 UINT CSystemTrayApp::PollingThreadFunc(LPVOID pParam)
 {
-	char chMessage[256];
+	UINT uiCameraID;
 
 	if( pParam != NULL )
 	{
 		THREADPARAMS*		pThreadParams = (THREADPARAMS*) pParam;
 		BOOL*				pContinueFlag = pThreadParams->pContinueFlag;
-		CSystemSettings*	pSystemSettings = (CSystemSettings*) pThreadParams->lParam;
+		CSystemSettings*	pSystemSettings = (CSystemSettings*) pThreadParams->lParam1;
+		CControlCamera*		pControlCamera = (CControlCamera*) pThreadParams->lParam2;
+		CControlVCR*		pControlVCR = (CControlVCR*) pThreadParams->lParam3;
 
 		delete pThreadParams;	// deallocate previously allocated memory
 
@@ -372,14 +382,120 @@ UINT CSystemTrayApp::PollingThreadFunc(LPVOID pParam)
 			if( pSystemSettings != NULL )
 			{
 				CCOMParallelPort* pPP = pSystemSettings->GetParallelPort();
+				BOOL bWireless = pSystemSettings->IsWireless();
 				if( pPP->IsEnabled() )
 				{
-					BYTE bStatusPort = 0; 
-					bStatusPort = pPP->ReadStatusPort();
-					if( bStatusPort != NULL )
+					if( bWireless )		// wireless version
 					{
-						wsprintf(chMessage, "Status Port = %d", bStatusPort );
-						AfxMessageBox( chMessage );
+/*
+						BYTE bStatusPort = 0; 
+						BYTE bControlPort = 0;
+						BYTE bInterruptMask = 0x40; //we're looking for bit 6 of the status port (S6)
+						bStatusPort = pPP->ReadStatusPort();
+						bControlPort = pPP->ReadControlPort();
+						//if( (bStatusPort & bInterruptMask) == 0 ) // interrupt detected !
+						if( ((bStatusPort  & 0x40) != 0) ||
+							((bStatusPort  & 0x80) != 0) ||
+							((bStatusPort  & 0x20) != 0) ||
+							((bStatusPort  & 0x10) != 0) ||
+							((bControlPort & 0x01) != 0) ||
+							((bControlPort & 0x02) != 0) ||
+							((bControlPort & 0x04) != 0) ||
+							((bControlPort & 0x08) != 0)
+						  )
+						{
+							//m_criticalSection.Lock();
+							// first, find out which camera triggered the interrupt
+							// check S6 if camera1
+							if( (bStatusPort & 0x40) != 0 )
+								uiCameraID = 1;
+							// check S7 if camera2
+							if( (bStatusPort & 0x80) != 0 )
+								uiCameraID = 2;
+							// check S5 if camera3
+							if( (bStatusPort & 0x20) != 0 )
+								uiCameraID = 3;
+							// check S3 if camera4
+							if( (bStatusPort & 0x10) != 0 )
+								uiCameraID = 4;
+							// check C0 if camera8
+							if( (bControlPort & 0x01) != 0 )
+								uiCameraID = 8;
+							// check C1 if camera7
+							if( (bControlPort & 0x02) != 0 )
+								uiCameraID = 7;
+							// check C2 if camera6
+							if( (bControlPort & 0x04) != 0 )
+								uiCameraID = 6;
+							// check C3 if camera5
+							if( (bControlPort & 0x08) != 0 )
+								uiCameraID = 5;
+
+							// in order to issue commands, we must first go in LOCAL MODE
+							BOOL bOldMode = pSystemSettings->InLocalMode();
+							pSystemSettings->SetLocalMode( TRUE );
+							pControlCamera->Show( uiCameraID );
+							pControlVCR->Rec();
+							pSystemSettings->SetLocalMode( bOldMode );
+
+							// now clear the interrupt ( D7 in the wireless case ! )
+							BYTE bFlipFlopClearBit = 0x7F;
+							BYTE bFlipFlopSetBit = 0xFF;
+							BYTE bDataPort = pPP->ReadDataPort();
+
+							pPP->WriteDataPort( bDataPort & bFlipFlopClearBit );
+							pPP->WriteDataPort( bDataPort & bFlipFlopSetBit );
+
+						}
+*/
+					}
+					else				// wired version
+					{
+						BYTE bStatusPort = 0; 
+						BYTE bInterruptMask = 0x40; //we're looking for bit 6 of the status port (S6)
+						bStatusPort = pPP->ReadStatusPort();
+						//if( (bStatusPort & bInterruptMask) == 0 ) // interrupt detected !
+						if( ((bStatusPort & 0x08) != 0) ||
+							((bStatusPort & 0x10) != 0) ||
+							((bStatusPort & 0x20) != 0) ||
+							((bStatusPort & 0x80) != 0)
+							)
+						{
+							//m_criticalSection.Lock();
+							// first, find out which camera triggered the interrupt
+							// check S3 if camera1
+							if( (bStatusPort & 0x08) != 0 )
+								uiCameraID = 1;
+							// check S4 if camera2
+							if( (bStatusPort & 0x10) != 0 )
+								uiCameraID = 2;
+							// check S5 if camera3
+							if( (bStatusPort & 0x20) != 0 )
+								uiCameraID = 3;
+							// check S7 if camera4
+							if( (bStatusPort & 0x80) != 0 )
+								uiCameraID = 4;
+
+
+
+							// in order to issue commands, we must first go in LOCAL MODE
+							BOOL bOldMode = pSystemSettings->InLocalMode();
+							pSystemSettings->SetLocalMode( TRUE );
+							pControlCamera->Show( uiCameraID );
+							pControlVCR->Rec();
+							pControlVCR->Rec();
+							pSystemSettings->SetLocalMode( bOldMode );
+
+							// now clear the interrupt ( C0/ in the wired version ! )
+							BYTE bFlipFlopClearBit = 0xFE;
+							BYTE bFlipFlopSetBit = 0xFF;
+							BYTE bControlPort = pPP->ReadControlPort();
+
+							pPP->WriteControlPort( bControlPort & bFlipFlopClearBit );
+							pPP->WriteControlPort( bControlPort & bFlipFlopSetBit );
+	
+							//m_criticalSection.Unlock();
+						}	// end of wired version
 					}
 				}
 			}

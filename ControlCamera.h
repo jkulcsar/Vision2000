@@ -17,6 +17,7 @@ public:
 	virtual ~CControlCamera();
 
 private:
+	BOOL m_bWireless;
 	CCOMParallelPort *m_pPP;
 };
 

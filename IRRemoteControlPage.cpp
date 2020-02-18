@@ -36,6 +36,12 @@ CIRRemoteControlPage::~CIRRemoteControlPage()
 }
 
 
+CIRRemoteControl* CIRRemoteControlPage::GetIRRemoteControl()
+{
+	return m_pIRRemoteControl;
+}
+
+
 void CIRRemoteControlPage::DoDataExchange(CDataExchange* pDX)
 {
 	CPropertyPage::DoDataExchange(pDX);

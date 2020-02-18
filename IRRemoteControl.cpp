@@ -36,11 +36,16 @@ CIRRemoteControl::CIRRemoteControl()
 
 CIRRemoteControl::~CIRRemoteControl()
 {
+/*	do not destroy the CIRRemoteControl object here !
+	the pointer to this newly allocated object is stored in CArray, 
+	it will be destroyed there !
+
 	if( m_pbData != NULL )
 	{
 		delete m_pbData;
 		m_pbData = NULL;
 	}
+*/
 }
 
 
@@ -54,7 +59,19 @@ void CIRRemoteControl::Record()
 //	_disable();
 	m_criticalSection.Lock();
 
-	m_pPP->WriteDataPort(2);
+	// set D6 on 1
+	BYTE byteMask		= 0xBF;	// mask out D6
+	BYTE byteTemp		= 0x00;
+	BYTE byteDevice		= 0x40;
+	BYTE byteToWrite	= 0x00;
+
+	byteToWrite	= m_pPP->ReadDataPort();
+
+	byteTemp	= byteMask & byteToWrite;
+	byteToWrite = byteTemp | byteDevice;
+
+	m_pPP->WriteDataPort( byteToWrite );
+
 
 	while( (bStatus = m_pPP->ReadStatusPort() & 16) == 0);
 	while( (bStatus = m_pPP->ReadStatusPort() & 16) == 16);	// Wait for 1st data
@@ -71,7 +88,21 @@ void CIRRemoteControl::Record()
 		m_pbData[i] = d;
 	}
 
-	m_pPP->WriteDataPort(0);
+	// set D6 on 0
+	byteMask	= 0xBF;	// mask out D6
+	byteTemp	= 0x00;
+	byteDevice	= 0x00;
+	byteToWrite	= 0x00;
+
+	byteToWrite	= m_pPP->ReadDataPort();
+
+	byteTemp	= byteMask & byteToWrite;
+	byteToWrite = byteTemp | byteDevice;
+
+	m_pPP->WriteDataPort( byteToWrite );
+
+
+//	m_pPP->WriteDataPort(0);
 
 //	_enable();
 	m_criticalSection.Unlock();
@@ -100,9 +131,39 @@ void CIRRemoteControl::Playback()
 		for (j=0; j<8; j++)
 		{
 			if ( d & mask) 
-				m_pPP->WriteDataPort(1);
+			{
+				// set D5 on 1
+				BYTE byteMask		= 0xDF;	// mask out D5
+				BYTE byteTemp		= 0x00;
+				BYTE byteDevice		= 0x20;
+				BYTE byteToWrite	= 0x00;
+
+				byteToWrite	= m_pPP->ReadDataPort();
+
+				byteTemp	= byteMask & byteToWrite;
+				byteToWrite = byteTemp | byteDevice;
+	
+				m_pPP->WriteDataPort( byteToWrite );
+
+			//	m_pPP->WriteDataPort(1);
+			}
 			else 
-				m_pPP->WriteDataPort(0);
+			{
+				// set D5 on 0
+				BYTE byteMask		= 0xDF;	// mask out D5
+				BYTE byteTemp		= 0x00;
+				BYTE byteDevice		= 0x00;
+				BYTE byteToWrite	= 0x00;
+
+				byteToWrite	= m_pPP->ReadDataPort();
+
+				byteTemp	= byteMask & byteToWrite;
+				byteToWrite = byteTemp | byteDevice;
+	
+				m_pPP->WriteDataPort( byteToWrite );
+
+			//	m_pPP->WriteDataPort(0);
+			}
 			
 			mask=mask>>1;
 		}

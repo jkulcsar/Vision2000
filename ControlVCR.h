@@ -25,6 +25,7 @@ public:
 	void VCR();
 	void VPC();	// VCR Power Control
 private:
+	BOOL m_bWireless;
 	HCURSOR m_hOldCursor;
 	BOOL m_bPowerOn;
 	BOOL m_bURCInitialized;		// URC = Universal Remote Control

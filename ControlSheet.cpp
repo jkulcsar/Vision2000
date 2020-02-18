@@ -29,7 +29,7 @@ CControlSheet::CControlSheet(LPCTSTR pszCaption, CWnd* pParentWnd, UINT iSelectP
 	AddPage( &m_CameraControlPage );
 	AddPage( &m_VCRControlPage );
 	AddPage( &m_CallControlPage );
-	AddPage( &m_IRRemoteControlPage );
+	//AddPage( &m_IRRemoteControlPage );
 	AddPage( &m_SystemSettingsPage );
 
 	SetLogoText( _T("Vision2000"));

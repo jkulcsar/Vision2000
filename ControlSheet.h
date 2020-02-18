@@ -36,7 +36,7 @@ private:
 	CCameraControlPage		m_CameraControlPage;
 	CVCRControlPage			m_VCRControlPage;
 	CCallControlPage		m_CallControlPage;
-	CIRRemoteControlPage	m_IRRemoteControlPage;
+//	CIRRemoteControlPage	m_IRRemoteControlPage;
 	CSystemSettingsPage		m_SystemSettingsPage;
 
 	CButton m_ButtonClose;

@@ -26,6 +26,10 @@ public:
 	CBitmapButton	m_btnCamera2;
 	CBitmapButton	m_btnCamera3;
 	CBitmapButton	m_btnCamera4;
+	CBitmapButton	m_btnCamera5;
+	CBitmapButton	m_btnCamera6;
+	CBitmapButton	m_btnCamera7;
+	CBitmapButton	m_btnCamera8;
 	//}}AFX_DATA
 
 
@@ -45,12 +49,20 @@ protected:
 	afx_msg void OnCamera2();
 	afx_msg void OnCamera3();
 	afx_msg void OnCamera4();
+	afx_msg void OnCamera5();
+	afx_msg void OnCamera6();
+	afx_msg void OnCamera7();
+	afx_msg void OnCamera8();
 	//}}AFX_MSG
 	afx_msg LRESULT OnKickIdle(WPARAM, LPARAM);
 	afx_msg void OnUpdateCamera1( CCmdUI* pCmdUI );
 	afx_msg void OnUpdateCamera2( CCmdUI* pCmdUI );
 	afx_msg void OnUpdateCamera3( CCmdUI* pCmdUI );
 	afx_msg void OnUpdateCamera4( CCmdUI* pCmdUI );
+	afx_msg void OnUpdateCamera5( CCmdUI* pCmdUI );
+	afx_msg void OnUpdateCamera6( CCmdUI* pCmdUI );
+	afx_msg void OnUpdateCamera7( CCmdUI* pCmdUI );
+	afx_msg void OnUpdateCamera8( CCmdUI* pCmdUI );
 	DECLARE_MESSAGE_MAP()
 
 private:

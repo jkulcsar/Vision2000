@@ -47,7 +47,10 @@ protected:
 	afx_msg void OnRadioLPT2();
 	afx_msg void OnRadioLPT3();
 	afx_msg void OnLocalMode();
+	afx_msg void OnIRWizard();
 	//}}AFX_MSG
+	afx_msg LRESULT OnKickIdle(WPARAM, LPARAM);
+	afx_msg void OnUpdateLocalMode( CCmdUI* pCmdUI );
 	DECLARE_MESSAGE_MAP()
 
 private:

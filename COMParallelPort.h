@@ -24,9 +24,12 @@ class CCOMParallelPort
 
 	public:
 		BYTE ReadStatusPort();
-		void WriteDataPort(BYTE);
+		BYTE ReadControlPort();
 		BYTE ReadDataPort();
 		BOOL InitializeAt(unsigned short);
+
+		void WriteDataPort(BYTE);
+		void WriteControlPort(BYTE);
 
 		BOOL IsEnabled();
 		BOOL TestPort();
