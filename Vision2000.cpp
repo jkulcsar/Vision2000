@@ -89,7 +89,10 @@ END_MESSAGE_MAP()
 
 CSystemTrayApp::CSystemTrayApp()
 {
-	m_pConf = NULL;
+	m_pConf				=	NULL;
+	m_pSystemSettings	=	NULL;
+	m_pPollingThread	=	NULL;
+	m_bContinuePolling	=	TRUE;	// start polling as soon as the thread is started
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -148,6 +151,16 @@ BOOL CSystemTrayApp::InitInstance()
 		return -1;	// destroy window; can not continue
 	}
 
+	// after all the init sequence, set up the interrup polling thread
+	if( m_pPollingThread == NULL )	// create the polling thread
+	{
+		THREADPARAMS*	pThreadParams = new THREADPARAMS;
+		pThreadParams->pContinueFlag = &m_bContinuePolling;
+		pThreadParams->lParam = (LPARAM) m_pSystemSettings;
+
+		m_pPollingThread = AfxBeginThread( PollingThreadFunc, pThreadParams ) ;
+	}
+
 	return TRUE;
 }
 
@@ -166,6 +179,13 @@ int CSystemTrayApp::ExitInstance()
 		delete m_pConf;
 		m_pConf = NULL;
 	}
+
+	/////////////////////////////////////////////////////////////////////////
+	// we must terminate the polling thread before destroying the CSystemSettings object
+	HANDLE hThread = m_pPollingThread->m_hThread;
+	m_bContinuePolling = FALSE;
+	::WaitForSingleObject( hThread, INFINITE );
+	m_pPollingThread = NULL;
 
 	if(m_pSystemSettings != NULL)
 	{
@@ -329,4 +349,46 @@ CControlCamera* CSystemTrayApp::GetControlCamera()
 CControlVCR* CSystemTrayApp::GetControlVCR()
 {
 	return m_pControlVCR;
+}
+
+
+//////////////////////////////////////////////////////////////////////////////
+// Polling Thread related
+UINT CSystemTrayApp::PollingThreadFunc(LPVOID pParam)
+{
+	char chMessage[256];
+
+	if( pParam != NULL )
+	{
+		THREADPARAMS*		pThreadParams = (THREADPARAMS*) pParam;
+		BOOL*				pContinueFlag = pThreadParams->pContinueFlag;
+		CSystemSettings*	pSystemSettings = (CSystemSettings*) pThreadParams->lParam;
+
+		delete pThreadParams;	// deallocate previously allocated memory
+
+		while( *pContinueFlag )
+		{
+			// do the polling
+			if( pSystemSettings != NULL )
+			{
+				CCOMParallelPort* pPP = pSystemSettings->GetParallelPort();
+				if( pPP->IsEnabled() )
+				{
+					BYTE bStatusPort = 0; 
+					bStatusPort = pPP->ReadStatusPort();
+					if( bStatusPort != NULL )
+					{
+						wsprintf(chMessage, "Status Port = %d", bStatusPort );
+						AfxMessageBox( chMessage );
+					}
+				}
+			}
+
+			::Sleep( 1000 );
+		}
+	
+		return 0;
+	}
+	else
+		return 0; // checking...
 }
