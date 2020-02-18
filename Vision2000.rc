@@ -173,7 +173,7 @@ IDD_SETTINGS_PAGE DIALOG DISCARDABLE  0, 0, 232, 97
 STYLE DS_MODALFRAME | WS_CHILD
 FONT 8, "MS Sans Serif"
 BEGIN
-    GROUPBOX        " Parallel Port ",IDC_STATIC,6,6,68,82
+    GROUPBOX        " Parallel Port ",IDC_STATIC,6,4,68,84
     CONTROL         "LPT1",IDC_RADIO_LPT1,"Button",BS_AUTORADIOBUTTON | 
                     BS_PUSHLIKE,15,19,33,13
     CONTROL         "LPT2",IDC_RADIO_LPT2,"Button",BS_AUTORADIOBUTTON | 
@@ -181,6 +181,9 @@ BEGIN
     CONTROL         "LPT3",IDC_RADIO_LPT3,"Button",BS_AUTORADIOBUTTON | 
                     BS_PUSHLIKE,15,47,33,13
     PUSHBUTTON      "&Test Port ...",IDC_TEST_PORT,15,66,50,14
+    CONTROL         "&Local Mode",IDC_LOCAL_MODE,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,83,20,57,10
+    GROUPBOX        "General Settings",IDC_STATIC,76,4,69,84
 END
 
 
@@ -208,7 +211,7 @@ BEGIN
         BLOCK "040904b0"
         BEGIN
             VALUE "Comments", "\0"
-            VALUE "CompanyName", "\0"
+            VALUE "CompanyName", "sNET Technologies, Inc.\0"
             VALUE "FileDescription", "Vision2000 MFC Application\0"
             VALUE "FileVersion", "1, 0, 0, 1\0"
             VALUE "InternalName", "Vision2000\0"

@@ -90,6 +90,8 @@
 #define IDC_RADIO_LPT1                  1016
 #define IDC_RADIO_LPT2                  1017
 #define IDC_RADIO_LPT3                  1018
+#define IDC_CHECK1                      1019
+#define IDC_LOCAL_MODE                  1019
 #define IDC_BUTTON_CLOSE                0x02000
 #define ID_CALL_HANGUP                  32773
 #define ID_SEND_TEXT                    32775
@@ -106,7 +108,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        187
 #define _APS_NEXT_COMMAND_VALUE         32777
-#define _APS_NEXT_CONTROL_VALUE         1019
+#define _APS_NEXT_CONTROL_VALUE         1020
 #define _APS_NEXT_SYMED_VALUE           105
 #endif
 #endif

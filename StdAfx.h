@@ -57,6 +57,10 @@ extern CVision2000Module _Module;
 #include "CnfNtfy.h"
 #include "Conf.h"
 
+#include "ControlCamera.h"
+#include "ControlVCR.h"
+#include "SystemSettings.h"	
+
 
 /////////////////////////////////////////////////////////////////////////////
 // The one and only application GUID object {A5E48460-4F49-11d3-AFB1-004095D0EF62}

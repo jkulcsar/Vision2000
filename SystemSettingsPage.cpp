@@ -19,14 +19,12 @@ IMPLEMENT_DYNCREATE(CSystemSettingsPage, CPropertyPage)
 CSystemSettingsPage::CSystemSettingsPage() : CPropertyPage(CSystemSettingsPage::IDD, IDS_TAB_SETTINGS)
 {
 	//{{AFX_DATA_INIT(CSystemSettingsPage)
-		// NOTE: the ClassWizard will add member initialization here
 	//}}AFX_DATA_INIT
 
 	// init local copy of system settings object
 	CSystemTrayApp* pApp;
 	pApp = (CSystemTrayApp*) AfxGetApp();
 	m_pSystemSettings = pApp->GetSystemSettings();
-
 }
 
 CSystemSettingsPage::~CSystemSettingsPage()
@@ -38,6 +36,7 @@ void CSystemSettingsPage::DoDataExchange(CDataExchange* pDX)
 {
 	CPropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CSystemSettingsPage)
+	DDX_Control(pDX, IDC_LOCAL_MODE, m_ctlLocalMode);
 	DDX_Control(pDX, IDC_TEST_PORT, m_ctlTestPort);
 	DDX_Control(pDX, IDC_RADIO_LPT1, m_ctlRadioButtonLPT1);
 	DDX_Control(pDX, IDC_RADIO_LPT2, m_ctlRadioButtonLPT2);
@@ -52,6 +51,7 @@ BEGIN_MESSAGE_MAP(CSystemSettingsPage, CPropertyPage)
 	ON_BN_CLICKED(IDC_RADIO_LPT1, OnRadioLPT1)
 	ON_BN_CLICKED(IDC_RADIO_LPT2, OnRadioLPT2)
 	ON_BN_CLICKED(IDC_RADIO_LPT3, OnRadioLPT3)
+	ON_BN_CLICKED(IDC_LOCAL_MODE, OnLocalMode)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -72,6 +72,12 @@ BOOL CSystemSettingsPage::OnInitDialog()
 	CCOMParallelPort* pPP = m_pSystemSettings->GetParallelPort();
 
 	CPropertyPage::OnInitDialog();
+
+	if( m_pSystemSettings->InLocalMode() )
+		m_ctlLocalMode.SetCheck(TRUE);
+	else
+		m_ctlLocalMode.SetCheck(FALSE);
+
 	if( !strcmp( pPP->GetName(), "LPT1" ) && pPP->IsEnabled() )
 		CheckLPT1();
 
@@ -151,4 +157,12 @@ void CSystemSettingsPage::CheckLPT3()
 	m_ctlRadioButtonLPT1.SetCheck( BST_UNCHECKED );
 	m_ctlRadioButtonLPT2.SetCheck( BST_UNCHECKED );
 	m_ctlRadioButtonLPT3.SetCheck( BST_CHECKED );
+}
+
+void CSystemSettingsPage::OnLocalMode() 
+{
+	if( m_ctlLocalMode.GetCheck() )
+		m_pSystemSettings->SetLocalMode( TRUE );
+	else
+		m_pSystemSettings->SetLocalMode( FALSE );
 }

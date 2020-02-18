@@ -28,10 +28,15 @@ CVCRControlPage::CVCRControlPage() : CPropertyPage(CVCRControlPage::IDD, IDS_TAB
 	CSystemTrayApp* pApp;
 	pApp = (CSystemTrayApp*) AfxGetApp();
 	m_pConf = pApp->GetConference();
+	m_pSystemSettings = pApp->GetSystemSettings();
+	m_pControlVCR = pApp->GetControlVCR();
 }
 
 CVCRControlPage::~CVCRControlPage()
 {
+	m_pConf = NULL;
+	m_pSystemSettings = NULL;
+	m_pControlVCR = NULL;
 }
 
 void CVCRControlPage::DoDataExchange(CDataExchange* pDX)
@@ -77,50 +82,74 @@ END_MESSAGE_MAP()
 
 void CVCRControlPage::OnVcr() 
 {
-	if (m_pConf->InConnection()) 
-		m_pConf->SendText("VCR");
+	if( m_pSystemSettings->InLocalMode() )
+		m_pControlVCR->VCR();
+	else
+		if (m_pConf->InConnection()) 
+			m_pConf->SendText("VCR");
 }
 
 void CVCRControlPage::OnPower() 
 {
-	if (m_pConf->InConnection()) 
-		m_pConf->SendText("POWER");
+	if( m_pSystemSettings->InLocalMode() )
+		m_pControlVCR->Power();
+	else
+		if (m_pConf->InConnection()) 
+			m_pConf->SendText("POWER");
 }
 
 void CVCRControlPage::OnRew() 
 {
-	if (m_pConf->InConnection()) 
-		m_pConf->SendText("REW");
+	if( m_pSystemSettings->InLocalMode() )
+		m_pControlVCR->Rew();
+	else
+		if (m_pConf->InConnection()) 
+			m_pConf->SendText("REW");
 }
 
 void CVCRControlPage::OnPlay() 
 {
-	if (m_pConf->InConnection()) 
-		m_pConf->SendText("PLAY");
+	if( m_pSystemSettings->InLocalMode() )
+		m_pControlVCR->Play();
+	else
+		if (m_pConf->InConnection()) 
+			m_pConf->SendText("PLAY");
 }
 
 void CVCRControlPage::OnFf() 
 {
-	if (m_pConf->InConnection()) 
-		m_pConf->SendText("FF");
+	if( m_pSystemSettings->InLocalMode() )
+		m_pControlVCR->FF();
+	else
+		if (m_pConf->InConnection()) 
+			m_pConf->SendText("FF");
 }
 
 void CVCRControlPage::OnRec() 
 {
-	if (m_pConf->InConnection()) 
-		m_pConf->SendText("REC");
+	if( m_pSystemSettings->InLocalMode() )
+		m_pControlVCR->Rec();
+	else
+		if (m_pConf->InConnection()) 
+			m_pConf->SendText("REC");
 }
 
 void CVCRControlPage::OnStop() 
 {
-	if (m_pConf->InConnection()) 
-		m_pConf->SendText("STOP");
+	if( m_pSystemSettings->InLocalMode() )
+		m_pControlVCR->Stop();
+	else
+		if (m_pConf->InConnection()) 
+			m_pConf->SendText("STOP");
 }
 
 void CVCRControlPage::OnPause() 
 {
-	if (m_pConf->InConnection()) 
-		m_pConf->SendText("PAUSE");
+	if( m_pSystemSettings->InLocalMode() )
+		m_pControlVCR->Pause();
+	else
+		if (m_pConf->InConnection()) 
+			m_pConf->SendText("PAUSE");
 }
 
 
@@ -171,49 +200,73 @@ LRESULT CVCRControlPage::OnKickIdle(WPARAM, LPARAM)
 
 void CVCRControlPage::OnUpdatePlay( CCmdUI* pCmdUI )
 {
-	pCmdUI->Enable( m_pConf->InConnection() );
+	if( m_pSystemSettings->InLocalMode() )
+			pCmdUI->Enable( TRUE );
+	else
+		pCmdUI->Enable( m_pConf->InConnection() );
 }
 
 
 void CVCRControlPage::OnUpdateStop( CCmdUI* pCmdUI )
 {
-	pCmdUI->Enable( m_pConf->InConnection() );
+	if( m_pSystemSettings->InLocalMode() )
+			pCmdUI->Enable( TRUE );
+	else
+		pCmdUI->Enable( m_pConf->InConnection() );
 }
 
 
 void CVCRControlPage::OnUpdateFf( CCmdUI* pCmdUI )
 {
-	pCmdUI->Enable( m_pConf->InConnection() );
+	if( m_pSystemSettings->InLocalMode() )
+			pCmdUI->Enable( TRUE );
+	else
+		pCmdUI->Enable( m_pConf->InConnection() );
 }
 
 
 void CVCRControlPage::OnUpdateRew( CCmdUI* pCmdUI )
 {
-	pCmdUI->Enable( m_pConf->InConnection() );
+	if( m_pSystemSettings->InLocalMode() )
+			pCmdUI->Enable( TRUE );
+	else
+		pCmdUI->Enable( m_pConf->InConnection() );
 }
 
 
 void CVCRControlPage::OnUpdatePause( CCmdUI* pCmdUI )
 {
-	pCmdUI->Enable( m_pConf->InConnection() );
+	if( m_pSystemSettings->InLocalMode() )
+			pCmdUI->Enable( TRUE );
+	else
+		pCmdUI->Enable( m_pConf->InConnection() );
 }
 
 
 void CVCRControlPage::OnUpdateRec( CCmdUI* pCmdUI )
 {
-	pCmdUI->Enable( m_pConf->InConnection() );
+	if( m_pSystemSettings->InLocalMode() )
+			pCmdUI->Enable( TRUE );
+	else
+		pCmdUI->Enable( m_pConf->InConnection() );
 }
 
 
 void CVCRControlPage::OnUpdatePower( CCmdUI* pCmdUI )
 {
-	pCmdUI->Enable( m_pConf->InConnection() );
+	if( m_pSystemSettings->InLocalMode() )
+			pCmdUI->Enable( TRUE );
+	else
+		pCmdUI->Enable( m_pConf->InConnection() );
 }
 
 
 void CVCRControlPage::OnUpdateVcr( CCmdUI* pCmdUI )
 {
-	pCmdUI->Enable( m_pConf->InConnection() );
+	if( m_pSystemSettings->InLocalMode() )
+			pCmdUI->Enable( TRUE );
+	else
+		pCmdUI->Enable( m_pConf->InConnection() );
 }
 
 ///////////////////////////////////////////////////////////////////////////////

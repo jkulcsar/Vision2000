@@ -14,9 +14,6 @@ class CCallControlPage : public CPropertyPage
 {
 	DECLARE_DYNCREATE(CCallControlPage)
 
-private:
-	Conf* m_pConf;
-
 // Construction
 public:
 	CCallControlPage();
@@ -48,6 +45,9 @@ protected:
 	afx_msg void OnUpdateMachineName( CCmdUI* pCmdUI );
 	DECLARE_MESSAGE_MAP()
 
+private:
+	Conf* m_pConf;
+	CSystemSettings* m_pSystemSettings;
 };
 
 //{{AFX_INSERT_LOCATION}}

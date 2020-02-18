@@ -2,7 +2,7 @@
 
 
 /* File created by MIDL compiler version 5.01.0164 */
-/* at Mon Dec 27 00:50:28 1999
+/* at Tue Dec 28 00:01:14 1999
  */
 /* Compiler settings for F:\Work\Vision2000\Vision2000.idl:
     Oicf (OptLev=i2), W1, Zp8, env=Win32, ms_ext, c_ext

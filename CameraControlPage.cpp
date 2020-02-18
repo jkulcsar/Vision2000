@@ -24,15 +24,19 @@ CCameraControlPage::CCameraControlPage() : CPropertyPage(CCameraControlPage::IDD
 		// NOTE: the ClassWizard will add member initialization here
 	//}}AFX_DATA_INIT
 
-	// init local copy of conference object
+	// init local copy of conference object and system settings object
 	CSystemTrayApp* pApp;
 	pApp = (CSystemTrayApp*) AfxGetApp();
 	m_pConf = pApp->GetConference();
+	m_pSystemSettings = pApp->GetSystemSettings();
+	m_pControlCamera = pApp->GetControlCamera();
 }
 
 CCameraControlPage::~CCameraControlPage()
 {
 	m_pConf = NULL;
+	m_pSystemSettings = NULL;
+	m_pControlCamera = NULL;
 }
 
 void CCameraControlPage::DoDataExchange(CDataExchange* pDX)
@@ -87,31 +91,43 @@ BOOL CCameraControlPage::OnInitDialog()
 
 void CCameraControlPage::OnCamera1() 
 {
-	if (m_pConf->InConnection()) 
-		m_pConf->SendText("CAMERA1");
+	if( m_pSystemSettings->InLocalMode() )
+		m_pControlCamera->Show(1);
+	else
+		if (m_pConf->InConnection()) 
+			m_pConf->SendText("CAMERA1");
 }
 
 
 void CCameraControlPage::OnCamera2() 
 {
-	if (m_pConf->InConnection()) 
-		m_pConf->SendText("CAMERA2");
+	if( m_pSystemSettings->InLocalMode() )
+		m_pControlCamera->Show(2);
+	else
+		if (m_pConf->InConnection()) 
+			m_pConf->SendText("CAMERA2");
 }
 
 
 
 void CCameraControlPage::OnCamera3() 
 {
-	if (m_pConf->InConnection()) 
-		m_pConf->SendText("CAMERA3");
+	if( m_pSystemSettings->InLocalMode() )
+		m_pControlCamera->Show(3);
+	else
+		if (m_pConf->InConnection()) 
+			m_pConf->SendText("CAMERA3");
 }
 
 
 
 void CCameraControlPage::OnCamera4() 
 {
-	if (m_pConf->InConnection()) 
-		m_pConf->SendText("CAMERA4");
+	if( m_pSystemSettings->InLocalMode() )
+		m_pControlCamera->Show(4);
+	else
+		if (m_pConf->InConnection()) 
+			m_pConf->SendText("CAMERA4");
 }
 
 
@@ -128,25 +144,37 @@ LRESULT CCameraControlPage::OnKickIdle(WPARAM, LPARAM)
 
 void CCameraControlPage::OnUpdateCamera1( CCmdUI* pCmdUI )
 {
-	pCmdUI->Enable( m_pConf->InConnection() );
+	if( m_pSystemSettings->InLocalMode() )
+			pCmdUI->Enable( TRUE );
+	else
+		pCmdUI->Enable( m_pConf->InConnection() );
 }
 
 
 void CCameraControlPage::OnUpdateCamera2( CCmdUI* pCmdUI )
 {
-	pCmdUI->Enable( m_pConf->InConnection() );
+	if( m_pSystemSettings->InLocalMode() )
+			pCmdUI->Enable( TRUE );
+	else
+		pCmdUI->Enable( m_pConf->InConnection() );
 }
 
 
 void CCameraControlPage::OnUpdateCamera3( CCmdUI* pCmdUI )
 {
-	pCmdUI->Enable( m_pConf->InConnection() );
+	if( m_pSystemSettings->InLocalMode() )
+			pCmdUI->Enable( TRUE );
+	else
+		pCmdUI->Enable( m_pConf->InConnection() );
 }
 
 
 void CCameraControlPage::OnUpdateCamera4( CCmdUI* pCmdUI )
 {
-	pCmdUI->Enable( m_pConf->InConnection() );
+	if( m_pSystemSettings->InLocalMode() )
+			pCmdUI->Enable( TRUE );
+	else
+		pCmdUI->Enable( m_pConf->InConnection() );
 }
 
 ///////////////////////////////////////////////////////////////////////////////

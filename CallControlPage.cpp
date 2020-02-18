@@ -28,10 +28,13 @@ CCallControlPage::CCallControlPage() : CPropertyPage(CCallControlPage::IDD, IDS_
 	CSystemTrayApp* pApp;
 	pApp = (CSystemTrayApp*) AfxGetApp();
 	m_pConf = pApp->GetConference();
+	m_pSystemSettings = pApp->GetSystemSettings();
 }
 
 CCallControlPage::~CCallControlPage()
 {
+	m_pConf = NULL;
+	m_pSystemSettings = NULL;
 }
 
 void CCallControlPage::DoDataExchange(CDataExchange* pDX)
@@ -84,16 +87,25 @@ LRESULT CCallControlPage::OnKickIdle(WPARAM, LPARAM)
 
 void CCallControlPage::OnUpdateCallHangup( CCmdUI* pCmdUI )
 {
-	if( m_pConf->InConnection() )
-		pCmdUI->SetText( _T("&Hang up") );
+	if( m_pSystemSettings->InLocalMode() )
+			pCmdUI->Enable( FALSE );
 	else
-		pCmdUI->SetText( _T("&Call") );
+	{
+		pCmdUI->Enable( TRUE );
+		if( m_pConf->InConnection() )
+			pCmdUI->SetText( _T("&Hang up") );
+		else
+			pCmdUI->SetText( _T("&Call") );
+	}
 }
 
 
 void CCallControlPage::OnUpdateMachineName( CCmdUI* pCmdUI )
 {
-	pCmdUI->Enable( !m_pConf->InConnection() );
+	if( m_pSystemSettings->InLocalMode() )
+			pCmdUI->Enable( FALSE );
+	else
+		pCmdUI->Enable( !m_pConf->InConnection() );
 }
 
 ///////////////////////////////////////////////////////////////////////////////

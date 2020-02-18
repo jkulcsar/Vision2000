@@ -2,7 +2,7 @@
 
 
 /* File created by MIDL compiler version 5.01.0164 */
-/* at Mon Dec 27 00:50:36 1999
+/* at Tue Dec 28 00:01:22 1999
  */
 /* Compiler settings for F:\Work\Vision2000\Imsconf2.idl:
     Os (OptLev=s), W1, Zp8, env=Win32, ms_ext, c_ext

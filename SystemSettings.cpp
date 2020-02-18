@@ -20,6 +20,7 @@ CSystemSettings::CSystemSettings()
 {
 	// init the parallel port
 	m_pPP = new CCOMParallelPort();
+	m_bLocalMode = FALSE;
 }
 
 
@@ -52,4 +53,16 @@ BOOL CSystemSettings::Initialize()
 CCOMParallelPort* CSystemSettings::GetParallelPort()
 {
 	return m_pPP;
+}
+
+
+BOOL CSystemSettings::InLocalMode()
+{
+	return m_bLocalMode;
+}
+
+
+void CSystemSettings::SetLocalMode( BOOL bLocalMode )
+{
+	m_bLocalMode = bLocalMode;
 }

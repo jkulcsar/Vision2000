@@ -12,7 +12,9 @@
 class CSystemSettings  
 {
 public:
+	BOOL InLocalMode();
 	CCOMParallelPort* GetParallelPort();
+	void SetLocalMode( BOOL );
 	BOOL Initialize();
 	CSystemSettings();
 	virtual ~CSystemSettings();
@@ -20,6 +22,8 @@ public:
 protected:
 	CCOMParallelPort *m_pPP;
 
+private:
+	BOOL m_bLocalMode;
 };
 
 #endif // !defined(AFX_SYSTEMSETTINGS_H__8D1F7A82_B9A1_11D3_8F6A_004033D21526__INCLUDED_)

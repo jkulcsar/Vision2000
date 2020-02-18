@@ -22,6 +22,7 @@ public:
 // Dialog Data
 	//{{AFX_DATA(CSystemSettingsPage)
 	enum { IDD = IDD_SETTINGS_PAGE };
+	CButton	m_ctlLocalMode;
 	CButton	m_ctlTestPort;
 	CButton m_ctlRadioButtonLPT1;
 	CButton m_ctlRadioButtonLPT2;
@@ -45,6 +46,7 @@ protected:
 	afx_msg void OnRadioLPT1();
 	afx_msg void OnRadioLPT2();
 	afx_msg void OnRadioLPT3();
+	afx_msg void OnLocalMode();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 

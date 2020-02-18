@@ -16,7 +16,6 @@ class CVCRControlPage : public CPropertyPage
 
 // Construction
 public:
-	Conf* m_pConf;
 	CVCRControlPage();
 	~CVCRControlPage();
 
@@ -65,6 +64,11 @@ protected:
 	afx_msg void OnUpdateStop( CCmdUI* pCmdUI );
 	afx_msg void OnUpdatePause( CCmdUI* pCmdUI );
 	DECLARE_MESSAGE_MAP()
+private:
+	CSystemSettings* m_pSystemSettings;
+	Conf* m_pConf;	
+	CControlVCR* m_pControlVCR;
+
 };
 
 //{{AFX_INSERT_LOCATION}}

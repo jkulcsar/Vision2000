@@ -15,7 +15,6 @@
 #include "resource.h"       // main symbols
 #include "Vision2000_i.h"
 
-#include "SystemSettings.h"	
 #include "HyperLink.h"		// for the hyperlink feature in the About Box.
 
 /////////////////////////////////////////////////////////////////////////////
@@ -38,7 +37,13 @@ private:
 	// for details see the SystemSettings.h file
 	CSystemSettings* m_pSystemSettings;
 
+	CControlCamera* m_pControlCamera;
+	CControlVCR* m_pControlVCR;
+
+
 public:
+	CControlCamera*		GetControlCamera();
+	CControlVCR*		GetControlVCR();
 	Conf*				GetConference();
 	CSystemSettings*	GetSystemSettings();
 	CSystemTrayApp();

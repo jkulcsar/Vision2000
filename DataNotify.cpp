@@ -24,31 +24,18 @@ CDataNotify::CDataNotify()
 CDataNotify::CDataNotify(Conf *pConf)
 {
 	m_pConf = pConf;
-	
-	m_pControlCamera = new CControlCamera;
-//	if(m_pControlCamera != NULL )
-//		m_pControlCamera->InitializeAt(LPT1);
 
-	m_pControlVCR = new CControlVCR;
-//	if(m_pControlVCR != NULL )
-//		m_pControlVCR->InitializeAt(LPT1);
+	// init local copy of camera control object
+	CSystemTrayApp* pApp;
+	pApp = (CSystemTrayApp*) AfxGetApp();
+	m_pControlCamera	= pApp->GetControlCamera();
+	m_pControlVCR		= pApp->GetControlVCR();
 }
 
 
 
 CDataNotify::~CDataNotify()
 {
-	if( m_pControlVCR != NULL )
-	{
-		delete m_pControlVCR;
-		m_pControlVCR = NULL;
-	}
-
-	if( m_pControlCamera != NULL )
-	{
-		delete m_pControlCamera;
-		m_pControlCamera = NULL;
-	}
 }
 
 

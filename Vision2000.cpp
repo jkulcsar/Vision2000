@@ -135,6 +135,10 @@ BOOL CSystemTrayApp::InitInstance()
 	}
 
 
+	m_pControlCamera = new CControlCamera;
+	m_pControlVCR = new CControlVCR;
+
+
 	// Initialize the conference object
 	m_pConf=new Conf(m_pMainWnd->GetSafeHwnd());
 
@@ -167,6 +171,18 @@ int CSystemTrayApp::ExitInstance()
 	{
 		delete m_pSystemSettings;
 		m_pSystemSettings = NULL;
+	}
+
+	if( m_pControlVCR != NULL )
+	{
+		delete m_pControlVCR;
+		m_pControlVCR = NULL;
+	}
+
+	if( m_pControlCamera != NULL )
+	{
+		delete m_pControlCamera;
+		m_pControlCamera = NULL;
 	}
 
 
@@ -301,4 +317,16 @@ BOOL CSystemTrayApp::OnIdle(LONG lCount)
 		::SendMessage( m_pMainWnd->GetSafeHwnd(), WM_IDLEUPDATECMDUI, 0, 0 );
 	
 	return CWinApp::OnIdle(lCount);
+}
+
+
+CControlCamera* CSystemTrayApp::GetControlCamera()
+{
+	return m_pControlCamera;
+}
+
+
+CControlVCR* CSystemTrayApp::GetControlVCR()
+{
+	return m_pControlVCR;
 }
