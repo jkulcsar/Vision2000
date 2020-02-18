@@ -22,6 +22,7 @@ class CSystemSettings : public CObject
 	DECLARE_SERIAL(CSystemSettings)
 
 public:
+	short CreateInitX10CM();
 	CX10Settings* GetX10Settings();
 	CControlCM* GetX10ControlModule();
 	UINT GetMode();

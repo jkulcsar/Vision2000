@@ -2,9 +2,9 @@
 
 
 /* File created by MIDL compiler version 5.01.0164 */
-/* at Wed Nov 29 16:25:50 2000
+/* at Sat Dec 02 00:36:34 2000
  */
-/* Compiler settings for E:\Work\Vision2000\Imsconf2.idl:
+/* Compiler settings for E:\Vision2000\Imsconf2.idl:
     Os (OptLev=s), W1, Zp8, env=Win32, ms_ext, c_ext
     error checks: allocation ref bounds_check enum stub_data 
 */

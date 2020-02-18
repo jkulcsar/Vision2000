@@ -26,8 +26,8 @@ IMPLEMENT_SERIAL( CSystemSettings, CObject, 1 )
 CSystemSettings::CSystemSettings()
 {
 	// init the parallel port
-//	m_pPP			=	new CCOMParallelPort();
-	m_pPP			=	NULL;
+	m_pPP			=	new CCOMParallelPort();
+//	m_pPP			=	NULL;
 
 	// create X10 settings and ActiveX object
 	// init later, after settings loaded
@@ -121,28 +121,38 @@ BOOL CSystemSettings::Initialize()
 	}
 
 
-	// init parallel port
-	if( m_pPP != NULL )
+	if( (m_uiMode == MODE_WIRELESS) || (m_uiMode == MODE_WIRED) )
 	{
-		if( m_dwIndexLPT == 1 )
-			if( m_pPP->InitializeAt(LPT1) )
-				m_pPP->SetName("LPT1");
-			else
-				return FALSE;
+		// init parallel port
+		if( m_pPP != NULL )
+		{
+			if( m_dwIndexLPT == 1 )
+				if( m_pPP->InitializeAt(LPT1) )
+					m_pPP->SetName("LPT1");
+				else
+					return FALSE;
 
-		if( m_dwIndexLPT == 2 )
-			if( m_pPP->InitializeAt(LPT2) )
-				m_pPP->SetName("LPT2");
-			else
-				return FALSE;
+			if( m_dwIndexLPT == 2 )
+				if( m_pPP->InitializeAt(LPT2) )
+					m_pPP->SetName("LPT2");
+				else
+					return FALSE;
 
-		if( m_dwIndexLPT == 3 )
-			if( m_pPP->InitializeAt(LPT3) )
-				m_pPP->SetName("LPT3");
-			else
-				return FALSE;
+			if( m_dwIndexLPT == 3 )
+				if( m_pPP->InitializeAt(LPT3) )
+					m_pPP->SetName("LPT3");
+				else
+					return FALSE;
+		}
 	}
 
+
+
+	if( m_uiMode == MODE_X10 )
+	{
+		// try to init X10 mode and ActiveX control
+		CreateInitX10CM();
+	}
 
 	return TRUE;
 }
@@ -255,4 +265,55 @@ CControlCM* CSystemSettings::GetX10ControlModule()
 CX10Settings* CSystemSettings::GetX10Settings()
 {
 	return m_pX10Settings;
+}
+
+
+short CSystemSettings::CreateInitX10CM()
+{
+	short				shInitResult	= FALSE;
+	CSystemTrayApp*		pApp			= (CSystemTrayApp*) AfxGetApp();
+	CWnd*				pMainWnd		= pApp->m_pMainWnd;
+
+	// check if X10 CM not null and if it's not window
+	// if it's window, it was already created!
+	if( (m_pX10CM != NULL) && !::IsWindow( m_pX10CM->GetSafeHwnd() ) )
+	{
+		// create and init X10 control
+		RECT rect;
+		rect.top	=	100;
+		rect.bottom	=	0;
+		rect.left	=	0;
+		rect.right	=	100;
+
+		BOOL bResult;
+		if( m_pX10CM != NULL )
+		{
+			bResult = m_pX10CM->Create(	_T("X10"),
+										NULL,
+										rect,
+										pMainWnd,
+										6699
+									);
+			if( bResult == 0 )	// create failed
+			{
+				// destroy the object;
+				// no point to exist if create failed (ActiveX control not installed!)
+				if( m_pX10CM != NULL )
+				{
+					delete m_pX10CM;
+					m_pX10CM= NULL;
+				}
+			}
+		}
+
+		if( m_pX10CM != NULL )
+		{
+			m_pX10CM->SetComport( m_pX10Settings->GetCOMPort() );
+			short shInitResult = m_pX10CM->Init();
+			if( shInitResult != FALSE )
+				SetMode( MODE_NONE );	// init of X10 module failed!
+		}
+	}
+
+	return shInitResult;
 }

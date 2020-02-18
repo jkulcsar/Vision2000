@@ -261,56 +261,25 @@ void CSystemSettingsPage::OnWiredMode()
 
 void CSystemSettingsPage::OnX10Mode() 
 {
-	if( m_ctlX10Mode.GetCheck() )
-		m_pSystemSettings->SetMode( MODE_X10 );
-
 	CControlCM*		pCM				=	m_pSystemSettings->GetX10ControlModule();
 	CX10Settings*	pX10Settings	=	m_pSystemSettings->GetX10Settings();
+	short			shResult		=	FALSE;
+
+	if( m_ctlX10Mode.GetCheck() )
+		m_pSystemSettings->SetMode( MODE_X10 );
 
 	// check if X10 CM not null and if it's not window
 	// if it's window, it was already created!
 	if( (pCM != NULL) && !::IsWindow( pCM->GetSafeHwnd() ) )
-	{
-		// create and init X10 control
-		RECT rect;
-		rect.top	=	100;
-		rect.bottom	=	0;
-		rect.left	=	0;
-		rect.right	=	100;
+		shResult = m_pSystemSettings->CreateInitX10CM();
+	else
+		shResult = FALSE;	// it was already initialized; 
+							// negative logic; CreateInitX10CM returns FALSE on success!
 
-		BOOL bResult;
-		if( pCM != NULL )
-		{
-			bResult = pCM->Create(	_T("X10"),
-										NULL,
-										rect,
-										this,  // this should be the MAINFRAME!!!
-										6699
-									);
-			if( bResult == 0 )	// create failed
-			{
-				// destroy the object;
-				// no point to exist if create failed (ActiveX control not installed!)
-				if( pCM != NULL )
-				{
-					delete pCM;
-					pCM= NULL;
-				}
-			}
-		}
+	// check if init of X10 mode/control failed
+	if( shResult != FALSE )	
+		m_ctlX10Mode.SetCheck( BST_UNCHECKED );	
 
-		if( pCM != NULL )
-		{
-			pCM->SetComport( pX10Settings->GetCOMPort() );
-			short shInitResult = pCM->Init();
-			if( shInitResult != FALSE )
-			{
-				// init of X10 module failed!
-				m_pSystemSettings->SetMode( MODE_NONE );
-				m_ctlX10Mode.SetCheck( BST_UNCHECKED );
-			}
-		}
-	}
 }
 
 LRESULT CSystemSettingsPage::OnKickIdle(WPARAM, LPARAM)
