@@ -26,8 +26,8 @@ IMPLEMENT_SERIAL( CSystemSettings, CObject, 1 )
 CSystemSettings::CSystemSettings()
 {
 	// init the parallel port
-	m_pPP			=	new CCOMParallelPort();
-//	m_pPP			=	NULL;
+//	m_pPP			=	new CCOMParallelPort();
+	m_pPP			=	NULL;
 
 	// create X10 settings and ActiveX object
 	// init later, after settings loaded
@@ -75,7 +75,7 @@ void CSystemSettings::Serialize( CArchive& archive )
     if( archive.IsStoring() )
 	{
 		// do storing
-        archive << m_dwIndexLPT << m_bLocalMode;
+        archive << m_dwIndexLPT << m_uiMode << m_bLocalMode;
 		if( m_pX10Settings != NULL )
 			m_pX10Settings->Serialize( archive );
 		m_arrayMRU.Serialize( archive );
@@ -84,7 +84,7 @@ void CSystemSettings::Serialize( CArchive& archive )
     else
 	{
 		// do retrieve
-        archive >> m_dwIndexLPT >> m_bLocalMode;
+        archive >> m_dwIndexLPT >> m_uiMode >> m_bLocalMode;
 		if( m_pX10Settings != NULL )
 			m_pX10Settings->Serialize( archive );
 		m_arrayMRU.Serialize( archive );

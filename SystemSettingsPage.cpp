@@ -113,10 +113,28 @@ BOOL CSystemSettingsPage::OnInitDialog()
 
 	CCOMParallelPort* pPP = m_pSystemSettings->GetParallelPort();
 
+	// init the MODE_ radios
+
 	if( m_pSystemSettings->InLocalMode() )
 		m_ctlLocalMode.SetCheck(TRUE);
 	else
 		m_ctlLocalMode.SetCheck(FALSE);
+
+	if( m_pSystemSettings->GetMode() == MODE_WIRED )
+		m_ctlWiredMode.SetCheck(TRUE);
+	else
+		m_ctlWiredMode.SetCheck(FALSE);
+
+	if( m_pSystemSettings->GetMode() == MODE_WIRELESS )
+		m_ctlWirelessMode.SetCheck(TRUE);
+	else
+		m_ctlWirelessMode.SetCheck(FALSE);
+
+	if( m_pSystemSettings->GetMode() == MODE_X10 )
+		m_ctlX10Mode.SetCheck(TRUE);
+	else
+		m_ctlX10Mode.SetCheck(FALSE);
+
 
 	// check if we have a PP first
 	if( pPP != NULL )
@@ -229,21 +247,21 @@ void CSystemSettingsPage::OnLocalMode()
 
 void CSystemSettingsPage::OnWirelessMode() 
 {
-	if( m_ctlLocalMode.GetCheck() )
+	if( m_ctlWirelessMode.GetCheck() )
 		m_pSystemSettings->SetMode( MODE_WIRELESS );
 }
 
 
 void CSystemSettingsPage::OnWiredMode() 
 {
-	if( m_ctlLocalMode.GetCheck() )
+	if( m_ctlWiredMode.GetCheck() )
 		m_pSystemSettings->SetMode( MODE_WIRED );
 }
 
 
 void CSystemSettingsPage::OnX10Mode() 
 {
-	if( m_ctlLocalMode.GetCheck() )
+	if( m_ctlX10Mode.GetCheck() )
 		m_pSystemSettings->SetMode( MODE_X10 );
 
 	CControlCM*		pCM				=	m_pSystemSettings->GetX10ControlModule();
