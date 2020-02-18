@@ -186,7 +186,7 @@ HRESULT STDMETHODCALLTYPE CConfNotify::ChannelChanged(NM_CHANNEL_NOTIFY uNotify,
 
 HRESULT STDMETHODCALLTYPE CConfNotify::MemberChanged(NM_MEMBER_NOTIFY uNotify, INmMember * pMember)
 {
-	return S_OK;
+	return m_pConf->CheckDataChannel();
 }
 
 
@@ -216,7 +216,11 @@ HRESULT STDMETHODCALLTYPE CConfNotify::StateChanged(NM_CONFERENCE_STATE uState)
 	{
 		case NM_CONFERENCE_ACTIVE:
 			{
-				hr = m_pConf->CreateDataChannel();
+				// [janos]
+				// data channel can not be created here !
+				// see CConfNotify::MemberChanged() or the same function in 
+				// the NMCHAT sample for more info
+				//hr = m_pConf->CreateDataChannel();
 				break;
 			}
 

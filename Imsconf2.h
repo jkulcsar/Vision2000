@@ -2,9 +2,9 @@
 
 
 /* File created by MIDL compiler version 5.01.0164 */
-/* at Sat Aug 07 20:28:00 1999
+/* at Sun Sep 19 14:50:35 1999
  */
-/* Compiler settings for C:\Program Files\Microsoft Visual Studio\MyProjects\Vision2000\Imsconf2.idl:
+/* Compiler settings for E:\Work\Vision2000\Imsconf2.idl:
     Os (OptLev=s), W1, Zp8, env=Win32, ms_ext, c_ext
     error checks: allocation ref bounds_check enum stub_data 
 */
@@ -199,6 +199,12 @@ typedef interface IEnumNmSharableApp IEnumNmSharableApp;
 #endif 	/* __IEnumNmSharableApp_FWD_DEFINED__ */
 
 
+#ifndef __INmObject_FWD_DEFINED__
+#define __INmObject_FWD_DEFINED__
+typedef interface INmObject INmObject;
+#endif 	/* __INmObject_FWD_DEFINED__ */
+
+
 #ifndef __NmManager_FWD_DEFINED__
 #define __NmManager_FWD_DEFINED__
 
@@ -225,7 +231,7 @@ void __RPC_USER MIDL_user_free( void __RPC_FAR * );
 //+-------------------------------------------------------------------------
 //
 //  Microsoft Windows
-//  Copyright 1995-1997 Microsoft Corporation. All Rights Reserved.
+//  Copyright 1995-1999 Microsoft Corporation. All Rights Reserved.
 //
 //  File: imsconf2.h
 //
@@ -270,11 +276,13 @@ void __RPC_USER MIDL_user_free( void __RPC_FAR * );
 #define NMCH_SHARE                    0x00000010
 #define NMCH_FT                       0x00000020
 #define NMCH_ALL                      0x0000FFFF
+#define NMCH_SECURE                   0x00010000
 
 // Initialization options
 #define NM_INIT_NORMAL                0x00000000
 #define NM_INIT_CONTROL               0x00000001
 #define NM_INIT_NO_LAUNCH             0x00000002
+#define NM_INIT_BACKGROUND            0x00000005
 
 // INmChannelDataNotify.DataReceived dwFlags
 #define NM_DF_BROADCAST               0x00000010
@@ -299,6 +307,8 @@ void __RPC_USER MIDL_user_free( void __RPC_FAR * );
 #define NM_VER_UNKNOWN                0x00000000
 #define NM_VER_1                      0x00000001
 #define NM_VER_2                      0x00000002
+#define NM_VER_NetMeeting2_11         0x00000003
+#define NM_VER_NetMeeting3            0x00000004
 #define NM_VER_FUTURE                 0x0000000F
 
 
@@ -335,6 +345,8 @@ enum {
   NM_CALLERR_AUDIO              = NM_E(0x0109),
   NM_CALLERR_AUDIO_LOCAL        = NM_E(0x010A),
   NM_CALLERR_AUDIO_REMOTE       = NM_E(0x010B),
+  NM_CALLERR_ALREADY_CALLING    = NM_E(0x01FD),
+  NM_CALLERR_LOOPBACK           = NM_E(0x01FE),
   NM_CALLERR_UNKNOWN            = NM_E(0x01FF),
 
 // other error codes
@@ -343,6 +355,10 @@ enum {
   NM_E_CHANNEL_ALREADY_EXISTS   = NM_E(0x0201),
   NM_E_NO_T120_CONFERENCE       = NM_E(0x0202),
   NM_E_NOT_ACTIVE               = NM_E(0x0203),
+  NM_E_FILE_TOO_BIG             = NM_E(0x0204),
+  NM_E_USER_CANCELED_SETUP	   = NM_E(0x0205),
+  NM_E_ALREADY_RUNNING		   = NM_E(0x0206),
+  NM_E_SHARING_NOT_AVAILABLE	   = NM_E(0x0207),
 };
 
 typedef 
@@ -367,7 +383,9 @@ enum tagNmAddrType
 	NM_ADDR_MACHINENAME	= 2,
 	NM_ADDR_PSTN	= 3,
 	NM_ADDR_ULS	= 4,
-	NM_ADDR_H323_GATEWAY	= 5
+	NM_ADDR_H323_GATEWAY	= 5,
+	NM_ADDR_CALLTO	= 6,
+	NM_ADDR_T120_TRANSPORT	= 7
     }	NM_ADDR_TYPE;
 
 typedef 
@@ -466,13 +484,18 @@ enum tagNmSysProp
 	NM_SYSPROP_USER_COUNTRY	= 8,
 	NM_SYSPROP_USER_COMMENTS	= 9,
 	NM_SYSPROP_USER_CATEGORY	= 10,
+	NM_SYSPROP_USER_PHONENUM	= 11,
+	NM_SYSPROP_USER_LOCATION	= 12,
 	NM_SYSPROP_H323_GATEWAY	= 20,
 	NM_SYSPROP_H323_GATEWAY_ENABLE	= 21,
 	NM_SYSPROP_INSTALL_DIRECTORY	= 50,
 	NM_SYSPROP_APP_NAME	= 51,
-	NM_SYSPROP_ICA_ENABLE	= 60,
+	NM_SYSPROP_LOGGED_ON	= 69,
 	NM_SYSPROP_IS_RUNNING	= 100,
-	NM_SYSPROP_IN_CONFERENCE	= 101
+	NM_SYSPROP_IN_CONFERENCE	= 101,
+	NM_SYSPROP_BUILD_VER	= 200,
+	NM_SYSPROP_DISABLE_H323	= 201,
+	NM_SYSPROP_DISABLE_INITIAL_ILS_LOGON	= 202
     }	NM_SYSPROP;
 
 typedef 
@@ -497,9 +520,21 @@ enum tagConfn
 	CONFN_NM_STOPPED	= 0x601
     }	CONFN;
 
+typedef 
+enum NM_APPID
+    {	NM_APPID_CHAT	= 1,
+	NM_APPID_WHITEBOARD	= 2,
+	NM_APPID_T126_WHITEBOARD	= 3,
+	NM_APPID_FILE_TRANSFER	= 4,
+	NM_APPID_APPSHARING	= 5
+    }	NM_APPID;
 
-////////////////////////////////////////////////////////////////////////////
-//  Interface Definitions
+typedef 
+enum NM_VUI
+    {	NM_VUI_CHECK	= 0,
+	NM_VUI_SHOW	= 1
+    }	NM_VUI;
+
 
 
 extern RPC_IF_HANDLE __MIDL_itf_Imsconf2_0000_v0_0_c_ifspec;
@@ -522,7 +557,7 @@ EXTERN_C const IID IID_INmManager;
     INmManager : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE Initialize( 
+        virtual /* [local] */ HRESULT STDMETHODCALLTYPE Initialize( 
             /* [out][in] */ ULONG __RPC_FAR *puOptions,
             /* [out][in] */ ULONG __RPC_FAR *puchCaps) = 0;
         
@@ -532,7 +567,7 @@ EXTERN_C const IID IID_INmManager;
         virtual HRESULT STDMETHODCALLTYPE EnumConference( 
             /* [out] */ IEnumNmConference __RPC_FAR *__RPC_FAR *ppEnum) = 0;
         
-        virtual HRESULT STDMETHODCALLTYPE CreateConference( 
+        virtual /* [local] */ HRESULT STDMETHODCALLTYPE CreateConference( 
             /* [out] */ INmConference __RPC_FAR *__RPC_FAR *ppConference,
             /* [in] */ BSTR bstrName,
             /* [in] */ BSTR bstrPassword,
@@ -541,14 +576,14 @@ EXTERN_C const IID IID_INmManager;
         virtual HRESULT STDMETHODCALLTYPE EnumCall( 
             /* [out] */ IEnumNmCall __RPC_FAR *__RPC_FAR *ppEnum) = 0;
         
-        virtual HRESULT STDMETHODCALLTYPE CreateCall( 
+        virtual /* [local] */ HRESULT STDMETHODCALLTYPE CreateCall( 
             /* [out] */ INmCall __RPC_FAR *__RPC_FAR *ppCall,
             /* [in] */ NM_CALL_TYPE callType,
             /* [in] */ NM_ADDR_TYPE addrType,
             /* [in] */ BSTR bstrAddr,
             /* [in] */ INmConference __RPC_FAR *pConference) = 0;
         
-        virtual HRESULT STDMETHODCALLTYPE CallConference( 
+        virtual /* [local] */ HRESULT STDMETHODCALLTYPE CallConference( 
             /* [out] */ INmCall __RPC_FAR *__RPC_FAR *ppCall,
             /* [in] */ NM_CALL_TYPE callType,
             /* [in] */ NM_ADDR_TYPE addrType,
@@ -575,7 +610,7 @@ EXTERN_C const IID IID_INmManager;
         ULONG ( STDMETHODCALLTYPE __RPC_FAR *Release )( 
             INmManager __RPC_FAR * This);
         
-        HRESULT ( STDMETHODCALLTYPE __RPC_FAR *Initialize )( 
+        /* [local] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *Initialize )( 
             INmManager __RPC_FAR * This,
             /* [out][in] */ ULONG __RPC_FAR *puOptions,
             /* [out][in] */ ULONG __RPC_FAR *puchCaps);
@@ -588,7 +623,7 @@ EXTERN_C const IID IID_INmManager;
             INmManager __RPC_FAR * This,
             /* [out] */ IEnumNmConference __RPC_FAR *__RPC_FAR *ppEnum);
         
-        HRESULT ( STDMETHODCALLTYPE __RPC_FAR *CreateConference )( 
+        /* [local] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *CreateConference )( 
             INmManager __RPC_FAR * This,
             /* [out] */ INmConference __RPC_FAR *__RPC_FAR *ppConference,
             /* [in] */ BSTR bstrName,
@@ -599,7 +634,7 @@ EXTERN_C const IID IID_INmManager;
             INmManager __RPC_FAR * This,
             /* [out] */ IEnumNmCall __RPC_FAR *__RPC_FAR *ppEnum);
         
-        HRESULT ( STDMETHODCALLTYPE __RPC_FAR *CreateCall )( 
+        /* [local] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *CreateCall )( 
             INmManager __RPC_FAR * This,
             /* [out] */ INmCall __RPC_FAR *__RPC_FAR *ppCall,
             /* [in] */ NM_CALL_TYPE callType,
@@ -607,7 +642,7 @@ EXTERN_C const IID IID_INmManager;
             /* [in] */ BSTR bstrAddr,
             /* [in] */ INmConference __RPC_FAR *pConference);
         
-        HRESULT ( STDMETHODCALLTYPE __RPC_FAR *CallConference )( 
+        /* [local] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *CallConference )( 
             INmManager __RPC_FAR * This,
             /* [out] */ INmCall __RPC_FAR *__RPC_FAR *ppCall,
             /* [in] */ NM_CALL_TYPE callType,
@@ -667,13 +702,13 @@ EXTERN_C const IID IID_INmManager;
 
 
 
-HRESULT STDMETHODCALLTYPE INmManager_Initialize_Proxy( 
+/* [call_as] */ HRESULT STDMETHODCALLTYPE INmManager_RemoteInitialize_Proxy( 
     INmManager __RPC_FAR * This,
     /* [out][in] */ ULONG __RPC_FAR *puOptions,
     /* [out][in] */ ULONG __RPC_FAR *puchCaps);
 
 
-void __RPC_STUB INmManager_Initialize_Stub(
+void __RPC_STUB INmManager_RemoteInitialize_Stub(
     IRpcStubBuffer *This,
     IRpcChannelBuffer *_pRpcChannelBuffer,
     PRPC_MESSAGE _pRpcMessage,
@@ -704,7 +739,7 @@ void __RPC_STUB INmManager_EnumConference_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE INmManager_CreateConference_Proxy( 
+/* [call_as] */ HRESULT STDMETHODCALLTYPE INmManager_RemoteCreateConference_Proxy( 
     INmManager __RPC_FAR * This,
     /* [out] */ INmConference __RPC_FAR *__RPC_FAR *ppConference,
     /* [in] */ BSTR bstrName,
@@ -712,7 +747,7 @@ HRESULT STDMETHODCALLTYPE INmManager_CreateConference_Proxy(
     /* [in] */ ULONG uchCaps);
 
 
-void __RPC_STUB INmManager_CreateConference_Stub(
+void __RPC_STUB INmManager_RemoteCreateConference_Stub(
     IRpcStubBuffer *This,
     IRpcChannelBuffer *_pRpcChannelBuffer,
     PRPC_MESSAGE _pRpcMessage,
@@ -731,7 +766,7 @@ void __RPC_STUB INmManager_EnumCall_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE INmManager_CreateCall_Proxy( 
+/* [call_as] */ HRESULT STDMETHODCALLTYPE INmManager_RemoteCreateCall_Proxy( 
     INmManager __RPC_FAR * This,
     /* [out] */ INmCall __RPC_FAR *__RPC_FAR *ppCall,
     /* [in] */ NM_CALL_TYPE callType,
@@ -740,14 +775,14 @@ HRESULT STDMETHODCALLTYPE INmManager_CreateCall_Proxy(
     /* [in] */ INmConference __RPC_FAR *pConference);
 
 
-void __RPC_STUB INmManager_CreateCall_Stub(
+void __RPC_STUB INmManager_RemoteCreateCall_Stub(
     IRpcStubBuffer *This,
     IRpcChannelBuffer *_pRpcChannelBuffer,
     PRPC_MESSAGE _pRpcMessage,
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE INmManager_CallConference_Proxy( 
+/* [call_as] */ HRESULT STDMETHODCALLTYPE INmManager_RemoteCallConference_Proxy( 
     INmManager __RPC_FAR * This,
     /* [out] */ INmCall __RPC_FAR *__RPC_FAR *ppCall,
     /* [in] */ NM_CALL_TYPE callType,
@@ -757,7 +792,7 @@ HRESULT STDMETHODCALLTYPE INmManager_CallConference_Proxy(
     /* [in] */ BSTR bstrPassword);
 
 
-void __RPC_STUB INmManager_CallConference_Stub(
+void __RPC_STUB INmManager_RemoteCallConference_Stub(
     IRpcStubBuffer *This,
     IRpcChannelBuffer *_pRpcChannelBuffer,
     PRPC_MESSAGE _pRpcMessage,
@@ -908,7 +943,7 @@ void __RPC_STUB INmManagerNotify_CallCreated_Stub(
 #define __INmSysInfo_INTERFACE_DEFINED__
 
 /* interface INmSysInfo */
-/* [unique][uuid][object] */ 
+/* [unique][uuid][object][local] */ 
 
 typedef /* [unique] */ INmSysInfo __RPC_FAR *LPNMSYSINFO;
 
@@ -1239,7 +1274,7 @@ EXTERN_C const IID IID_INmCall;
         
         virtual HRESULT STDMETHODCALLTYPE GetUserData( 
             /* [in] */ REFGUID rguid,
-            /* [out] */ BYTE __RPC_FAR *__RPC_FAR *ppb,
+            /* [size_is][size_is][out] */ BYTE __RPC_FAR *__RPC_FAR *ppb,
             /* [out] */ ULONG __RPC_FAR *pcb) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE GetConference( 
@@ -1289,7 +1324,7 @@ EXTERN_C const IID IID_INmCall;
         HRESULT ( STDMETHODCALLTYPE __RPC_FAR *GetUserData )( 
             INmCall __RPC_FAR * This,
             /* [in] */ REFGUID rguid,
-            /* [out] */ BYTE __RPC_FAR *__RPC_FAR *ppb,
+            /* [size_is][size_is][out] */ BYTE __RPC_FAR *__RPC_FAR *ppb,
             /* [out] */ ULONG __RPC_FAR *pcb);
         
         HRESULT ( STDMETHODCALLTYPE __RPC_FAR *GetConference )( 
@@ -1413,7 +1448,7 @@ void __RPC_STUB INmCall_GetAddr_Stub(
 HRESULT STDMETHODCALLTYPE INmCall_GetUserData_Proxy( 
     INmCall __RPC_FAR * This,
     /* [in] */ REFGUID rguid,
-    /* [out] */ BYTE __RPC_FAR *__RPC_FAR *ppb,
+    /* [size_is][size_is][out] */ BYTE __RPC_FAR *__RPC_FAR *ppb,
     /* [out] */ ULONG __RPC_FAR *pcb);
 
 
@@ -1673,7 +1708,7 @@ EXTERN_C const IID IID_INmConference;
         virtual HRESULT STDMETHODCALLTYPE GetChannelCount( 
             /* [out] */ ULONG __RPC_FAR *puCount) = 0;
         
-        virtual HRESULT STDMETHODCALLTYPE CreateDataChannel( 
+        virtual /* [local] */ HRESULT STDMETHODCALLTYPE CreateDataChannel( 
             /* [out] */ INmChannelData __RPC_FAR *__RPC_FAR *ppChannel,
             /* [in] */ REFGUID rguid) = 0;
         
@@ -1742,7 +1777,7 @@ EXTERN_C const IID IID_INmConference;
             INmConference __RPC_FAR * This,
             /* [out] */ ULONG __RPC_FAR *puCount);
         
-        HRESULT ( STDMETHODCALLTYPE __RPC_FAR *CreateDataChannel )( 
+        /* [local] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *CreateDataChannel )( 
             INmConference __RPC_FAR * This,
             /* [out] */ INmChannelData __RPC_FAR *__RPC_FAR *ppChannel,
             /* [in] */ REFGUID rguid);
@@ -1941,13 +1976,13 @@ void __RPC_STUB INmConference_GetChannelCount_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE INmConference_CreateDataChannel_Proxy( 
+/* [call_as] */ HRESULT STDMETHODCALLTYPE INmConference_RemoteCreateDataChannel_Proxy( 
     INmConference __RPC_FAR * This,
     /* [out] */ INmChannelData __RPC_FAR *__RPC_FAR *ppChannel,
     /* [in] */ REFGUID rguid);
 
 
-void __RPC_STUB INmConference_CreateDataChannel_Stub(
+void __RPC_STUB INmConference_RemoteCreateDataChannel_Stub(
     IRpcStubBuffer *This,
     IRpcChannelBuffer *_pRpcChannelBuffer,
     PRPC_MESSAGE _pRpcMessage,
@@ -2196,7 +2231,7 @@ EXTERN_C const IID IID_INmMember;
         
         virtual HRESULT STDMETHODCALLTYPE GetUserData( 
             /* [in] */ REFGUID rguid,
-            /* [out] */ BYTE __RPC_FAR *__RPC_FAR *ppb,
+            /* [size_is][size_is][out] */ BYTE __RPC_FAR *__RPC_FAR *ppb,
             /* [out] */ ULONG __RPC_FAR *pcb) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE GetConference( 
@@ -2253,7 +2288,7 @@ EXTERN_C const IID IID_INmMember;
         HRESULT ( STDMETHODCALLTYPE __RPC_FAR *GetUserData )( 
             INmMember __RPC_FAR * This,
             /* [in] */ REFGUID rguid,
-            /* [out] */ BYTE __RPC_FAR *__RPC_FAR *ppb,
+            /* [size_is][size_is][out] */ BYTE __RPC_FAR *__RPC_FAR *ppb,
             /* [out] */ ULONG __RPC_FAR *pcb);
         
         HRESULT ( STDMETHODCALLTYPE __RPC_FAR *GetConference )( 
@@ -2392,7 +2427,7 @@ void __RPC_STUB INmMember_GetAddr_Stub(
 HRESULT STDMETHODCALLTYPE INmMember_GetUserData_Proxy( 
     INmMember __RPC_FAR * This,
     /* [in] */ REFGUID rguid,
-    /* [out] */ BYTE __RPC_FAR *__RPC_FAR *ppb,
+    /* [size_is][size_is][out] */ BYTE __RPC_FAR *__RPC_FAR *ppb,
     /* [out] */ ULONG __RPC_FAR *pcb);
 
 
@@ -3853,13 +3888,13 @@ EXTERN_C const IID IID_INmChannelFt;
     INmChannelFt : public INmChannel
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE SendFile( 
+        virtual /* [local] */ HRESULT STDMETHODCALLTYPE SendFile( 
             /* [out] */ INmFt __RPC_FAR *__RPC_FAR *ppFt,
             /* [in] */ INmMember __RPC_FAR *pMember,
             /* [in] */ BSTR bstrFile,
             /* [in] */ ULONG uOptions) = 0;
         
-        virtual HRESULT STDMETHODCALLTYPE SetReceiveFileDir( 
+        virtual /* [local] */ HRESULT STDMETHODCALLTYPE SetReceiveFileDir( 
             /* [in] */ BSTR bstrDir) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE GetReceiveFileDir( 
@@ -3915,14 +3950,14 @@ EXTERN_C const IID IID_INmChannelFt;
             INmChannelFt __RPC_FAR * This,
             /* [out] */ ULONG __RPC_FAR *puCount);
         
-        HRESULT ( STDMETHODCALLTYPE __RPC_FAR *SendFile )( 
+        /* [local] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *SendFile )( 
             INmChannelFt __RPC_FAR * This,
             /* [out] */ INmFt __RPC_FAR *__RPC_FAR *ppFt,
             /* [in] */ INmMember __RPC_FAR *pMember,
             /* [in] */ BSTR bstrFile,
             /* [in] */ ULONG uOptions);
         
-        HRESULT ( STDMETHODCALLTYPE __RPC_FAR *SetReceiveFileDir )( 
+        /* [local] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *SetReceiveFileDir )( 
             INmChannelFt __RPC_FAR * This,
             /* [in] */ BSTR bstrDir);
         
@@ -3994,7 +4029,7 @@ EXTERN_C const IID IID_INmChannelFt;
 
 
 
-HRESULT STDMETHODCALLTYPE INmChannelFt_SendFile_Proxy( 
+/* [call_as] */ HRESULT STDMETHODCALLTYPE INmChannelFt_RemoteSendFile_Proxy( 
     INmChannelFt __RPC_FAR * This,
     /* [out] */ INmFt __RPC_FAR *__RPC_FAR *ppFt,
     /* [in] */ INmMember __RPC_FAR *pMember,
@@ -4002,19 +4037,19 @@ HRESULT STDMETHODCALLTYPE INmChannelFt_SendFile_Proxy(
     /* [in] */ ULONG uOptions);
 
 
-void __RPC_STUB INmChannelFt_SendFile_Stub(
+void __RPC_STUB INmChannelFt_RemoteSendFile_Stub(
     IRpcStubBuffer *This,
     IRpcChannelBuffer *_pRpcChannelBuffer,
     PRPC_MESSAGE _pRpcMessage,
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE INmChannelFt_SetReceiveFileDir_Proxy( 
+/* [call_as] */ HRESULT STDMETHODCALLTYPE INmChannelFt_RemoteSetReceiveFileDir_Proxy( 
     INmChannelFt __RPC_FAR * This,
     /* [in] */ BSTR bstrDir);
 
 
-void __RPC_STUB INmChannelFt_SetReceiveFileDir_Stub(
+void __RPC_STUB INmChannelFt_RemoteSetReceiveFileDir_Stub(
     IRpcStubBuffer *This,
     IRpcChannelBuffer *_pRpcChannelBuffer,
     PRPC_MESSAGE _pRpcMessage,
@@ -4843,7 +4878,7 @@ EXTERN_C const IID IID_IEnumNmConference;
     IEnumNmConference : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE Next( 
+        virtual /* [local] */ HRESULT STDMETHODCALLTYPE Next( 
             /* [in] */ ULONG cConference,
             /* [out] */ INmConference __RPC_FAR *__RPC_FAR *rgpConference,
             /* [out] */ ULONG __RPC_FAR *pcFetched) = 0;
@@ -4875,7 +4910,7 @@ EXTERN_C const IID IID_IEnumNmConference;
         ULONG ( STDMETHODCALLTYPE __RPC_FAR *Release )( 
             IEnumNmConference __RPC_FAR * This);
         
-        HRESULT ( STDMETHODCALLTYPE __RPC_FAR *Next )( 
+        /* [local] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *Next )( 
             IEnumNmConference __RPC_FAR * This,
             /* [in] */ ULONG cConference,
             /* [out] */ INmConference __RPC_FAR *__RPC_FAR *rgpConference,
@@ -4934,14 +4969,16 @@ EXTERN_C const IID IID_IEnumNmConference;
 
 
 
-HRESULT STDMETHODCALLTYPE IEnumNmConference_Next_Proxy( 
+/* [call_as] */ HRESULT STDMETHODCALLTYPE IEnumNmConference_RemoteNext_Proxy( 
     IEnumNmConference __RPC_FAR * This,
     /* [in] */ ULONG cConference,
-    /* [out] */ INmConference __RPC_FAR *__RPC_FAR *rgpConference,
-    /* [out] */ ULONG __RPC_FAR *pcFetched);
+    /* [length_is][size_is][out] */ INmConference __RPC_FAR *__RPC_FAR *rgpConference,
+    /* [out] */ ULONG __RPC_FAR *pcFetched,
+    /* [out] */ ULONG __RPC_FAR *pcItems,
+    /* [in] */ BOOL bGetNumberRemaining);
 
 
-void __RPC_STUB IEnumNmConference_Next_Stub(
+void __RPC_STUB IEnumNmConference_RemoteNext_Stub(
     IRpcStubBuffer *This,
     IRpcChannelBuffer *_pRpcChannelBuffer,
     PRPC_MESSAGE _pRpcMessage,
@@ -5002,7 +5039,7 @@ EXTERN_C const IID IID_IEnumNmMember;
     IEnumNmMember : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE Next( 
+        virtual /* [local] */ HRESULT STDMETHODCALLTYPE Next( 
             /* [in] */ ULONG cMember,
             /* [out] */ INmMember __RPC_FAR *__RPC_FAR *rgpMember,
             /* [out] */ ULONG __RPC_FAR *pcFetched) = 0;
@@ -5034,7 +5071,7 @@ EXTERN_C const IID IID_IEnumNmMember;
         ULONG ( STDMETHODCALLTYPE __RPC_FAR *Release )( 
             IEnumNmMember __RPC_FAR * This);
         
-        HRESULT ( STDMETHODCALLTYPE __RPC_FAR *Next )( 
+        /* [local] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *Next )( 
             IEnumNmMember __RPC_FAR * This,
             /* [in] */ ULONG cMember,
             /* [out] */ INmMember __RPC_FAR *__RPC_FAR *rgpMember,
@@ -5093,14 +5130,16 @@ EXTERN_C const IID IID_IEnumNmMember;
 
 
 
-HRESULT STDMETHODCALLTYPE IEnumNmMember_Next_Proxy( 
+/* [call_as] */ HRESULT STDMETHODCALLTYPE IEnumNmMember_RemoteNext_Proxy( 
     IEnumNmMember __RPC_FAR * This,
     /* [in] */ ULONG cMember,
-    /* [out] */ INmMember __RPC_FAR *__RPC_FAR *rgpMember,
-    /* [out] */ ULONG __RPC_FAR *pcFetched);
+    /* [length_is][size_is][out] */ INmMember __RPC_FAR *__RPC_FAR *rgpMember,
+    /* [out] */ ULONG __RPC_FAR *pcFetched,
+    /* [out] */ ULONG __RPC_FAR *pcItems,
+    /* [in] */ BOOL bGetNumberRemaining);
 
 
-void __RPC_STUB IEnumNmMember_Next_Stub(
+void __RPC_STUB IEnumNmMember_RemoteNext_Stub(
     IRpcStubBuffer *This,
     IRpcChannelBuffer *_pRpcChannelBuffer,
     PRPC_MESSAGE _pRpcMessage,
@@ -5161,9 +5200,9 @@ EXTERN_C const IID IID_IEnumNmChannel;
     IEnumNmChannel : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE Next( 
+        virtual /* [local] */ HRESULT STDMETHODCALLTYPE Next( 
             /* [in] */ ULONG cChannel,
-            /* [out] */ INmChannel __RPC_FAR *__RPC_FAR *rgpChannel,
+            /* [length_is][size_is][out] */ INmChannel __RPC_FAR *__RPC_FAR *rgpChannel,
             /* [out] */ ULONG __RPC_FAR *pcFetched) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE Skip( 
@@ -5193,10 +5232,10 @@ EXTERN_C const IID IID_IEnumNmChannel;
         ULONG ( STDMETHODCALLTYPE __RPC_FAR *Release )( 
             IEnumNmChannel __RPC_FAR * This);
         
-        HRESULT ( STDMETHODCALLTYPE __RPC_FAR *Next )( 
+        /* [local] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *Next )( 
             IEnumNmChannel __RPC_FAR * This,
             /* [in] */ ULONG cChannel,
-            /* [out] */ INmChannel __RPC_FAR *__RPC_FAR *rgpChannel,
+            /* [length_is][size_is][out] */ INmChannel __RPC_FAR *__RPC_FAR *rgpChannel,
             /* [out] */ ULONG __RPC_FAR *pcFetched);
         
         HRESULT ( STDMETHODCALLTYPE __RPC_FAR *Skip )( 
@@ -5252,14 +5291,16 @@ EXTERN_C const IID IID_IEnumNmChannel;
 
 
 
-HRESULT STDMETHODCALLTYPE IEnumNmChannel_Next_Proxy( 
+/* [call_as] */ HRESULT STDMETHODCALLTYPE IEnumNmChannel_RemoteNext_Proxy( 
     IEnumNmChannel __RPC_FAR * This,
     /* [in] */ ULONG cChannel,
-    /* [out] */ INmChannel __RPC_FAR *__RPC_FAR *rgpChannel,
-    /* [out] */ ULONG __RPC_FAR *pcFetched);
+    /* [length_is][size_is][out] */ INmChannel __RPC_FAR *__RPC_FAR *rgpChannel,
+    /* [out] */ ULONG __RPC_FAR *pcFetched,
+    /* [out] */ ULONG __RPC_FAR *pcItems,
+    /* [in] */ BOOL bGetNumberRemaining);
 
 
-void __RPC_STUB IEnumNmChannel_Next_Stub(
+void __RPC_STUB IEnumNmChannel_RemoteNext_Stub(
     IRpcStubBuffer *This,
     IRpcChannelBuffer *_pRpcChannelBuffer,
     PRPC_MESSAGE _pRpcMessage,
@@ -5320,7 +5361,7 @@ EXTERN_C const IID IID_IEnumNmCall;
     IEnumNmCall : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE Next( 
+        virtual /* [local] */ HRESULT STDMETHODCALLTYPE Next( 
             /* [in] */ ULONG cCall,
             /* [out] */ INmCall __RPC_FAR *__RPC_FAR *rgpCall,
             /* [out] */ ULONG __RPC_FAR *pcFetched) = 0;
@@ -5352,7 +5393,7 @@ EXTERN_C const IID IID_IEnumNmCall;
         ULONG ( STDMETHODCALLTYPE __RPC_FAR *Release )( 
             IEnumNmCall __RPC_FAR * This);
         
-        HRESULT ( STDMETHODCALLTYPE __RPC_FAR *Next )( 
+        /* [local] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *Next )( 
             IEnumNmCall __RPC_FAR * This,
             /* [in] */ ULONG cCall,
             /* [out] */ INmCall __RPC_FAR *__RPC_FAR *rgpCall,
@@ -5411,14 +5452,16 @@ EXTERN_C const IID IID_IEnumNmCall;
 
 
 
-HRESULT STDMETHODCALLTYPE IEnumNmCall_Next_Proxy( 
+/* [call_as] */ HRESULT STDMETHODCALLTYPE IEnumNmCall_RemoteNext_Proxy( 
     IEnumNmCall __RPC_FAR * This,
     /* [in] */ ULONG cCall,
-    /* [out] */ INmCall __RPC_FAR *__RPC_FAR *rgpCall,
-    /* [out] */ ULONG __RPC_FAR *pcFetched);
+    /* [length_is][size_is][out] */ INmCall __RPC_FAR *__RPC_FAR *rgpCall,
+    /* [out] */ ULONG __RPC_FAR *pcFetched,
+    /* [out] */ ULONG __RPC_FAR *pcItems,
+    /* [in] */ BOOL bGetNumberRemaining);
 
 
-void __RPC_STUB IEnumNmCall_Next_Stub(
+void __RPC_STUB IEnumNmCall_RemoteNext_Stub(
     IRpcStubBuffer *This,
     IRpcChannelBuffer *_pRpcChannelBuffer,
     PRPC_MESSAGE _pRpcMessage,
@@ -5479,7 +5522,7 @@ EXTERN_C const IID IID_IEnumNmSharableApp;
     IEnumNmSharableApp : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE Next( 
+        virtual /* [local] */ HRESULT STDMETHODCALLTYPE Next( 
             /* [in] */ ULONG cApp,
             /* [out] */ INmSharableApp __RPC_FAR *__RPC_FAR *rgpApp,
             /* [out] */ ULONG __RPC_FAR *pcFetched) = 0;
@@ -5511,7 +5554,7 @@ EXTERN_C const IID IID_IEnumNmSharableApp;
         ULONG ( STDMETHODCALLTYPE __RPC_FAR *Release )( 
             IEnumNmSharableApp __RPC_FAR * This);
         
-        HRESULT ( STDMETHODCALLTYPE __RPC_FAR *Next )( 
+        /* [local] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *Next )( 
             IEnumNmSharableApp __RPC_FAR * This,
             /* [in] */ ULONG cApp,
             /* [out] */ INmSharableApp __RPC_FAR *__RPC_FAR *rgpApp,
@@ -5570,14 +5613,16 @@ EXTERN_C const IID IID_IEnumNmSharableApp;
 
 
 
-HRESULT STDMETHODCALLTYPE IEnumNmSharableApp_Next_Proxy( 
+/* [call_as] */ HRESULT STDMETHODCALLTYPE IEnumNmSharableApp_RemoteNext_Proxy( 
     IEnumNmSharableApp __RPC_FAR * This,
     /* [in] */ ULONG cApp,
-    /* [out] */ INmSharableApp __RPC_FAR *__RPC_FAR *rgpApp,
-    /* [out] */ ULONG __RPC_FAR *pcFetched);
+    /* [length_is][size_is][out] */ INmSharableApp __RPC_FAR *__RPC_FAR *rgpApp,
+    /* [out] */ ULONG __RPC_FAR *pcFetched,
+    /* [out] */ ULONG __RPC_FAR *pcItems,
+    /* [in] */ BOOL bGetNumberRemaining);
 
 
-void __RPC_STUB IEnumNmSharableApp_Next_Stub(
+void __RPC_STUB IEnumNmSharableApp_RemoteNext_Stub(
     IRpcStubBuffer *This,
     IRpcChannelBuffer *_pRpcChannelBuffer,
     PRPC_MESSAGE _pRpcMessage,
@@ -5623,6 +5668,146 @@ void __RPC_STUB IEnumNmSharableApp_Clone_Stub(
 #endif 	/* __IEnumNmSharableApp_INTERFACE_DEFINED__ */
 
 
+#ifndef __INmObject_INTERFACE_DEFINED__
+#define __INmObject_INTERFACE_DEFINED__
+
+/* interface INmObject */
+/* [unique][uuid][object] */ 
+
+
+EXTERN_C const IID IID_INmObject;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+    
+    MIDL_INTERFACE("068B0780-718C-11d0-8B1A-00A0C91BC90E")
+    INmObject : public IUnknown
+    {
+    public:
+        virtual HRESULT STDMETHODCALLTYPE CallDialog( 
+            /* [in] */ long hwnd,
+            /* [in] */ int options) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE ShowLocal( 
+            /* [in] */ NM_APPID appId) = 0;
+        
+        virtual /* [local] */ HRESULT STDMETHODCALLTYPE VerifyUserInfo( 
+            /* [in] */ long hwnd,
+            /* [in] */ NM_VUI options) = 0;
+        
+    };
+    
+#else 	/* C style interface */
+
+    typedef struct INmObjectVtbl
+    {
+        BEGIN_INTERFACE
+        
+        HRESULT ( STDMETHODCALLTYPE __RPC_FAR *QueryInterface )( 
+            INmObject __RPC_FAR * This,
+            /* [in] */ REFIID riid,
+            /* [iid_is][out] */ void __RPC_FAR *__RPC_FAR *ppvObject);
+        
+        ULONG ( STDMETHODCALLTYPE __RPC_FAR *AddRef )( 
+            INmObject __RPC_FAR * This);
+        
+        ULONG ( STDMETHODCALLTYPE __RPC_FAR *Release )( 
+            INmObject __RPC_FAR * This);
+        
+        HRESULT ( STDMETHODCALLTYPE __RPC_FAR *CallDialog )( 
+            INmObject __RPC_FAR * This,
+            /* [in] */ long hwnd,
+            /* [in] */ int options);
+        
+        HRESULT ( STDMETHODCALLTYPE __RPC_FAR *ShowLocal )( 
+            INmObject __RPC_FAR * This,
+            /* [in] */ NM_APPID appId);
+        
+        /* [local] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *VerifyUserInfo )( 
+            INmObject __RPC_FAR * This,
+            /* [in] */ long hwnd,
+            /* [in] */ NM_VUI options);
+        
+        END_INTERFACE
+    } INmObjectVtbl;
+
+    interface INmObject
+    {
+        CONST_VTBL struct INmObjectVtbl __RPC_FAR *lpVtbl;
+    };
+
+    
+
+#ifdef COBJMACROS
+
+
+#define INmObject_QueryInterface(This,riid,ppvObject)	\
+    (This)->lpVtbl -> QueryInterface(This,riid,ppvObject)
+
+#define INmObject_AddRef(This)	\
+    (This)->lpVtbl -> AddRef(This)
+
+#define INmObject_Release(This)	\
+    (This)->lpVtbl -> Release(This)
+
+
+#define INmObject_CallDialog(This,hwnd,options)	\
+    (This)->lpVtbl -> CallDialog(This,hwnd,options)
+
+#define INmObject_ShowLocal(This,appId)	\
+    (This)->lpVtbl -> ShowLocal(This,appId)
+
+#define INmObject_VerifyUserInfo(This,hwnd,options)	\
+    (This)->lpVtbl -> VerifyUserInfo(This,hwnd,options)
+
+#endif /* COBJMACROS */
+
+
+#endif 	/* C style interface */
+
+
+
+HRESULT STDMETHODCALLTYPE INmObject_CallDialog_Proxy( 
+    INmObject __RPC_FAR * This,
+    /* [in] */ long hwnd,
+    /* [in] */ int options);
+
+
+void __RPC_STUB INmObject_CallDialog_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+HRESULT STDMETHODCALLTYPE INmObject_ShowLocal_Proxy( 
+    INmObject __RPC_FAR * This,
+    /* [in] */ NM_APPID appId);
+
+
+void __RPC_STUB INmObject_ShowLocal_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+/* [call_as] */ HRESULT STDMETHODCALLTYPE INmObject_RemoteVerifyUserInfo_Proxy( 
+    INmObject __RPC_FAR * This,
+    /* [in] */ long hwnd,
+    /* [in] */ NM_VUI options);
+
+
+void __RPC_STUB INmObject_RemoteVerifyUserInfo_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+
+#endif 	/* __INmObject_INTERFACE_DEFINED__ */
+
+
 
 #ifndef __NmManager_LIBRARY_DEFINED__
 #define __NmManager_LIBRARY_DEFINED__
@@ -5653,6 +5838,191 @@ unsigned long             __RPC_USER  HWND_UserSize(     unsigned long __RPC_FAR
 unsigned char __RPC_FAR * __RPC_USER  HWND_UserMarshal(  unsigned long __RPC_FAR *, unsigned char __RPC_FAR *, HWND __RPC_FAR * ); 
 unsigned char __RPC_FAR * __RPC_USER  HWND_UserUnmarshal(unsigned long __RPC_FAR *, unsigned char __RPC_FAR *, HWND __RPC_FAR * ); 
 void                      __RPC_USER  HWND_UserFree(     unsigned long __RPC_FAR *, HWND __RPC_FAR * ); 
+
+/* [local] */ HRESULT STDMETHODCALLTYPE INmManager_Initialize_Proxy( 
+    INmManager __RPC_FAR * This,
+    /* [out][in] */ ULONG __RPC_FAR *puOptions,
+    /* [out][in] */ ULONG __RPC_FAR *puchCaps);
+
+
+/* [call_as] */ HRESULT STDMETHODCALLTYPE INmManager_Initialize_Stub( 
+    INmManager __RPC_FAR * This,
+    /* [out][in] */ ULONG __RPC_FAR *puOptions,
+    /* [out][in] */ ULONG __RPC_FAR *puchCaps);
+
+/* [local] */ HRESULT STDMETHODCALLTYPE INmManager_CreateConference_Proxy( 
+    INmManager __RPC_FAR * This,
+    /* [out] */ INmConference __RPC_FAR *__RPC_FAR *ppConference,
+    /* [in] */ BSTR bstrName,
+    /* [in] */ BSTR bstrPassword,
+    /* [in] */ ULONG uchCaps);
+
+
+/* [call_as] */ HRESULT STDMETHODCALLTYPE INmManager_CreateConference_Stub( 
+    INmManager __RPC_FAR * This,
+    /* [out] */ INmConference __RPC_FAR *__RPC_FAR *ppConference,
+    /* [in] */ BSTR bstrName,
+    /* [in] */ BSTR bstrPassword,
+    /* [in] */ ULONG uchCaps);
+
+/* [local] */ HRESULT STDMETHODCALLTYPE INmManager_CreateCall_Proxy( 
+    INmManager __RPC_FAR * This,
+    /* [out] */ INmCall __RPC_FAR *__RPC_FAR *ppCall,
+    /* [in] */ NM_CALL_TYPE callType,
+    /* [in] */ NM_ADDR_TYPE addrType,
+    /* [in] */ BSTR bstrAddr,
+    /* [in] */ INmConference __RPC_FAR *pConference);
+
+
+/* [call_as] */ HRESULT STDMETHODCALLTYPE INmManager_CreateCall_Stub( 
+    INmManager __RPC_FAR * This,
+    /* [out] */ INmCall __RPC_FAR *__RPC_FAR *ppCall,
+    /* [in] */ NM_CALL_TYPE callType,
+    /* [in] */ NM_ADDR_TYPE addrType,
+    /* [in] */ BSTR bstrAddr,
+    /* [in] */ INmConference __RPC_FAR *pConference);
+
+/* [local] */ HRESULT STDMETHODCALLTYPE INmManager_CallConference_Proxy( 
+    INmManager __RPC_FAR * This,
+    /* [out] */ INmCall __RPC_FAR *__RPC_FAR *ppCall,
+    /* [in] */ NM_CALL_TYPE callType,
+    /* [in] */ NM_ADDR_TYPE addrType,
+    /* [in] */ BSTR bstrAddr,
+    /* [in] */ BSTR bstrName,
+    /* [in] */ BSTR bstrPassword);
+
+
+/* [call_as] */ HRESULT STDMETHODCALLTYPE INmManager_CallConference_Stub( 
+    INmManager __RPC_FAR * This,
+    /* [out] */ INmCall __RPC_FAR *__RPC_FAR *ppCall,
+    /* [in] */ NM_CALL_TYPE callType,
+    /* [in] */ NM_ADDR_TYPE addrType,
+    /* [in] */ BSTR bstrAddr,
+    /* [in] */ BSTR bstrName,
+    /* [in] */ BSTR bstrPassword);
+
+/* [local] */ HRESULT STDMETHODCALLTYPE INmConference_CreateDataChannel_Proxy( 
+    INmConference __RPC_FAR * This,
+    /* [out] */ INmChannelData __RPC_FAR *__RPC_FAR *ppChannel,
+    /* [in] */ REFGUID rguid);
+
+
+/* [call_as] */ HRESULT STDMETHODCALLTYPE INmConference_CreateDataChannel_Stub( 
+    INmConference __RPC_FAR * This,
+    /* [out] */ INmChannelData __RPC_FAR *__RPC_FAR *ppChannel,
+    /* [in] */ REFGUID rguid);
+
+/* [local] */ HRESULT STDMETHODCALLTYPE INmChannelFt_SendFile_Proxy( 
+    INmChannelFt __RPC_FAR * This,
+    /* [out] */ INmFt __RPC_FAR *__RPC_FAR *ppFt,
+    /* [in] */ INmMember __RPC_FAR *pMember,
+    /* [in] */ BSTR bstrFile,
+    /* [in] */ ULONG uOptions);
+
+
+/* [call_as] */ HRESULT STDMETHODCALLTYPE INmChannelFt_SendFile_Stub( 
+    INmChannelFt __RPC_FAR * This,
+    /* [out] */ INmFt __RPC_FAR *__RPC_FAR *ppFt,
+    /* [in] */ INmMember __RPC_FAR *pMember,
+    /* [in] */ BSTR bstrFile,
+    /* [in] */ ULONG uOptions);
+
+/* [local] */ HRESULT STDMETHODCALLTYPE INmChannelFt_SetReceiveFileDir_Proxy( 
+    INmChannelFt __RPC_FAR * This,
+    /* [in] */ BSTR bstrDir);
+
+
+/* [call_as] */ HRESULT STDMETHODCALLTYPE INmChannelFt_SetReceiveFileDir_Stub( 
+    INmChannelFt __RPC_FAR * This,
+    /* [in] */ BSTR bstrDir);
+
+/* [local] */ HRESULT STDMETHODCALLTYPE IEnumNmConference_Next_Proxy( 
+    IEnumNmConference __RPC_FAR * This,
+    /* [in] */ ULONG cConference,
+    /* [out] */ INmConference __RPC_FAR *__RPC_FAR *rgpConference,
+    /* [out] */ ULONG __RPC_FAR *pcFetched);
+
+
+/* [call_as] */ HRESULT STDMETHODCALLTYPE IEnumNmConference_Next_Stub( 
+    IEnumNmConference __RPC_FAR * This,
+    /* [in] */ ULONG cConference,
+    /* [length_is][size_is][out] */ INmConference __RPC_FAR *__RPC_FAR *rgpConference,
+    /* [out] */ ULONG __RPC_FAR *pcFetched,
+    /* [out] */ ULONG __RPC_FAR *pcItems,
+    /* [in] */ BOOL bGetNumberRemaining);
+
+/* [local] */ HRESULT STDMETHODCALLTYPE IEnumNmMember_Next_Proxy( 
+    IEnumNmMember __RPC_FAR * This,
+    /* [in] */ ULONG cMember,
+    /* [out] */ INmMember __RPC_FAR *__RPC_FAR *rgpMember,
+    /* [out] */ ULONG __RPC_FAR *pcFetched);
+
+
+/* [call_as] */ HRESULT STDMETHODCALLTYPE IEnumNmMember_Next_Stub( 
+    IEnumNmMember __RPC_FAR * This,
+    /* [in] */ ULONG cMember,
+    /* [length_is][size_is][out] */ INmMember __RPC_FAR *__RPC_FAR *rgpMember,
+    /* [out] */ ULONG __RPC_FAR *pcFetched,
+    /* [out] */ ULONG __RPC_FAR *pcItems,
+    /* [in] */ BOOL bGetNumberRemaining);
+
+/* [local] */ HRESULT STDMETHODCALLTYPE IEnumNmChannel_Next_Proxy( 
+    IEnumNmChannel __RPC_FAR * This,
+    /* [in] */ ULONG cChannel,
+    /* [length_is][size_is][out] */ INmChannel __RPC_FAR *__RPC_FAR *rgpChannel,
+    /* [out] */ ULONG __RPC_FAR *pcFetched);
+
+
+/* [call_as] */ HRESULT STDMETHODCALLTYPE IEnumNmChannel_Next_Stub( 
+    IEnumNmChannel __RPC_FAR * This,
+    /* [in] */ ULONG cChannel,
+    /* [length_is][size_is][out] */ INmChannel __RPC_FAR *__RPC_FAR *rgpChannel,
+    /* [out] */ ULONG __RPC_FAR *pcFetched,
+    /* [out] */ ULONG __RPC_FAR *pcItems,
+    /* [in] */ BOOL bGetNumberRemaining);
+
+/* [local] */ HRESULT STDMETHODCALLTYPE IEnumNmCall_Next_Proxy( 
+    IEnumNmCall __RPC_FAR * This,
+    /* [in] */ ULONG cCall,
+    /* [out] */ INmCall __RPC_FAR *__RPC_FAR *rgpCall,
+    /* [out] */ ULONG __RPC_FAR *pcFetched);
+
+
+/* [call_as] */ HRESULT STDMETHODCALLTYPE IEnumNmCall_Next_Stub( 
+    IEnumNmCall __RPC_FAR * This,
+    /* [in] */ ULONG cCall,
+    /* [length_is][size_is][out] */ INmCall __RPC_FAR *__RPC_FAR *rgpCall,
+    /* [out] */ ULONG __RPC_FAR *pcFetched,
+    /* [out] */ ULONG __RPC_FAR *pcItems,
+    /* [in] */ BOOL bGetNumberRemaining);
+
+/* [local] */ HRESULT STDMETHODCALLTYPE IEnumNmSharableApp_Next_Proxy( 
+    IEnumNmSharableApp __RPC_FAR * This,
+    /* [in] */ ULONG cApp,
+    /* [out] */ INmSharableApp __RPC_FAR *__RPC_FAR *rgpApp,
+    /* [out] */ ULONG __RPC_FAR *pcFetched);
+
+
+/* [call_as] */ HRESULT STDMETHODCALLTYPE IEnumNmSharableApp_Next_Stub( 
+    IEnumNmSharableApp __RPC_FAR * This,
+    /* [in] */ ULONG cApp,
+    /* [length_is][size_is][out] */ INmSharableApp __RPC_FAR *__RPC_FAR *rgpApp,
+    /* [out] */ ULONG __RPC_FAR *pcFetched,
+    /* [out] */ ULONG __RPC_FAR *pcItems,
+    /* [in] */ BOOL bGetNumberRemaining);
+
+/* [local] */ HRESULT STDMETHODCALLTYPE INmObject_VerifyUserInfo_Proxy( 
+    INmObject __RPC_FAR * This,
+    /* [in] */ long hwnd,
+    /* [in] */ NM_VUI options);
+
+
+/* [call_as] */ HRESULT STDMETHODCALLTYPE INmObject_VerifyUserInfo_Stub( 
+    INmObject __RPC_FAR * This,
+    /* [in] */ long hwnd,
+    /* [in] */ NM_VUI options);
+
+
 
 /* end of Additional Prototypes */
 

@@ -109,26 +109,30 @@ HRESULT STDMETHODCALLTYPE CCallNotify::StateChanged(NM_CALL_STATE uState)
 {
 	switch (uState)
 	{
-	case NM_CALL_RING:
-	
-		// Query whether to accept the call and notify my Conf object the result.
-		if (MessageBox(NULL,"Accept incoming call?","Call",MB_YESNO|MB_TASKMODAL)== IDYES)
+		case NM_CALL_RING:
+		
+			// This is a good place to query whether to accept the call and notify my Conf object the result.
+			// if (MessageBox(NULL,"Accept incoming call?","Call",MB_YESNO|MB_TASKMODAL)== IDYES)
+			//			m_pConf->AcceptCall();
+			//		else
+			//			m_pConf->RejectCall();
+
+			// for our app it's good enough to accept it directly or based on an automated conditioning
+
 			m_pConf->AcceptCall();
-		else
-			m_pConf->RejectCall();
-		break;
+			break;
 
-	case NM_CALL_REJECTED:
+		case NM_CALL_REJECTED:
 
-		// Notify my Conf object that the call was rejected.
-		m_pConf->CallRejected();
-		break;
+			// Notify my Conf object that the call was rejected.
+			m_pConf->CallRejected();
+			break;
 
-	case NM_CALL_ACCEPTED:
+		case NM_CALL_ACCEPTED:
 
-		// Notify my Conf object that the call was accepted
-		m_pConf->CallAccepted();
-		break;
+			// Notify my Conf object that the call was accepted
+			m_pConf->CallAccepted();
+			break;
 	}
 	return S_OK;
 }

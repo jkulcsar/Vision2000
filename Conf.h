@@ -46,6 +46,7 @@ private:
 	BOOL m_bInConnection;
 
 public:
+	HRESULT CheckDataChannel();
 	Conf(HWND);
 	virtual ~Conf();
 

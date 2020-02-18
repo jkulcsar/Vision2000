@@ -15,51 +15,6 @@ static char THIS_FILE[] = __FILE__;
 #define MAX_SZ 256
 
 /////////////////////////////////////////////////////////////////////////////
-// CAboutDlg dialog used for App About
-
-class CAboutDlg : public CDialog
-{
-public:
-	CAboutDlg();
-
-// Dialog Data
-	//{{AFX_DATA(CAboutDlg)
-	enum { IDD = IDD_ABOUTBOX };
-	//}}AFX_DATA
-
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CAboutDlg)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	//{{AFX_MSG(CAboutDlg)
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
-};
-
-CAboutDlg::CAboutDlg() : CDialog(CAboutDlg::IDD)
-{
-	//{{AFX_DATA_INIT(CAboutDlg)
-	//}}AFX_DATA_INIT
-}
-
-void CAboutDlg::DoDataExchange(CDataExchange* pDX)
-{
-	CDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CAboutDlg)
-	//}}AFX_DATA_MAP
-}
-
-BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
-	//{{AFX_MSG_MAP(CAboutDlg)
-		// No message handlers
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
-
-/////////////////////////////////////////////////////////////////////////////
 // CVision2000Dlg dialog
 
 CVision2000Dlg::CVision2000Dlg(CWnd* pParent /*=NULL*/)
@@ -91,7 +46,6 @@ BEGIN_MESSAGE_MAP(CVision2000Dlg, CDialog)
 	ON_WM_CLOSE()
 	ON_BN_CLICKED(IDC_CALLHANGUP, OnCallhangup)
 	ON_BN_CLICKED(IDC_OPEN_DATA, OnOpenData)
-	ON_BN_CLICKED(IDC_SEND_DATA, OnSendData)
 	ON_BN_CLICKED(IDC_CAMERA_1, OnCamera1)
 	ON_BN_CLICKED(IDC_CAMERA_2, OnCamera2)
 	ON_BN_CLICKED(IDC_CAMERA_3, OnCamera3)
@@ -251,22 +205,6 @@ void CVision2000Dlg::OnOpenData()
 	}
 }
 
-void CVision2000Dlg::OnSendData() 
-{
-	if (pConf->InConnection()) 
-	{
-		if( pConf->SendText("Generic text, here !") == S_OK )
-			AfxMessageBox("Text sent successfully!", MB_OK);
-		else
-			AfxMessageBox("Text NOT sent!", MB_OK);
-	}
-	else
-	{
-		AfxMessageBox("Not in a connection!", MB_OK);
-	}
-}
-
-// 	if( m_pPP->IsEnabled() )
 
 void CVision2000Dlg::OnCamera1() 
 {

@@ -1,9 +1,10 @@
-// Vision2000.cpp : Defines the class behaviors for the application.
+// SystemTray.cpp : Defines the class behaviors for the application.
 //
 
 #include "stdafx.h"
 #include "Vision2000.h"
-#include "Vision2000Dlg.h"
+
+#include "MainFrm.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -11,46 +12,67 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
-// CVision2000App
 
-BEGIN_MESSAGE_MAP(CVision2000App, CWinApp)
-	//{{AFX_MSG_MAP(CVision2000App)
-		// NOTE - the ClassWizard will add and remove mapping macros here.
-		//    DO NOT EDIT what you see in these blocks of generated code!
-	//}}AFX_MSG
-	ON_COMMAND(ID_HELP, CWinApp::OnHelp)
+/////////////////////////////////////////////////////////////////////////////
+// CAboutDlg dialog used for App About
+
+CAboutDlg::CAboutDlg() : CDialog(CAboutDlg::IDD)
+{
+	//{{AFX_DATA_INIT(CAboutDlg)
+	//}}AFX_DATA_INIT
+}
+
+void CAboutDlg::DoDataExchange(CDataExchange* pDX)
+{
+	CDialog::DoDataExchange(pDX);
+	//{{AFX_DATA_MAP(CAboutDlg)
+	//}}AFX_DATA_MAP
+}
+
+BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
+	//{{AFX_MSG_MAP(CAboutDlg)
+		// No message handlers
+	//}}AFX_MSG_MAP
+END_MESSAGE_MAP()
+
+// App command to run the dialog
+void CSystemTrayApp::OnAppAbout()
+{
+	CAboutDlg aboutDlg;
+	aboutDlg.DoModal();
+}
+
+
+/////////////////////////////////////////////////////////////////////////////
+// CSystemTrayApp
+
+BEGIN_MESSAGE_MAP(CSystemTrayApp, CWinApp)
+	//{{AFX_MSG_MAP(CSystemTrayApp)
+	ON_COMMAND(ID_APP_ABOUT, OnAppAbout)
+	ON_COMMAND(ID_CALL_HANGUP, OnCallHangup)
+	ON_COMMAND(ID_SEND_TEXT, OnSendText)
+	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// CVision2000App construction
+// CSystemTrayApp construction
 
-CVision2000App::CVision2000App()
+CSystemTrayApp::CSystemTrayApp()
 {
-	// TODO: add construction code here,
-	// Place all significant initialization in InitInstance
+	m_pConf = NULL;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// The one and only CVision2000App object
+// The one and only CSystemTrayApp object
 
-CVision2000App theApp;
-
+CSystemTrayApp theApp;
 
 /////////////////////////////////////////////////////////////////////////////
-// CVision2000App initialization
+// CSystemTrayApp initialization
 
-BOOL CVision2000App::InitInstance()
+BOOL CSystemTrayApp::InitInstance()
 {
-	AfxEnableControlContainer();
-
-	// for COM support
-	AfxOleInit();
-
 	// Standard initialization
-	// If you are not using these features and wish to reduce the size
-	//  of your final executable, you should remove from the following
-	//  the specific initialization routines you do not need.
 
 #ifdef _AFXDLL
 	Enable3dControls();			// Call this when using MFC in a shared DLL
@@ -58,21 +80,76 @@ BOOL CVision2000App::InitInstance()
 	Enable3dControlsStatic();	// Call this when linking to MFC statically
 #endif
 
-	CVision2000Dlg dlg;
-	m_pMainWnd = &dlg;
-	int nResponse = dlg.DoModal();
-	if (nResponse == IDOK)
+	CMainFrame* pMainFrame = new CMainFrame;
+	if (!pMainFrame->LoadFrame(IDR_MAINFRAME))
+		return FALSE;
+	m_pMainWnd = pMainFrame;
+
+	// for COM support
+	AfxOleInit();
+
+	// Initialize the conference object
+	m_pConf=new Conf(m_pMainWnd->GetSafeHwnd());
+
+	if (FAILED(m_pConf->Initialize()))
 	{
-		// TODO: Place code here to handle when the dialog is
-		//  dismissed with OK
-	}
-	else if (nResponse == IDCANCEL)
-	{
-		// TODO: Place code here to handle when the dialog is
-		//  dismissed with Cancel
+		AfxMessageBox("NetMeeting may not be installed");
+		return -1;	// destroy window; can not continue
 	}
 
-	// Since the dialog has been closed, return FALSE so that we exit the
-	//  application, rather than start the application's message pump.
-	return FALSE;
+
+	return TRUE;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// CSystemTrayApp commands
+
+void CSystemTrayApp::OnCallHangup() 
+{
+	// If not in a call, then call szMachineName, otherwise hang up.
+	if (!m_pConf->InConnection()) 
+	{
+		CString strMachineName("tester");
+		//GetDlgItemText(IDC_MACHINENAME,strMachineName);
+		if( !strMachineName.IsEmpty() )
+			m_pConf->Call((LPTSTR)(LPCTSTR)strMachineName);
+		else
+			AfxMessageBox("Enter a machine name first!", MB_OK);
+	}
+	else
+		m_pConf->HangUp();
+}
+
+
+int CSystemTrayApp::ExitInstance() 
+{
+	// Hangup if in a call
+	if (m_pConf->InConnection())
+		m_pConf->HangUp();
+
+	m_pConf->Uninitialize();
+	if(m_pConf != NULL)
+	{
+		delete m_pConf;
+		m_pConf = NULL;
+	}
+	
+	return CWinApp::ExitInstance();
+}
+
+
+
+void CSystemTrayApp::OnSendText() 
+{
+	if (m_pConf->InConnection()) 
+	{
+		if( m_pConf->SendText("CAMERA1") == S_OK )
+			AfxMessageBox("CAMERA1 selected", MB_OK);
+		else
+			AfxMessageBox("Text NOT sent!", MB_OK);
+	}
+	else
+	{
+		AfxMessageBox("Not in a connection!", MB_OK);
+	}
 }

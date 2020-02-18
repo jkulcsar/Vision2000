@@ -25,9 +25,12 @@ CDataNotify::CDataNotify(Conf *pConf)
 {
 	m_pConf = pConf;
 
+	/* this section is temporarily disabled
 	// init the parallel port
 	m_pPP = new CCOMParallelPort();
 	m_pPP->Initialize();
+	*/
+	m_pPP = NULL;	//temp
 
 }
 
@@ -126,7 +129,7 @@ HRESULT STDMETHODCALLTYPE CDataNotify::DataReceived(INmMember *pMember, ULONG uS
 	// TODO: Check dwFlags & NM_DF_SEGMENT_END
 
 	psz = (LPTSTR) pb;
-
+/* this section temporarily disabled
 	if(m_pConf && m_pPP)
 	{
 		if( !strcmp(psz,"CAMERA1") )
@@ -138,7 +141,7 @@ HRESULT STDMETHODCALLTYPE CDataNotify::DataReceived(INmMember *pMember, ULONG uS
 		if( !strcmp(psz,"CAMERA4") )
 			m_pPP->WriteDataPort( 0x03 );
 	}
-	
+*/	
 
 	return S_OK;
 }

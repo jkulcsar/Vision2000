@@ -43,7 +43,6 @@ protected:
 	afx_msg LONG OnConnect(WPARAM, LPARAM);
 	afx_msg void OnCallhangup();
 	afx_msg void OnOpenData();
-	afx_msg void OnSendData();
 	afx_msg void OnCamera1();
 	afx_msg void OnCamera2();
 	afx_msg void OnCamera3();

@@ -114,11 +114,21 @@ SOURCE=.\DataNotify.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Imsconf2_i.c
+SOURCE=.\Imsconf2.idl
+# SUBTRACT MTL /mktyplib203
+# End Source File
+# Begin Source File
+
+SOURCE=.\mainfrm.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\Mgrntfy.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\netmeeting.idl
+# SUBTRACT MTL /mktyplib203
 # End Source File
 # Begin Source File
 
@@ -127,15 +137,15 @@ SOURCE=.\StdAfx.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\trayicon.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Vision2000.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\Vision2000.rc
-# End Source File
-# Begin Source File
-
-SOURCE=.\Vision2000Dlg.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -167,7 +177,7 @@ SOURCE=.\DataNotify.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Imsconf2.h
+SOURCE=.\mainfrm.h
 # End Source File
 # Begin Source File
 
@@ -183,11 +193,11 @@ SOURCE=.\StdAfx.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Vision2000.h
+SOURCE=.\trayicon.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Vision2000Dlg.h
+SOURCE=.\Vision2000.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"
@@ -202,9 +212,5 @@ SOURCE=.\res\Vision2000.ico
 SOURCE=.\res\Vision2000.rc2
 # End Source File
 # End Group
-# Begin Source File
-
-SOURCE=.\ReadMe.txt
-# End Source File
 # End Target
 # End Project

@@ -5,6 +5,8 @@
 
 #include "stdafx.h"
 
+const UINT MAX_ATTEMPTS = 10; //this is an arbitrary number
+
 
 //****************************************************************************
 //
@@ -105,20 +107,35 @@ HRESULT Conf::Uninitialize()
 
 HRESULT Conf::CreateDataChannel(void)
 {
-    HRESULT hr;
+    HRESULT hr=S_FALSE;
 
-    hr = m_pINmConf->CreateDataChannel(&m_pINmChannelData, guidApp);    
-	if (S_OK == hr) 
+	if( m_pINmChannelData == NULL )
 	{
-        //m_pDataNotify = new CDataNotify;
-        if( NULL != m_pDataNotify ) 
+		hr = m_pINmConf->CreateDataChannel(&m_pINmChannelData, guidApp);    
+		if (S_OK == hr) 
 		{
-            hr = m_pDataNotify->Connect(m_pINmChannelData);        
+			//m_pDataNotify = new CDataNotify;
+			if( NULL != m_pDataNotify ) 
+			{
+				hr = m_pDataNotify->Connect(m_pINmChannelData);        
+			}
 		}
-    }
-    
-	return hr;
+		return hr;
+	}
+	else
+		return hr;
 }
+
+
+
+HRESULT Conf::CheckDataChannel()
+{
+	if( m_pINmChannelData == NULL )
+		return CreateDataChannel();
+	else
+		return S_FALSE;
+}
+
 
 
 
@@ -252,6 +269,7 @@ HRESULT Conf::CallCreated(INmCall * pCall)
 
 HRESULT Conf::AcceptCall()
 {
+	// modified; automatically accept any incoming calls
 	return m_pINmCall->Accept();
 }
 
@@ -284,7 +302,17 @@ HRESULT Conf::ConferenceCreated(INmConference *pINmConf)
 	m_pINmConf->AddRef();
 	m_pConfNotify->Connect(pINmConf);
 	m_bInConnection=TRUE;
-
+/*
+	for (int i = 0; i < MAX_ATTEMPTS; i++)
+	{
+		if( CreateDataChannel() == S_OK )
+			AfxMessageBox("Data channel opened successfully!", MB_OK);
+		else
+			AfxMessageBox("Data channel NOT opened!", MB_OK);
+	
+		::Sleep(20);
+	}
+*/
 	if (m_hWnd)
 		SendMessage(m_hWnd,WM_CONNECTED,0,0);
 	return S_OK;
@@ -307,6 +335,7 @@ HRESULT Conf::CallAccepted()
 
 	m_pINmCall=NULL;
 	m_pCallNotify->Disconnect();
+
 	m_bInConnection=TRUE;
 
 	return S_OK;
@@ -383,4 +412,5 @@ BOOL Conf::InConnection()
 {	
 	return m_bInConnection;
 }
+
 
