@@ -1,5 +1,6 @@
 // Vision2000Dlg.h : header file
 //
+#include "COMParallelPort.h";
 
 #if !defined(AFX_VISION2000DLG_H__1FAE7147_4B4C_11D3_AFB1_004095D0EF62__INCLUDED_)
 #define AFX_VISION2000DLG_H__1FAE7147_4B4C_11D3_AFB1_004095D0EF62__INCLUDED_
@@ -40,8 +41,8 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	afx_msg void OnClose();
-	afx_msg void OnDisconnected();
-	afx_msg void OnConnect();
+	afx_msg LONG OnDisconnected(WPARAM, LPARAM);
+	afx_msg LONG OnConnect(WPARAM, LPARAM);
 	afx_msg void OnCallhangup();
 	afx_msg void OnOpenData();
 	afx_msg void OnSendData();
@@ -49,6 +50,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 private:
 	Conf* pConf;
+	CCOMParallelPort*	m_pPP;
 };
 
 //{{AFX_INSERT_LOCATION}}

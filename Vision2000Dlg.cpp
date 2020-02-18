@@ -2,6 +2,7 @@
 //
 
 #include "stdafx.h"
+//#include "COMParallelPort.h"
 #include "Vision2000.h"
 #include "Vision2000Dlg.h"
 
@@ -71,8 +72,9 @@ CVision2000Dlg::CVision2000Dlg(CWnd* pParent /*=NULL*/)
 	// Note that LoadIcon does not require a subsequent DestroyIcon in Win32
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 
-	// Initialize conference data member
+	// initialize private members
 	pConf = NULL;
+	m_pPP = NULL;
 }
 
 void CVision2000Dlg::DoDataExchange(CDataExchange* pDX)
@@ -89,11 +91,11 @@ BEGIN_MESSAGE_MAP(CVision2000Dlg, CDialog)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	ON_WM_CLOSE()
-	ON_COMMAND(WM_DISCONNECTED, OnDisconnected)
-	ON_COMMAND(WM_CONNECTING, OnConnect)
+	ON_MESSAGE(WM_DISCONNECTED, OnDisconnected)
+	ON_MESSAGE(WM_CONNECTING, OnConnect)
+	ON_MESSAGE(WM_CONNECTED, OnConnect)
 	ON_BN_CLICKED(IDC_CALLHANGUP, OnCallhangup)
 	ON_BN_CLICKED(IDC_OPEN_DATA, OnOpenData)
-	ON_COMMAND(WM_CONNECTED,  OnConnect)
 	ON_BN_CLICKED(IDC_SEND_DATA, OnSendData)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
@@ -205,15 +207,17 @@ void CVision2000Dlg::OnClose()
 }
 
 
-void CVision2000Dlg::OnConnect()
+LONG CVision2000Dlg::OnConnect(WPARAM wParam, LPARAM lParam)
 {
 	SetDlgItemText(IDC_CALLHANGUP,"H&ang Up");
+	return 0;
 }
 
 
-void CVision2000Dlg::OnDisconnected()
+LONG CVision2000Dlg::OnDisconnected(WPARAM wParam, LPARAM lParam)
 {
 	SetDlgItemText(IDC_CALLHANGUP,"C&all");
+	return 0;
 }
 
 void CVision2000Dlg::OnCallhangup() 
@@ -221,15 +225,19 @@ void CVision2000Dlg::OnCallhangup()
 	// If not in a call, then call szMachineName, otherwise hang up.
 	if (!pConf->InConnection()) 
 	{
-		char szMachineName[MAX_SZ];
-		GetDlgItemText(IDC_MACHINENAME,szMachineName,MAX_SZ);
-		pConf->Call(szMachineName);
-//		return TRUE;
+		CString strMachineName;
+		GetDlgItemText(IDC_MACHINENAME,strMachineName);
+		if( !strMachineName.IsEmpty() )
+			pConf->Call((LPTSTR)(LPCTSTR)strMachineName);
+		else
+			AfxMessageBox("Enter a machine name first!", MB_OK);
+		
+		m_pPP = new CCOMParallelPort();
 	}
 	else
 	{
 		pConf->HangUp();
-//		return TRUE;
+		if( m_pPP != NULL ) delete m_pPP;
 	}
 }
 
@@ -252,7 +260,7 @@ void CVision2000Dlg::OnSendData()
 {
 	if (pConf->InConnection()) 
 	{
-		if( pConf->SendText("Cucu!") == S_OK )
+		if( pConf->SendText("Te iubesc, piszu!") == S_OK )
 			AfxMessageBox("Text sent successfully!", MB_OK);
 		else
 			AfxMessageBox("Text NOT sent!", MB_OK);

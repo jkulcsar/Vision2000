@@ -21,7 +21,8 @@
 #include <afxcmn.h>			// MFC support for Windows Common Controls
 #endif // _AFX_NO_AFXCMN_SUPPORT
 
-#include "imsconf2.h"
+#include "imsconf2.h"		// NetMeeting COM object interfaces
+#include "interface.h"		// Parallel Port COM object interfaces
 #include "ClUtil.h"
 #include "MgrNtfy.h"
 #include "CallNtfy.h"

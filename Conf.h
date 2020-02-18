@@ -22,7 +22,7 @@
 
 #define WM_CONNECTING	WM_USER + 1
 #define WM_CONNECTED	WM_USER + 2
-#define WM_DISCONNECTED WM_USER +3
+#define WM_DISCONNECTED WM_USER + 3
 
 
 //****************************************************************************

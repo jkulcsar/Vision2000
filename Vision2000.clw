@@ -2,12 +2,12 @@
 
 [General Info]
 Version=1
-LastClass=CVision2000Dlg
+LastClass=CCamera
 LastTemplate=CDialog
 NewFileInclude1=#include "stdafx.h"
 NewFileInclude2=#include "Vision2000.h"
 
-ClassCount=3
+ClassCount=4
 Class1=CVision2000App
 Class2=CVision2000Dlg
 Class3=CAboutDlg
@@ -15,6 +15,7 @@ Class3=CAboutDlg
 ResourceCount=3
 Resource1=IDD_ABOUTBOX
 Resource2=IDR_MAINFRAME
+Class4=CCamera
 Resource3=IDD_VISION2000_DIALOG
 
 [CLS:CVision2000App]
@@ -22,13 +23,14 @@ Type=0
 HeaderFile=Vision2000.h
 ImplementationFile=Vision2000.cpp
 Filter=N
+LastObject=CVision2000App
 
 [CLS:CVision2000Dlg]
 Type=0
 HeaderFile=Vision2000Dlg.h
 ImplementationFile=Vision2000Dlg.cpp
 Filter=D
-LastObject=CVision2000Dlg
+LastObject=IDC_SEND_DATA
 BaseClass=CDialog
 VirtualFilter=dWC
 
@@ -56,4 +58,11 @@ Control2=IDC_CALLHANGUP,button,1342242816
 Control3=IDC_STATIC,static,1342308352
 Control4=IDC_SEND_DATA,button,1342242816
 Control5=IDC_OPEN_DATA,button,1342242816
+
+[CLS:CCamera]
+Type=0
+HeaderFile=Camera.h
+ImplementationFile=Camera.cpp
+BaseClass=CDialog
+Filter=D
 
