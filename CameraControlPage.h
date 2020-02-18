@@ -47,6 +47,10 @@ protected:
 	afx_msg void OnCamera4();
 	//}}AFX_MSG
 	afx_msg LRESULT OnKickIdle(WPARAM, LPARAM);
+	afx_msg void OnUpdateCamera1( CCmdUI* pCmdUI );
+	afx_msg void OnUpdateCamera2( CCmdUI* pCmdUI );
+	afx_msg void OnUpdateCamera3( CCmdUI* pCmdUI );
+	afx_msg void OnUpdateCamera4( CCmdUI* pCmdUI );
 	DECLARE_MESSAGE_MAP()
 
 private:

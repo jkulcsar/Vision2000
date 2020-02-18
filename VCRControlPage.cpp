@@ -62,132 +62,65 @@ BEGIN_MESSAGE_MAP(CVCRControlPage, CPropertyPage)
 	ON_BN_CLICKED(IDC_PAUSE, OnPause)
 	//}}AFX_MSG_MAP
 	ON_MESSAGE(WM_KICKIDLE, OnKickIdle)
+	ON_UPDATE_COMMAND_UI( IDC_VCR, OnUpdateVcr )
+	ON_UPDATE_COMMAND_UI( IDC_POWER, OnUpdatePower )
+	ON_UPDATE_COMMAND_UI( IDC_REW, OnUpdateRew )
+	ON_UPDATE_COMMAND_UI( IDC_PLAY, OnUpdatePlay )
+	ON_UPDATE_COMMAND_UI( IDC_FF, OnUpdateFf )
+	ON_UPDATE_COMMAND_UI( IDC_REC, OnUpdateRec )
+	ON_UPDATE_COMMAND_UI( IDC_STOP, OnUpdateStop )
+	ON_UPDATE_COMMAND_UI( IDC_PAUSE, OnUpdatePause )
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CVCRControlPage message handlers
 
-
-
-
 void CVCRControlPage::OnVcr() 
 {
 	if (m_pConf->InConnection()) 
-	{
-		if( m_pConf->SendText("VCR") == S_OK )
-			AfxMessageBox("VCR selected... please allow a few seconds for the URC to initialize", MB_OK);
-		else
-			AfxMessageBox("Command NOT sent!", MB_OK);
-	}
-	else
-	{
-		AfxMessageBox("Not in a connection!", MB_OK);
-	}
+		m_pConf->SendText("VCR");
 }
 
 void CVCRControlPage::OnPower() 
 {
 	if (m_pConf->InConnection()) 
-	{
-		if( m_pConf->SendText("POWER") == S_OK )
-			AfxMessageBox("POWER selected", MB_OK);
-		else
-			AfxMessageBox("Command NOT sent!", MB_OK);
-	}
-	else
-	{
-		AfxMessageBox("Not in a connection!", MB_OK);
-	}
+		m_pConf->SendText("POWER");
 }
 
 void CVCRControlPage::OnRew() 
 {
 	if (m_pConf->InConnection()) 
-	{
-		if( m_pConf->SendText("REW") == S_OK )
-			AfxMessageBox("REW selected", MB_OK);
-		else
-			AfxMessageBox("Command NOT sent!", MB_OK);
-	}
-	else
-	{
-		AfxMessageBox("Not in a connection!", MB_OK);
-	}
+		m_pConf->SendText("REW");
 }
 
 void CVCRControlPage::OnPlay() 
 {
 	if (m_pConf->InConnection()) 
-	{
-		if( m_pConf->SendText("PLAY") == S_OK )
-			AfxMessageBox("PLAY selected", MB_OK);
-		else
-			AfxMessageBox("Command NOT sent!", MB_OK);
-	}
-	else
-	{
-		AfxMessageBox("Not in a connection!", MB_OK);
-	}
+		m_pConf->SendText("PLAY");
 }
 
 void CVCRControlPage::OnFf() 
 {
 	if (m_pConf->InConnection()) 
-	{
-		if( m_pConf->SendText("FF") == S_OK )
-			AfxMessageBox("FF selected", MB_OK);
-		else
-			AfxMessageBox("Command NOT sent!", MB_OK);
-	}
-	else
-	{
-		AfxMessageBox("Not in a connection!", MB_OK);
-	}
+		m_pConf->SendText("FF");
 }
 
 void CVCRControlPage::OnRec() 
 {
 	if (m_pConf->InConnection()) 
-	{
-		if( m_pConf->SendText("REC") == S_OK )
-			AfxMessageBox("REC selected", MB_OK);
-		else
-			AfxMessageBox("Command NOT sent!", MB_OK);
-	}
-	else
-	{
-		AfxMessageBox("Not in a connection!", MB_OK);
-	}
+		m_pConf->SendText("REC");
 }
 
 void CVCRControlPage::OnStop() 
 {
 	if (m_pConf->InConnection()) 
-	{
-		if( m_pConf->SendText("STOP") == S_OK )
-			AfxMessageBox("STOP selected", MB_OK);
-		else
-			AfxMessageBox("Command NOT sent!", MB_OK);
-	}
-	else
-	{
-		AfxMessageBox("Not in a connection!", MB_OK);
-	}
+		m_pConf->SendText("STOP");
 }
 
 void CVCRControlPage::OnPause() 
 {
 	if (m_pConf->InConnection()) 
-	{
-		if( m_pConf->SendText("PAUSE") == S_OK )
-			AfxMessageBox("PAUSE selected", MB_OK);
-		else
-			AfxMessageBox("Command NOT sent!", MB_OK);
-	}
-	else
-	{
-		AfxMessageBox("Not in a connection!", MB_OK);
-	}
+		m_pConf->SendText("PAUSE");
 }
 
 
@@ -228,6 +161,59 @@ BOOL CVCRControlPage::OnInitDialog()
 
 LRESULT CVCRControlPage::OnKickIdle(WPARAM, LPARAM)
 {
-//	UpdateDialogControls( this, FALSE );
+	UpdateDialogControls( this, FALSE );
 	return 0;
 }
+
+
+///////////////////////////////////////////////////////////////////////////////
+// CVCRControlPage::OnUpdate???? functions
+
+void CVCRControlPage::OnUpdatePlay( CCmdUI* pCmdUI )
+{
+	pCmdUI->Enable( m_pConf->InConnection() );
+}
+
+
+void CVCRControlPage::OnUpdateStop( CCmdUI* pCmdUI )
+{
+	pCmdUI->Enable( m_pConf->InConnection() );
+}
+
+
+void CVCRControlPage::OnUpdateFf( CCmdUI* pCmdUI )
+{
+	pCmdUI->Enable( m_pConf->InConnection() );
+}
+
+
+void CVCRControlPage::OnUpdateRew( CCmdUI* pCmdUI )
+{
+	pCmdUI->Enable( m_pConf->InConnection() );
+}
+
+
+void CVCRControlPage::OnUpdatePause( CCmdUI* pCmdUI )
+{
+	pCmdUI->Enable( m_pConf->InConnection() );
+}
+
+
+void CVCRControlPage::OnUpdateRec( CCmdUI* pCmdUI )
+{
+	pCmdUI->Enable( m_pConf->InConnection() );
+}
+
+
+void CVCRControlPage::OnUpdatePower( CCmdUI* pCmdUI )
+{
+	pCmdUI->Enable( m_pConf->InConnection() );
+}
+
+
+void CVCRControlPage::OnUpdateVcr( CCmdUI* pCmdUI )
+{
+	pCmdUI->Enable( m_pConf->InConnection() );
+}
+
+///////////////////////////////////////////////////////////////////////////////

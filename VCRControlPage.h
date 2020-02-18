@@ -56,6 +56,14 @@ protected:
 	virtual BOOL OnInitDialog();
 	//}}AFX_MSG
 	afx_msg LRESULT OnKickIdle(WPARAM, LPARAM);
+	afx_msg void OnUpdateVcr( CCmdUI* pCmdUI );
+	afx_msg void OnUpdatePower( CCmdUI* pCmdUI );
+	afx_msg void OnUpdateRew( CCmdUI* pCmdUI );
+	afx_msg void OnUpdatePlay( CCmdUI* pCmdUI );
+	afx_msg void OnUpdateFf( CCmdUI* pCmdUI );
+	afx_msg void OnUpdateRec( CCmdUI* pCmdUI );
+	afx_msg void OnUpdateStop( CCmdUI* pCmdUI );
+	afx_msg void OnUpdatePause( CCmdUI* pCmdUI );
 	DECLARE_MESSAGE_MAP()
 };
 

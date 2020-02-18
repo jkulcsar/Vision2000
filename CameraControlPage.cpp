@@ -55,6 +55,10 @@ BEGIN_MESSAGE_MAP(CCameraControlPage, CPropertyPage)
 		ON_BN_CLICKED(IDC_CAMERA4, OnCamera4)
 	//}}AFX_MSG_MAP
 	ON_MESSAGE(WM_KICKIDLE, OnKickIdle)
+	ON_UPDATE_COMMAND_UI( IDC_CAMERA1, OnUpdateCamera1 )
+	ON_UPDATE_COMMAND_UI( IDC_CAMERA2, OnUpdateCamera2 )
+	ON_UPDATE_COMMAND_UI( IDC_CAMERA3, OnUpdateCamera3 )
+	ON_UPDATE_COMMAND_UI( IDC_CAMERA4, OnUpdateCamera4 )
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -84,69 +88,65 @@ BOOL CCameraControlPage::OnInitDialog()
 void CCameraControlPage::OnCamera1() 
 {
 	if (m_pConf->InConnection()) 
-	{
-		if( m_pConf->SendText("CAMERA1") == S_OK )
-			AfxMessageBox("CAMERA1 selected", MB_OK);
-		else
-			AfxMessageBox("Command NOT sent!", MB_OK);
-	}
-	else
-	{
-		AfxMessageBox("Not in a connection!", MB_OK);
-	}
+		m_pConf->SendText("CAMERA1");
 }
 
 
 void CCameraControlPage::OnCamera2() 
 {
 	if (m_pConf->InConnection()) 
-	{
-		if( m_pConf->SendText("CAMERA2") == S_OK )
-			AfxMessageBox("CAMERA2 selected", MB_OK);
-		else
-			AfxMessageBox("Command NOT sent!", MB_OK);
-	}
-	else
-	{
-		AfxMessageBox("Not in a connection!", MB_OK);
-	}
+		m_pConf->SendText("CAMERA2");
 }
+
 
 
 void CCameraControlPage::OnCamera3() 
 {
 	if (m_pConf->InConnection()) 
-	{
-		if( m_pConf->SendText("CAMERA3") == S_OK )
-			AfxMessageBox("CAMERA3 selected", MB_OK);
-		else
-			AfxMessageBox("Command NOT sent!", MB_OK);
-	}
-	else
-	{
-		AfxMessageBox("Not in a connection!", MB_OK);
-	}
+		m_pConf->SendText("CAMERA3");
 }
+
 
 
 void CCameraControlPage::OnCamera4() 
 {
 	if (m_pConf->InConnection()) 
-	{
-		if( m_pConf->SendText("CAMERA4") == S_OK )
-			AfxMessageBox("CAMERA4 selected", MB_OK);
-		else
-			AfxMessageBox("Command NOT sent!", MB_OK);
-	}
-	else
-	{
-		AfxMessageBox("Not in a connection!", MB_OK);
-	}
+		m_pConf->SendText("CAMERA4");
 }
+
 
 
 LRESULT CCameraControlPage::OnKickIdle(WPARAM, LPARAM)
 {
-//	UpdateDialogControls( this, FALSE );
+	UpdateDialogControls( this, FALSE );
 	return 0;
 }
+
+
+///////////////////////////////////////////////////////////////////////////////
+// CCameraControlPage::OnUpdate???? functions
+
+void CCameraControlPage::OnUpdateCamera1( CCmdUI* pCmdUI )
+{
+	pCmdUI->Enable( m_pConf->InConnection() );
+}
+
+
+void CCameraControlPage::OnUpdateCamera2( CCmdUI* pCmdUI )
+{
+	pCmdUI->Enable( m_pConf->InConnection() );
+}
+
+
+void CCameraControlPage::OnUpdateCamera3( CCmdUI* pCmdUI )
+{
+	pCmdUI->Enable( m_pConf->InConnection() );
+}
+
+
+void CCameraControlPage::OnUpdateCamera4( CCmdUI* pCmdUI )
+{
+	pCmdUI->Enable( m_pConf->InConnection() );
+}
+
+///////////////////////////////////////////////////////////////////////////////

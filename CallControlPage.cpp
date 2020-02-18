@@ -5,6 +5,8 @@
 #include "vision2000.h"
 #include "CallControlPage.h"
 
+#include <afxpriv.h>
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -45,6 +47,9 @@ BEGIN_MESSAGE_MAP(CCallControlPage, CPropertyPage)
 	//{{AFX_MSG_MAP(CCallControlPage)
 	ON_BN_CLICKED(IDC_CALL_HANGUP, OnCallHangup)
 	//}}AFX_MSG_MAP
+	ON_MESSAGE(WM_KICKIDLE, OnKickIdle)
+	ON_UPDATE_COMMAND_UI( IDC_CALL_HANGUP, OnUpdateCallHangup )
+	ON_UPDATE_COMMAND_UI( IDC_MACHINE_NAME, OnUpdateMachineName )
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -66,3 +71,29 @@ void CCallControlPage::OnCallHangup()
 		m_pConf->HangUp();
 }
 
+
+LRESULT CCallControlPage::OnKickIdle(WPARAM, LPARAM)
+{
+	UpdateDialogControls( this, FALSE );
+	return 0;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+// CCallControlPage::OnUpdate???? functions
+
+void CCallControlPage::OnUpdateCallHangup( CCmdUI* pCmdUI )
+{
+	if( m_pConf->InConnection() )
+		pCmdUI->SetText( _T("&Hang up") );
+	else
+		pCmdUI->SetText( _T("&Call") );
+}
+
+
+void CCallControlPage::OnUpdateMachineName( CCmdUI* pCmdUI )
+{
+	pCmdUI->Enable( !m_pConf->InConnection() );
+}
+
+///////////////////////////////////////////////////////////////////////////////

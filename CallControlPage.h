@@ -43,6 +43,9 @@ protected:
 	//{{AFX_MSG(CCallControlPage)
 	afx_msg void OnCallHangup();
 	//}}AFX_MSG
+	afx_msg LRESULT OnKickIdle(WPARAM, LPARAM);
+	afx_msg void OnUpdateCallHangup( CCmdUI* pCmdUI );
+	afx_msg void OnUpdateMachineName( CCmdUI* pCmdUI );
 	DECLARE_MESSAGE_MAP()
 
 };

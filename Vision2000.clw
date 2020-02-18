@@ -18,11 +18,11 @@ Class6=CAboutDlg
 Class7=CSystemTrayApp
 
 ResourceCount=8
-Resource1=IDR_POPUP_MENU
+Resource1=IDD_VCR_CONTROL_PAGE
 Resource2=IDD_ABOUTBOX
 Resource3=IDD_CAMERA_CONTROL_PAGE
 Resource4=IDD_IR_CONTROL_PAGE
-Resource5=IDD_VCR_CONTROL_PAGE
+Resource5=IDR_POPUP_MENU
 Resource6=IDD_CONTROL_SHEET
 Resource7=IDD_CALL_CONTROL_PAGE
 Class8=CIRRemoteControlPage
@@ -62,7 +62,7 @@ Type=0
 BaseClass=CFrameWnd
 HeaderFile=mainfrm.h
 ImplementationFile=mainfrm.cpp
-LastObject=CMainFrame
+LastObject=ID_CONTROL_SHEET
 Filter=T
 VirtualFilter=fWC
 

@@ -2,7 +2,7 @@
 
 
 /* File created by MIDL compiler version 5.01.0164 */
-/* at Tue Dec 14 10:26:38 1999
+/* at Wed Dec 15 11:40:23 1999
  */
 /* Compiler settings for C:\Program Files\Microsoft Visual Studio\MyProjects\Vision2000\netmeeting.idl:
     Os (OptLev=s), W1, Zp8, env=Win32, ms_ext, c_ext
