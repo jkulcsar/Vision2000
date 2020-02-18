@@ -126,8 +126,9 @@ HRESULT STDMETHODCALLTYPE CDataNotify::DataReceived(INmMember *pMember, ULONG uS
 	pApp = (CSystemTrayApp*) AfxGetApp();
 	pControlCamera	= pApp->GetControlCamera();
 	pControlVCR		= pApp->GetControlVCR();
-	pX10Appliance	= pApp->GetX10Appliance();
-	pX10Light		= pApp->GetX10Light();
+
+//	pX10Appliance	= pApp->GetX10Appliance();
+//	pX10Light		= pApp->GetX10Light();
 
 	if(m_pConf)
 	{
@@ -169,7 +170,7 @@ HRESULT STDMETHODCALLTYPE CDataNotify::DataReceived(INmMember *pMember, ULONG uS
 		if( !strcmp(psz,"POWER") )
 			pControlVCR->Power();		// send Power command to VCR
 
-
+/*
 		if( !strcmp(psz,"APPLIANCEON") )
 			pX10Appliance->TurnApplianceON();
 		if( !strcmp(psz,"APPLIANCEOFF") )
@@ -185,7 +186,7 @@ HRESULT STDMETHODCALLTYPE CDataNotify::DataReceived(INmMember *pMember, ULONG uS
 		if( !strcmp(psz,"BRIGHTEN") )
 			pX10Light->DIMM( FALSE );
 
-
+*/
 
 
 

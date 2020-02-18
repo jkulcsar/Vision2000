@@ -26,8 +26,8 @@ IMPLEMENT_SERIAL( CSystemSettings, CObject, 1 )
 CSystemSettings::CSystemSettings()
 {
 	// init the parallel port
-	m_pPP			=	new CCOMParallelPort();
-//	m_pPP			=	NULL;
+//	m_pPP			=	new CCOMParallelPort();
+	m_pPP			=	NULL;
 
 	// create X10 settings and ActiveX object
 	// init later, after settings loaded
@@ -67,6 +67,11 @@ CSystemSettings::~CSystemSettings()
 
 void CSystemSettings::Serialize( CArchive& archive )
 {
+	// retrieve the X10 Device list to serialize it
+	CSystemTrayApp* pApp = (CSystemTrayApp*) AfxGetApp();
+	CTypedPtrList<CObList, CX10Device*>* pX10DeviceList;
+	pX10DeviceList = pApp->GetX10DeviceList();
+
 	// call base class function first
     // base class is CObject in this case
     CObject::Serialize( archive );
@@ -80,6 +85,7 @@ void CSystemSettings::Serialize( CArchive& archive )
 			m_pX10Settings->Serialize( archive );
 		m_arrayMRU.Serialize( archive );
 		m_arrayIR.Serialize( archive );
+		pX10DeviceList->Serialize( archive );
 	}
     else
 	{
@@ -89,6 +95,7 @@ void CSystemSettings::Serialize( CArchive& archive )
 			m_pX10Settings->Serialize( archive );
 		m_arrayMRU.Serialize( archive );
 		m_arrayIR.Serialize( archive );
+		pX10DeviceList->Serialize( archive );
 	}
 }
 

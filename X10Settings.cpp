@@ -26,8 +26,6 @@ CX10Settings::CX10Settings()
 	m_chHouseCode		=	_T('A');
 	m_uiDeviceCodeBase	=	1;
 	m_uiCOMPort			=	1;
-	m_uiApplianceCode	=	1;
-	m_uiLampCode		=	1;
 }
 
 CX10Settings::~CX10Settings()
@@ -50,13 +48,11 @@ void CX10Settings::Serialize( CArchive& archive )
 	{
 		// do storing
         archive << m_chHouseCode << m_uiDeviceCodeBase << m_uiCOMPort;
-		archive << m_uiApplianceCode << m_uiLampCode;
 	}
     else
 	{
 		// do retrieve
         archive >> m_chHouseCode >> m_uiDeviceCodeBase >> m_uiCOMPort;
-		archive >> m_uiApplianceCode >> m_uiLampCode;
 	}
 }
 
@@ -93,28 +89,4 @@ void CX10Settings::SetDeviceCodeBase(UINT uiDeviceCodeBase)
 void CX10Settings::SetCOMPort(UINT uiCOMPort)
 {
 	m_uiCOMPort = uiCOMPort;
-}
-
-
-UINT CX10Settings::GetApplianceCode()
-{
-	return m_uiApplianceCode;
-}
-
-
-UINT CX10Settings::GetLampCode()
-{
-	return m_uiLampCode;
-}
-
-
-void CX10Settings::SetApplianceCode(UINT uiApplianceCode)
-{
-	m_uiApplianceCode = uiApplianceCode;
-}
-
-
-void CX10Settings::SetLampCode(UINT uiLampCode)
-{
-	m_uiLampCode = uiLampCode;
 }

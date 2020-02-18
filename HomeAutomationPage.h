@@ -16,14 +16,22 @@ class CHomeAutomationPage : public CPropertyPage
 
 // Construction
 public:
+	void RefreshX10DeviceListComboBox();
+	void RefreshButtons();
 	CHomeAutomationPage();
 	~CHomeAutomationPage();
 
 // Dialog Data
 	//{{AFX_DATA(CHomeAutomationPage)
 	enum { IDD = IDD_HOME_AUTOMATION };
-	CComboBox	m_cbLampCode;
-	CComboBox	m_cbApplianceCode;
+	CButton	m_btnAdd;
+	CButton	m_btnRemoveAll;
+	CButton	m_btnRemove;
+	CButton	m_btnModify;
+	CButton	m_btnOnOff;
+	CButton	m_btnDimm;
+	CButton	m_btnBrighten;
+	CComboBox	m_cbX10DeviceList;
 	//}}AFX_DATA
 
 
@@ -38,15 +46,11 @@ public:
 protected:
 	// Generated message map functions
 	//{{AFX_MSG(CHomeAutomationPage)
-	afx_msg void OnApplianceOn();
-	afx_msg void OnApplianceOff();
-	afx_msg void OnLampOn();
-	afx_msg void OnLampOff();
-	afx_msg void OnLampDown();
-	afx_msg void OnLampUp();
 	virtual BOOL OnInitDialog();
-	afx_msg void OnSelendokComboCodeAppliance();
-	afx_msg void OnSelendokComboCodeLamp();
+	afx_msg void OnAddX10device();
+	afx_msg void OnRemoveallX10device();
+	afx_msg void OnSelendokComboX10deviceList();
+	afx_msg void OnOnOff();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 
@@ -55,8 +59,8 @@ private:
 	Conf*				m_pConf;	
 
 private:	
-	CX10Device* m_pX10Light;
-	CX10Device* m_pX10Appliance;
+//	CX10Device* m_pX10Light;
+//	CX10Device* m_pX10Appliance;
 };
 
 //{{AFX_INSERT_LOCATION}}

@@ -13,23 +13,46 @@
 #define MIN_BRIGHT	0
 #define STEP		12
 
-class CX10Device  
+#define APPLIANCE	0x00
+#define LIGHT		0x01
+
+#define ON			TRUE
+#define OFF			FALSE
+
+class CX10Device : public CObject
 {
+	DECLARE_SERIAL(CX10Device)
+
 public:
 	CX10Device();
 	virtual ~CX10Device();
 
+	void Serialize( CArchive& );
+
 public:
-	void DIMM( BOOL );
-	void TurnApplianceOFF();
-	void TurnApplianceON();
-	void TurnLampOFF();
-	void TurnLampON();
+	void SetOn( BOOL );
+	BOOL IsOn();
+	UINT GetX10DeviceType();
+	UINT GetX10DeviceCode();
+	UINT GetX10DeviceHouseCode();
+	CString& GetX10DeviceName();
+	void SetX10DeviceType( UINT );
+	void SetX10DeviceCode( UINT );
+	void SetX10DeviceHouseCode( UINT );
+	void SetX10DeviceName( CString& );
+//	void DIMM( BOOL );
+//	void TurnApplianceOFF();
+//	void TurnApplianceON();
+//	void TurnLampOFF();
+//	void TurnLampON();
 
 private:
-	// this is volatile; don't save it from one session to other;
-	// is very device and time specific
-	short m_shBrightness;
+	BOOL	m_bOnOff;
+	UINT	m_uiType;
+	short	m_shBrightness;
+	UINT	m_uiDeviceCode;
+	UINT	m_uiHouseCode;
+	CString	m_strDeviceName;
 };
 
 #endif // !defined(AFX_X10DEVICE_H__BCBD5C02_A85E_42BB_95C5_9EED4D40D06B__INCLUDED_)

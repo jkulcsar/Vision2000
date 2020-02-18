@@ -64,13 +64,15 @@ private:
 	// the 'objects' on which the app acts upon
 	CControlCamera*		m_pControlCamera;
 	CControlVCR*		m_pControlVCR;
-	CX10Device*			m_pX10Appliance;
-	CX10Device*			m_pX10Light;
+	
+	CTypedPtrList<CObList, CX10Device*>     m_TPtrListX10Device;
+	
+//	CX10Device*			m_pX10Appliance;
+//	CX10Device*			m_pX10Light;
 
 
 public:
-	CX10Device* GetX10Light();
-	CX10Device* GetX10Appliance();
+	CTypedPtrList<CObList, CX10Device*>*	GetX10DeviceList();
 	CControlCamera*		GetControlCamera();
 	CControlVCR*		GetControlVCR();
 	Conf*				GetConference();

@@ -141,8 +141,10 @@ BOOL CSystemTrayApp::InitInstance()
 	// create the 'objects'
 	m_pControlCamera	= new CControlCamera;
 	m_pControlVCR		= new CControlVCR;
-	m_pX10Appliance		= new CX10Device;
-	m_pX10Light			= new CX10Device;
+
+	
+//	m_pX10Appliance		= new CX10Device;
+//	m_pX10Light			= new CX10Device;
 
 
 	// Initialize the conference object
@@ -217,17 +219,9 @@ int CSystemTrayApp::ExitInstance()
 		m_pControlCamera = NULL;
 	}
 
-	if( m_pX10Appliance != NULL )
-	{
-		delete m_pX10Appliance;
-		m_pX10Appliance = NULL;
-	}
-
-	if( m_pX10Light != NULL )
-	{
-		delete m_pX10Light;
-		m_pX10Light = NULL;
-	}
+	// destroy X10 devices 
+	while (!m_TPtrListX10Device.IsEmpty())
+		delete m_TPtrListX10Device.RemoveHead();
 
 
 	if(::IsWindow(m_hWndRemoteVideo))
@@ -627,14 +621,8 @@ void CSystemTrayApp::OnVideoWindow()
 }
 
 
-CX10Device* CSystemTrayApp::GetX10Appliance()
+CTypedPtrList<CObList, CX10Device*>* CSystemTrayApp::GetX10DeviceList()
 {
-	return m_pX10Appliance;
+	return &m_TPtrListX10Device;
 }
 
-
-
-CX10Device* CSystemTrayApp::GetX10Light()
-{
-	return m_pX10Light;
-}

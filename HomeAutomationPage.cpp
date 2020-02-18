@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "vision2000.h"
 #include "HomeAutomationPage.h"
+#include "NewX10DeviceDlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -28,8 +29,8 @@ CHomeAutomationPage::CHomeAutomationPage() : CPropertyPage(CHomeAutomationPage::
 	m_pConf				= pApp->GetConference();
 	m_pSystemSettings	= pApp->GetSystemSettings();
 	
-	m_pX10Appliance		= pApp->GetX10Appliance();
-	m_pX10Light			= pApp->GetX10Light();
+//	m_pX10Appliance		= pApp->GetX10Appliance();
+//	m_pX10Light			= pApp->GetX10Light();
 }
 
 
@@ -42,28 +43,30 @@ void CHomeAutomationPage::DoDataExchange(CDataExchange* pDX)
 {
 	CPropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CHomeAutomationPage)
-	DDX_Control(pDX, IDC_COMBO_CODE_LAMP, m_cbLampCode);
-	DDX_Control(pDX, IDC_COMBO_CODE_APPLIANCE, m_cbApplianceCode);
+	DDX_Control(pDX, IDC_BUTTON_ADD_X10DEVICE, m_btnAdd);
+	DDX_Control(pDX, IDC_BUTTON_REMOVEALL_X10DEVICE, m_btnRemoveAll);
+	DDX_Control(pDX, IDC_BUTTON_REMOVE_X10DEVICE, m_btnRemove);
+	DDX_Control(pDX, IDC_BUTTON_MODIFY_X10DEVICE, m_btnModify);
+	DDX_Control(pDX, IDC_CHECK_ONOFF, m_btnOnOff);
+	DDX_Control(pDX, IDC_BUTTON_DIMM, m_btnDimm);
+	DDX_Control(pDX, IDC_BUTTON_BRIGHTEN, m_btnBrighten);
+	DDX_Control(pDX, IDC_COMBO_X10DEVICE_LIST, m_cbX10DeviceList);
 	//}}AFX_DATA_MAP
 }
 
 
 BEGIN_MESSAGE_MAP(CHomeAutomationPage, CPropertyPage)
 	//{{AFX_MSG_MAP(CHomeAutomationPage)
-	ON_BN_CLICKED(IDC_RADIO_APPLIANCE_ON, OnApplianceOn)
-	ON_BN_CLICKED(IDC_RADIO_APPLIANCE_OFF, OnApplianceOff)
-	ON_BN_CLICKED(IDC_RADIO_LAMP_ON, OnLampOn)
-	ON_BN_CLICKED(IDC_RADIO_LAMP_OFF, OnLampOff)
-	ON_BN_CLICKED(IDC_BUTTON_LAMP_DOWN, OnLampDown)
-	ON_BN_CLICKED(IDC_BUTTON_LAMP_UP, OnLampUp)
-	ON_CBN_SELENDOK(IDC_COMBO_CODE_APPLIANCE, OnSelendokComboCodeAppliance)
-	ON_CBN_SELENDOK(IDC_COMBO_CODE_LAMP, OnSelendokComboCodeLamp)
+	ON_BN_CLICKED(IDC_BUTTON_ADD_X10DEVICE, OnAddX10device)
+	ON_BN_CLICKED(IDC_BUTTON_REMOVEALL_X10DEVICE, OnRemoveallX10device)
+	ON_CBN_SELENDOK(IDC_COMBO_X10DEVICE_LIST, OnSelendokComboX10deviceList)
+	ON_BN_CLICKED(IDC_CHECK_ONOFF, OnOnOff)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CHomeAutomationPage message handlers
-
+/*
 void CHomeAutomationPage::OnApplianceOn() 
 {
 	if( m_pSystemSettings->InLocalMode() )
@@ -124,57 +127,155 @@ void CHomeAutomationPage::OnLampUp()
 			m_pConf->SendText("BRIGHTEN");
 	
 }
-
+*/
 BOOL CHomeAutomationPage::OnInitDialog() 
 {
 	CPropertyPage::OnInitDialog();
-	
-	CX10Settings*	pX10Settings	=	m_pSystemSettings->GetX10Settings();
 
-	CString strBuffer;
+	RefreshX10DeviceListComboBox();
+	RefreshButtons();
 
-	// init the X10 setting controls
-	strBuffer.Format( "%d", pX10Settings->GetApplianceCode() );
-	m_cbApplianceCode.SelectString(0, strBuffer );
-
-	strBuffer.Format( "%d", pX10Settings->GetLampCode() );
-	m_cbLampCode.SelectString(0, strBuffer);
-
-	
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
 
-void CHomeAutomationPage::OnSelendokComboCodeAppliance() 
+void CHomeAutomationPage::OnAddX10device() 
 {
-	CX10Settings*	pX10Settings	=	m_pSystemSettings->GetX10Settings();
-	UINT			uiSel;
-	int				nIndex;
-	CString			strSel;
+	CNewX10DeviceDlg	dlg;
+	dlg.DoModal();
 
-	nIndex	= m_cbApplianceCode.GetCurSel();
-	m_cbApplianceCode.GetLBText( nIndex, strSel );
-	uiSel = (UINT) ::atoi( (LPCTSTR) strSel );
-
-	if( pX10Settings != NULL )
-		pX10Settings->SetApplianceCode( uiSel );
+	RefreshX10DeviceListComboBox();
+	RefreshButtons();
 }
 
 
-
-void CHomeAutomationPage::OnSelendokComboCodeLamp() 
+void CHomeAutomationPage::OnRemoveallX10device() 
 {
-	CX10Settings*	pX10Settings	=	m_pSystemSettings->GetX10Settings();
-	UINT			uiSel;
-	int				nIndex;
-	CString			strSel;
+	CSystemTrayApp* pApp = (CSystemTrayApp*) AfxGetApp();
+	CTypedPtrList<CObList, CX10Device*>* pX10DeviceList;
+	pX10DeviceList = pApp->GetX10DeviceList();
 
-	nIndex	= m_cbLampCode.GetCurSel();
-	m_cbLampCode.GetLBText( nIndex, strSel );
-	uiSel = (UINT) ::atoi( (LPCTSTR) strSel );
+	if( AfxMessageBox( IDS_REMOVEALL_WARNING, MB_YESNO | MB_ICONEXCLAMATION	) == IDYES )
+		while (!pX10DeviceList->IsEmpty())
+			delete pX10DeviceList->RemoveHead();
 
-	if( pX10Settings != NULL )
-		pX10Settings->SetLampCode( uiSel );
+	RefreshX10DeviceListComboBox();
+	RefreshButtons();
+
+}
+
+void CHomeAutomationPage::OnSelendokComboX10deviceList() 
+{
+	UINT uiCurrIndex = m_cbX10DeviceList.GetCurSel();
+	POSITION pos = (POSITION) m_cbX10DeviceList.GetItemDataPtr( uiCurrIndex );
+
+}
+
+void CHomeAutomationPage::RefreshButtons()
+{
+	POSITION pos;
+	CSystemTrayApp* pApp = (CSystemTrayApp*) AfxGetApp();
+	CTypedPtrList<CObList, CX10Device*>*	pX10DeviceList;
+	pX10DeviceList = pApp->GetX10DeviceList();
+
 	
+	UINT uiCurrIndex = m_cbX10DeviceList.GetCurSel();
+	if( uiCurrIndex != CB_ERR )
+	{
+		pos = (POSITION) m_cbX10DeviceList.GetItemDataPtr( uiCurrIndex );
+		CX10Device* pX10Device = pX10DeviceList->GetAt(pos);
+
+		m_btnRemove.EnableWindow( TRUE );
+		m_btnRemoveAll.EnableWindow( TRUE );
+		m_btnModify.EnableWindow( TRUE );
+		m_btnAdd.EnableWindow( TRUE );
+		m_btnOnOff.EnableWindow( TRUE );
+		if( pX10Device->IsOn() )
+		{
+			m_btnOnOff.SetCheck( TRUE );
+			m_btnOnOff.SetWindowText( "ON" );
+		}
+		else
+		{
+			m_btnOnOff.SetCheck( FALSE );
+			m_btnOnOff.SetWindowText( "OFF" );
+		}
+		
+		if( pos != NULL )
+		{
+			if( pX10Device->GetX10DeviceType() == LIGHT )
+			{
+				m_btnBrighten.EnableWindow( TRUE );
+				m_btnDimm.EnableWindow( TRUE );
+			}
+		}
+		else
+		{
+			m_btnBrighten.EnableWindow( FALSE );
+			m_btnDimm.EnableWindow( FALSE );
+		}
+	}
+	else
+	{
+		// no selection; disable all buttons but ADD
+		m_btnBrighten.EnableWindow( FALSE );
+		m_btnDimm.EnableWindow( FALSE );
+		m_btnOnOff.EnableWindow( FALSE );
+		m_btnRemove.EnableWindow( FALSE );
+		m_btnRemoveAll.EnableWindow( FALSE );
+		m_btnModify.EnableWindow( FALSE );
+		m_btnAdd.EnableWindow( TRUE );
+	}
+}
+
+void CHomeAutomationPage::RefreshX10DeviceListComboBox()
+{
+	CSystemTrayApp* pApp = (CSystemTrayApp*) AfxGetApp();
+	CTypedPtrList<CObList, CX10Device*>*	pX10DeviceList;
+	pX10DeviceList = pApp->GetX10DeviceList();
+
+	// reset the combobox; this is an overkill
+	m_cbX10DeviceList.ResetContent();
+
+	POSITION	pos = pX10DeviceList->GetHeadPosition();
+	UINT		uiIndex = 0;
+	while (pos != NULL)
+	{
+		// assign the curent X10Device position to the current index, then increment index
+		m_cbX10DeviceList.SetItemDataPtr( uiIndex, pos );
+
+		CX10Device* pX10Device = pX10DeviceList->GetNext(pos);
+		m_cbX10DeviceList.InsertString( uiIndex, (LPCTSTR)pX10Device->GetX10DeviceName() );
+		
+		uiIndex++;
+	}
+
+	// select the first item if we have a valid list
+	if( m_cbX10DeviceList.GetCount() )
+		m_cbX10DeviceList.SetCurSel( 0 );
+}
+
+void CHomeAutomationPage::OnOnOff() 
+{
+	POSITION pos;
+	CSystemTrayApp* pApp = (CSystemTrayApp*) AfxGetApp();
+	CTypedPtrList<CObList, CX10Device*>*	pX10DeviceList;
+	pX10DeviceList = pApp->GetX10DeviceList();
+
+	
+	UINT uiCurrIndex = m_cbX10DeviceList.GetCurSel();
+	if( uiCurrIndex != CB_ERR )
+	{
+		pos = (POSITION) m_cbX10DeviceList.GetItemDataPtr( uiCurrIndex );
+		CX10Device* pX10Device = pX10DeviceList->GetAt(pos);
+
+		// toggle ON/OFF on X10 device
+		if( pX10Device->IsOn() )
+			pX10Device->SetOn( OFF );
+		else
+			pX10Device->SetOn( ON );
+
+		RefreshButtons();
+	}
 }

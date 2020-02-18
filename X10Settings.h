@@ -14,10 +14,6 @@ class CX10Settings : public CObject
 	DECLARE_SERIAL(CX10Settings)
 
 public:
-	void SetLampCode( UINT );
-	void SetApplianceCode( UINT );
-	UINT GetLampCode();
-	UINT GetApplianceCode();
 	void SetCOMPort( UINT );
 	void SetDeviceCodeBase( UINT );
 	void SetHouseCode( CHAR );
@@ -33,8 +29,6 @@ public:
 private:
 	CHAR	m_chHouseCode;
 	UINT	m_uiDeviceCodeBase;
-	UINT	m_uiApplianceCode;
-	UINT	m_uiLampCode;
 	UINT	m_uiCOMPort;
 
 };
