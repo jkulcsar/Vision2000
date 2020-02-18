@@ -61,16 +61,16 @@ BOOL CCameraControlPage::OnInitDialog()
 {
 	CPropertyPage::OnInitDialog();
 	
-	m_btnCamera1.LoadBitmaps( IDB_VIDEOCAMERA );
+	m_btnCamera1.LoadBitmaps( IDB_VIDEOCAMERA_U, IDB_VIDEOCAMERA_D );
 	m_btnCamera1.SizeToContent();
 
-	m_btnCamera2.LoadBitmaps( IDB_VIDEOCAMERA );
+	m_btnCamera2.LoadBitmaps( IDB_VIDEOCAMERA_U, IDB_VIDEOCAMERA_D );
 	m_btnCamera2.SizeToContent();
 
-	m_btnCamera3.LoadBitmaps( IDB_VIDEOCAMERA );
+	m_btnCamera3.LoadBitmaps( IDB_VIDEOCAMERA_U, IDB_VIDEOCAMERA_D );
 	m_btnCamera3.SizeToContent();
 
-	m_btnCamera4.LoadBitmaps( IDB_VIDEOCAMERA );
+	m_btnCamera4.LoadBitmaps( IDB_VIDEOCAMERA_U, IDB_VIDEOCAMERA_D );
 	m_btnCamera4.SizeToContent();
 	
 	return TRUE;  // return TRUE unless you set the focus to a control

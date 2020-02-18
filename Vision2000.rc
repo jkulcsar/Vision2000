@@ -277,16 +277,24 @@ END
 // Bitmap
 //
 
-IDB_REW                 BITMAP  DISCARDABLE     "res\\rew.bmp"
-IDB_FF                  BITMAP  DISCARDABLE     "res\\ff.bmp"
-IDB_PAUSE               BITMAP  DISCARDABLE     "res\\pause.bmp"
-IDB_PLAY                BITMAP  DISCARDABLE     "res\\play.bmp"
-IDB_POWER               BITMAP  DISCARDABLE     "res\\power.bmp"
-IDB_REC                 BITMAP  DISCARDABLE     "res\\rec.bmp"
-IDB_STOP                BITMAP  DISCARDABLE     "res\\stop.bmp"
-IDB_VCR                 BITMAP  DISCARDABLE     "res\\vcr.bmp"
-IDB_VIDEOTAPE           BITMAP  DISCARDABLE     "res\\Videotape.bmp"
-IDB_VIDEOCAMERA         BITMAP  DISCARDABLE     "res\\Videocamera.bmp"
+IDB_REW_U               BITMAP  DISCARDABLE     "res\\rew_u.bmp"
+IDB_FF_U                BITMAP  DISCARDABLE     "res\\ff_u.bmp"
+IDB_PAUSE_U             BITMAP  DISCARDABLE     "res\\pause_u.bmp"
+IDB_PLAY_U              BITMAP  DISCARDABLE     "res\\play_u.bmp"
+IDB_POWER_U             BITMAP  DISCARDABLE     "res\\power_u.bmp"
+IDB_REC_U               BITMAP  DISCARDABLE     "res\\rec_u.bmp"
+IDB_STOP_D              BITMAP  DISCARDABLE     "res\\stop_d.bmp"
+IDB_VCR_U               BITMAP  DISCARDABLE     "res\\vcr_u.bmp"
+IDB_VIDEOCAMERA_U       BITMAP  DISCARDABLE     "res\\vc_u.bmp"
+IDB_FF_D                BITMAP  DISCARDABLE     "res\\ff_d.bmp"
+IDB_VIDEOCAMERA_D       BITMAP  DISCARDABLE     "res\\vc_d.bmp"
+IDB_PAUSE_D             BITMAP  DISCARDABLE     "res\\pause_d.bmp"
+IDB_PLAY_D              BITMAP  DISCARDABLE     "res\\play_d.bmp"
+IDB_POWER_D             BITMAP  DISCARDABLE     "res\\power_d.bmp"
+IDB_REC_D               BITMAP  DISCARDABLE     "res\\rec_d.bmp"
+IDB_REW_D               BITMAP  DISCARDABLE     "res\\rew_d.bmp"
+IDB_STOP_U              BITMAP  DISCARDABLE     "res\\stop_u.bmp"
+IDB_VCR_D               BITMAP  DISCARDABLE     "res\\vcr_d.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //

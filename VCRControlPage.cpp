@@ -189,28 +189,28 @@ BOOL CVCRControlPage::OnInitDialog()
 {
 	CPropertyPage::OnInitDialog();
 	
-	m_btnPlay.LoadBitmaps( IDB_PLAY );
+	m_btnPlay.LoadBitmaps( IDB_PLAY_U, IDB_PLAY_D );
 	m_btnPlay.SizeToContent();
 
-	m_btnStop.LoadBitmaps( IDB_STOP );
+	m_btnStop.LoadBitmaps( IDB_STOP_U, IDB_STOP_D );
 	m_btnStop.SizeToContent();
 
-	m_btnRec.LoadBitmaps( IDB_REC );
+	m_btnRec.LoadBitmaps( IDB_REC_U, IDB_REC_D );
 	m_btnRec.SizeToContent();
 
-	m_btnREW.LoadBitmaps( IDB_REW );
+	m_btnREW.LoadBitmaps( IDB_REW_U, IDB_REW_D );
 	m_btnREW.SizeToContent();
 
-	m_btnFF.LoadBitmaps( IDB_FF );
+	m_btnFF.LoadBitmaps( IDB_FF_U, IDB_FF_D );
 	m_btnFF.SizeToContent();
 
-	m_btnPause.LoadBitmaps( IDB_PAUSE );
+	m_btnPause.LoadBitmaps( IDB_PAUSE_U, IDB_PAUSE_D );
 	m_btnPause.SizeToContent();
 
-	m_btnPower.LoadBitmaps( IDB_POWER );
+	m_btnPower.LoadBitmaps( IDB_POWER_U, IDB_POWER_D );
 	m_btnPower.SizeToContent();
 
-	m_btnVCR.LoadBitmaps( IDB_VCR );
+	m_btnVCR.LoadBitmaps( IDB_VCR_U, IDB_VCR_D );
 	m_btnVCR.SizeToContent();
 
 
