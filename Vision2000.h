@@ -24,7 +24,7 @@ class CSystemTrayApp : public CWinApp
 private:
 	// the main conference object
 	// it is created and intialized by the CWinApp object
-	// it's destryed also by the CWinApp object
+	// it's destroyed also by the CWinApp object
 	Conf* m_pConf;	
 
 public:

@@ -37,7 +37,7 @@
 static const GUID guidApp = 
 { 0xa5e48460, 0x4f49, 0x11d3, { 0xaf, 0xb1, 0x0, 0x40, 0x95, 0xd0, 0xef, 0x62 } };
 
-
+#define LPT1 0x378
 
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.

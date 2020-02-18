@@ -62,6 +62,15 @@ CCOMParallelPort::~CCOMParallelPort()
 	if( m_pTest != NULL ) m_pTest->Release();
 	if( m_pGet != NULL ) m_pGet->Release();
 	if( m_pSet != NULL ) m_pSet->Release();
+
+	m_pClf		= NULL;
+	m_pUnk		= NULL;
+
+	m_pRead		= NULL;
+	m_pWrite	= NULL;
+	m_pTest		= NULL;
+	m_pGet		= NULL;
+	m_pSet		= NULL;
 }
 
 BOOL CCOMParallelPort::IsEnabled()
@@ -72,14 +81,25 @@ BOOL CCOMParallelPort::IsEnabled()
 		return FALSE;
 }
 
-void CCOMParallelPort::Initialize()
+
+BOOL CCOMParallelPort::InitializeAt( unsigned short usAddress)
 {
-	m_pSet->SetAddress( 0x378 );
-	m_pTest->TestPort();
+	m_pSet->SetAddress( usAddress );
+	return m_pTest->TestPort();
 }
+
 
 void CCOMParallelPort::WriteDataPort( BYTE byteToWrite )
 {
 	if( m_pWrite != NULL )
 		m_pWrite->WriteDataPort( byteToWrite );
+}
+
+
+BYTE CCOMParallelPort::ReadDataPort()
+{
+	if( m_pRead != NULL )
+		return m_pRead->ReadDataPort();
+	else
+		return FALSE;
 }

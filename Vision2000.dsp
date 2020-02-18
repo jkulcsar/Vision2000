@@ -114,7 +114,19 @@ SOURCE=.\Conf.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ControlCamera.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ControlDevice.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\ControlSheet.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ControlVCR.cpp
 # End Source File
 # Begin Source File
 
@@ -189,7 +201,19 @@ SOURCE=.\Conf.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\ControlCamera.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ControlDevice.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\ControlSheet.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ControlVCR.h
 # End Source File
 # Begin Source File
 

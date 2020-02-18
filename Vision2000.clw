@@ -18,12 +18,12 @@ Class6=CSystemTrayApp
 Class7=CVision2000Dlg
 
 ResourceCount=7
-Resource1=IDD_CAMERA_CONTROL_PAGE
-Resource2=IDD_ABOUTBOX
-Resource3=IDD_VCR_CONTROL_PAGE
-Resource4=IDD_VISION2000_DIALOG
-Resource5=IDR_POPUP_MENU
-Resource6=IDD_CONTROL_SHEET
+Resource1=IDD_CONTROL_SHEET
+Resource2=IDD_VISION2000_DIALOG
+Resource3=IDD_ABOUTBOX
+Resource4=IDR_POPUP_MENU
+Resource5=IDD_VCR_CONTROL_PAGE
+Resource6=IDD_CAMERA_CONTROL_PAGE
 Resource7=IDR_MAINFRAME
 
 [CLS:CCameraControlPage]
@@ -82,7 +82,7 @@ ImplementationFile=Vision2000Dlg.cpp
 Type=1
 Class=CVCRControlPage
 ControlCount=5
-Control1=IDC_CAMERA1,button,1342226443
+Control1=IDC_CAMERA1,button,1342242827
 Control2=IDC_CAMERA2,button,1342242827
 Control3=IDC_CAMERA3,button,1342242827
 Control4=IDC_CAMERA4,button,1342242827

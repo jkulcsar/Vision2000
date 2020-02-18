@@ -24,13 +24,14 @@ CDataNotify::CDataNotify()
 CDataNotify::CDataNotify(Conf *pConf)
 {
 	m_pConf = pConf;
+	
+	m_pControlCamera = new CControlCamera;
+	if(m_pControlCamera != NULL )
+		m_pControlCamera->InitializeAt(LPT1);
 
-	/* this section is temporarily disabled
-	// init the parallel port
-	m_pPP = new CCOMParallelPort();
-	m_pPP->Initialize();
-	*/
-	m_pPP = NULL;	//temp
+	m_pControlVCR = new CControlVCR;
+	if(m_pControlVCR != NULL )
+		m_pControlVCR->InitializeAt(LPT1);
 
 }
 
@@ -38,7 +39,17 @@ CDataNotify::CDataNotify(Conf *pConf)
 
 CDataNotify::~CDataNotify()
 {
-	if( m_pPP != NULL ) delete m_pPP;
+	if( m_pControlVCR != NULL )
+	{
+		delete m_pControlVCR;
+		m_pControlVCR = NULL;
+	}
+
+	if( m_pControlCamera != NULL )
+	{
+		delete m_pControlCamera;
+		m_pControlCamera = NULL;
+	}
 }
 
 
@@ -114,10 +125,6 @@ HRESULT STDMETHODCALLTYPE CDataNotify::MemberChanged(NM_MEMBER_NOTIFY uNotify, I
 
 HRESULT STDMETHODCALLTYPE CDataNotify::DataSent(INmMember *pMember, ULONG uSize, LPBYTE pb)
 {
-//	LPTSTR psz;
-
-//	DisplayMsg(psz, g_pMemberLocal);
-
 	return S_OK;
 }
 
@@ -129,9 +136,10 @@ HRESULT STDMETHODCALLTYPE CDataNotify::DataReceived(INmMember *pMember, ULONG uS
 	// TODO: Check dwFlags & NM_DF_SEGMENT_END
 
 	psz = (LPTSTR) pb;
-/* this section temporarily disabled
-	if(m_pConf && m_pPP)
+
+	if(m_pConf)
 	{
+/*
 		if( !strcmp(psz,"CAMERA1") )
 			m_pPP->WriteDataPort( 0x00 );
 		if( !strcmp(psz,"CAMERA2") )
@@ -140,8 +148,24 @@ HRESULT STDMETHODCALLTYPE CDataNotify::DataReceived(INmMember *pMember, ULONG uS
 			m_pPP->WriteDataPort( 0x01 );
 		if( !strcmp(psz,"CAMERA4") )
 			m_pPP->WriteDataPort( 0x03 );
-	}
-*/	
+*/		
+		//////////////////////////////////////////////////////////////////////////
+		// the new command model
+
+		if( !strcmp(psz,"CAMERA1") )
+			m_pControlCamera->Show(1);	// show camera 1
+		if( !strcmp(psz,"CAMERA2") )
+			m_pControlCamera->Show(2);	// show camera 2
+		if( !strcmp(psz,"CAMERA3") )
+			m_pControlCamera->Show(3);	// show camera 3
+		if( !strcmp(psz,"CAMERA4") )
+			m_pControlCamera->Show(4);	// show camera 4
+
+
+		if( !strcmp(psz,"PLAY") )
+			m_pControlVCR->Play();		// send Play command to VCR
+  }
+	
 
 	return S_OK;
 }
