@@ -5,6 +5,7 @@
 #include "Vision2000.h"
 
 #include "MainFrm.h"
+#include "ControlSheet.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -36,19 +37,22 @@ BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
 END_MESSAGE_MAP()
 
 // App command to run the dialog
+/*
 void CSystemTrayApp::OnAppAbout()
 {
-	CAboutDlg aboutDlg;
-	aboutDlg.DoModal();
+//	CAboutDlg aboutDlg;
+//	aboutDlg.DoModal();
+	CControlSheet csh("Vision2000", NULL );
+	csh.Create(NULL);
+//	csh.DoModal();
 }
-
+*/
 
 /////////////////////////////////////////////////////////////////////////////
 // CSystemTrayApp
 
 BEGIN_MESSAGE_MAP(CSystemTrayApp, CWinApp)
 	//{{AFX_MSG_MAP(CSystemTrayApp)
-	ON_COMMAND(ID_APP_ABOUT, OnAppAbout)
 	ON_COMMAND(ID_CALL_HANGUP, OnCallHangup)
 	ON_COMMAND(ID_SEND_TEXT, OnSendText)
 	//}}AFX_MSG_MAP

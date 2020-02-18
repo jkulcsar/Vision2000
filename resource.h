@@ -8,6 +8,9 @@
 #define IDD_VISION2000_DIALOG           102
 #define IDR_MAINFRAME                   128
 #define IDR_POPUP_MENU                  129
+#define IDD_CONTROL_SHEET               133
+#define IDD_CAMERA_CONTROL_PAGE         134
+#define IDD_VCR_CONTROL_PAGE            135
 #define IDC_MACHINENAME                 1000
 #define IDC_CALLHANGUP                  1001
 #define IDC_DATA                        1002
@@ -18,16 +21,25 @@
 #define IDC_CAMERA_3                    1006
 #define IDC_BUTTON4                     1007
 #define IDC_CAMERA_4                    1007
+#define IDC_CAMERA4                     1007
+#define IDC_BUTTON1                     1008
+#define IDC_CAMERA1                     1008
+#define IDC_BUTTON2                     1009
+#define IDC_CAMERA2                     1009
+#define IDC_BUTTON3                     1010
+#define IDC_CAMERA3                     1010
+#define IDC_BUTTON_CLOSE                0x02000
 #define ID_CALL_HANGUP                  32773
 #define ID_SEND_TEXT                    32775
+#define ID_CONTROL_SHEET                32776
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        133
-#define _APS_NEXT_COMMAND_VALUE         32776
-#define _APS_NEXT_CONTROL_VALUE         1008
+#define _APS_NEXT_RESOURCE_VALUE        138
+#define _APS_NEXT_COMMAND_VALUE         32777
+#define _APS_NEXT_CONTROL_VALUE         1012
 #define _APS_NEXT_SYMED_VALUE           104
 #endif
 #endif

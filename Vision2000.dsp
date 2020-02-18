@@ -94,6 +94,10 @@ SOURCE=.\Callntfy.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\CameraControlPage.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Clutil.cpp
 # End Source File
 # Begin Source File
@@ -107,6 +111,10 @@ SOURCE=.\COMParallelPort.cpp
 # Begin Source File
 
 SOURCE=.\Conf.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ControlSheet.cpp
 # End Source File
 # Begin Source File
 
@@ -141,6 +149,10 @@ SOURCE=.\trayicon.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\VCRControlPage.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Vision2000.cpp
 # End Source File
 # Begin Source File
@@ -157,6 +169,10 @@ SOURCE=.\Callntfy.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\CameraControlPage.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Clutil.h
 # End Source File
 # Begin Source File
@@ -170,6 +186,10 @@ SOURCE=.\COMParallelPort.h
 # Begin Source File
 
 SOURCE=.\Conf.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ControlSheet.h
 # End Source File
 # Begin Source File
 
@@ -197,12 +217,32 @@ SOURCE=.\trayicon.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\VCRControlPage.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Vision2000.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"
 
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
+# Begin Source File
+
+SOURCE=.\res\bitmap1.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\bmp00001.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\bmp00002.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\camera1u.bmp
+# End Source File
 # Begin Source File
 
 SOURCE=.\res\Vision2000.ico

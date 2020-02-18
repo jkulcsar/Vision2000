@@ -10,6 +10,7 @@
 #endif // _MSC_VER >= 1000
 
 #include "TrayIcon.h"
+#include "ControlSheet.h"	// Added by ClassView
 
 class CMainFrame : public CFrameWnd
 {
@@ -42,9 +43,12 @@ protected:
 	//{{AFX_MSG(CMainFrame)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnClose();
+	afx_msg void OnControlSheet();
 	//}}AFX_MSG
 	afx_msg LONG OnTrayNotification(WPARAM wParam, LPARAM lParam);
 	DECLARE_MESSAGE_MAP()
+private:
+	CControlSheet* m_pCSh;
 };
 
 /////////////////////////////////////////////////////////////////////////////

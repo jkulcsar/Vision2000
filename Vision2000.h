@@ -41,7 +41,6 @@ public:
 // Implementation
 
 	//{{AFX_MSG(CSystemTrayApp)
-	afx_msg void OnAppAbout();
 	afx_msg void OnCallHangup();
 	afx_msg void OnSendText();
 	//}}AFX_MSG
