@@ -9,9 +9,7 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-#include "ControlDevice.h"
-
-class CControlVCR : public CControlDevice  
+class CControlVCR
 {
 public:
 	CControlVCR();
@@ -30,6 +28,9 @@ private:
 	HCURSOR m_hOldCursor;
 	BOOL m_bPowerOn;
 	BOOL m_bURCInitialized;		// URC = Universal Remote Control
+
+	CCOMParallelPort *m_pPP;
+
 };
 
 #endif // !defined(AFX_CONTROLVCR_H__CF033B43_7297_11D3_AFB2_004095D0EF62__INCLUDED_)

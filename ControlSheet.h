@@ -11,6 +11,7 @@
 #include "VCRControlPage.h"
 #include "CallControlpage.h"
 #include "IRRemoteControlPage.h"
+#include "SystemSettingsPage.h"
 
 /////////////////////////////////////////////////////////////////////////////
 // NmInitStruct
@@ -36,6 +37,7 @@ private:
 	CVCRControlPage			m_VCRControlPage;
 	CCallControlPage		m_CallControlPage;
 	CIRRemoteControlPage	m_IRRemoteControlPage;
+	CSystemSettingsPage		m_SystemSettingsPage;
 
 	CButton m_ButtonClose;
 	CEdit m_edit;

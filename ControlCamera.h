@@ -9,15 +9,15 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-#include "ControlDevice.h"
-
-class CControlCamera : public CControlDevice  
+class CControlCamera
 {
 public:
 	void Show( BYTE );
 	CControlCamera();
 	virtual ~CControlCamera();
 
+private:
+	CCOMParallelPort *m_pPP;
 };
 
 #endif // !defined(AFX_CONTROLCAMERA_H__CF033B41_7297_11D3_AFB2_004095D0EF62__INCLUDED_)

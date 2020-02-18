@@ -82,6 +82,15 @@ BOOL CCOMParallelPort::IsEnabled()
 }
 
 
+BOOL CCOMParallelPort::TestPort()
+{
+	if( m_pTest != NULL )
+		return m_pTest->TestPort();
+	else
+		return FALSE;
+}
+
+
 BOOL CCOMParallelPort::InitializeAt( unsigned short usAddress)
 {
 	m_pSet->SetAddress( usAddress );
@@ -103,3 +112,63 @@ BYTE CCOMParallelPort::ReadDataPort()
 	else
 		return FALSE;
 }
+
+BYTE CCOMParallelPort::ReadStatusPort()
+{
+	if( m_pRead != NULL )
+		return m_pRead->ReadStatusPort();
+	else
+		return FALSE;
+}
+
+
+
+LPCTSTR CCOMParallelPort::GetECPModeDescription()
+{
+	if( m_pGet != NULL )
+		return m_pGet->GetECPModeDescription();
+	else
+		return FALSE;
+}
+
+
+LPCTSTR CCOMParallelPort::GetName()
+{
+	if( m_pGet != NULL )
+		return m_pGet->GetName();
+	else
+		return FALSE;
+}
+
+
+LPCTSTR CCOMParallelPort::GetPortType()
+{
+	if( m_pGet != NULL )
+		return m_pGet->GetPortType();
+	else
+		return FALSE;
+}
+
+
+unsigned short CCOMParallelPort::GetAddress()
+{
+	if( m_pGet != NULL )
+		return m_pGet->GetAddress();
+	else
+		return FALSE;
+}
+
+
+void CCOMParallelPort::SetAddress( unsigned short usAddress)
+{
+	if( m_pSet != NULL )
+		m_pSet->SetAddress(usAddress);
+}
+
+
+void CCOMParallelPort::SetName( LPCTSTR lpctstrName)
+{
+	if( m_pSet != NULL )
+		m_pSet->SetName(lpctstrName);
+}
+

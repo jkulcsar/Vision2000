@@ -15,6 +15,7 @@
 #include "resource.h"       // main symbols
 #include "Vision2000_i.h"
 
+#include "SystemSettings.h"	
 #include "HyperLink.h"		// for the hyperlink feature in the About Box.
 
 /////////////////////////////////////////////////////////////////////////////
@@ -27,13 +28,19 @@ class CSystemTrayApp : public CWinApp
 private:
 	BOOL m_bATLInited;
 	BOOL InitATL();
+
 	// the main conference object
 	// it is created and intialized by the CWinApp object
 	// it's destroyed also by the CWinApp object
 	Conf* m_pConf;	
 
+	// the one and only CSystemSettings object to hold the overall system settings
+	// for details see the SystemSettings.h file
+	CSystemSettings* m_pSystemSettings;
+
 public:
-	Conf* GetConference();
+	Conf*				GetConference();
+	CSystemSettings*	GetSystemSettings();
 	CSystemTrayApp();
 
 // Overrides

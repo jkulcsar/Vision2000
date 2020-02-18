@@ -23,10 +23,23 @@ class CCOMParallelPort
 		LPUNKNOWN		m_pUnk;
 
 	public:
+		BYTE ReadStatusPort();
 		void WriteDataPort(BYTE);
 		BYTE ReadDataPort();
 		BOOL InitializeAt(unsigned short);
+
 		BOOL IsEnabled();
+		BOOL TestPort();
+ 		
+		LPCTSTR GetECPModeDescription();
+		LPCTSTR GetName();
+		LPCTSTR GetPortType();
+		unsigned short GetAddress();
+
+		void SetAddress( unsigned short );
+		void SetName( LPCTSTR );
+
+
 		CCOMParallelPort();
 		virtual ~CCOMParallelPort();
 

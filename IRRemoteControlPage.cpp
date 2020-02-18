@@ -21,11 +21,20 @@ CIRRemoteControlPage::CIRRemoteControlPage() : CPropertyPage(CIRRemoteControlPag
 	//{{AFX_DATA_INIT(CIRRemoteControlPage)
 		// NOTE: the ClassWizard will add member initialization here
 	//}}AFX_DATA_INIT
+
+	m_pIRRemoteControl = NULL;
 }
+
 
 CIRRemoteControlPage::~CIRRemoteControlPage()
 {
+	if( m_pIRRemoteControl != NULL )
+	{
+		delete m_pIRRemoteControl;
+		m_pIRRemoteControl = NULL;
+	}
 }
+
 
 void CIRRemoteControlPage::DoDataExchange(CDataExchange* pDX)
 {
@@ -48,12 +57,24 @@ END_MESSAGE_MAP()
 
 void CIRRemoteControlPage::OnIRPlayback() 
 {
-	// TODO: Add your control notification handler code here
-	
+	if( m_pIRRemoteControl != NULL )
+		m_pIRRemoteControl->Playback();
 }
+
 
 void CIRRemoteControlPage::OnIRRecord() 
 {
-	// TODO: Add your control notification handler code here
-	
+	if( m_pIRRemoteControl != NULL )
+		m_pIRRemoteControl->Record();
+}
+
+
+BOOL CIRRemoteControlPage::OnInitDialog() 
+{
+	CPropertyPage::OnInitDialog();
+
+	m_pIRRemoteControl = new CIRRemoteControl;
+
+	return TRUE;  // return TRUE unless you set the focus to a control
+	              // EXCEPTION: OCX Property Pages should return FALSE
 }

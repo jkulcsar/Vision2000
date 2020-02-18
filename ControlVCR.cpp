@@ -20,10 +20,17 @@ CControlVCR::CControlVCR()
 {
 	m_bPowerOn			= FALSE;
 	m_bURCInitialized	= FALSE;
+
+	// init local copy of COM parallel port object
+	CSystemTrayApp* pApp;
+	pApp = (CSystemTrayApp*) AfxGetApp();
+	m_pPP = pApp->GetSystemSettings()->GetParallelPort();
 }
 
 CControlVCR::~CControlVCR()
 {
+	//de-init local copy of COM parallel port object
+	m_pPP = NULL;
 }
 
 void CControlVCR::Play()

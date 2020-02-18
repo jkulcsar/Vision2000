@@ -2,9 +2,9 @@
 
 
 /* File created by MIDL compiler version 5.01.0164 */
-/* at Fri Dec 17 10:29:05 1999
+/* at Mon Dec 27 00:50:33 1999
  */
-/* Compiler settings for C:\Program Files\Microsoft Visual Studio\MyProjects\Vision2000\netmeeting.idl:
+/* Compiler settings for F:\Work\Vision2000\netmeeting.idl:
     Os (OptLev=s), W1, Zp8, env=Win32, ms_ext, c_ext
     error checks: allocation ref bounds_check enum stub_data 
 */

@@ -7,6 +7,8 @@
 // IRRemoteControlPage.h : header file
 //
 
+#include "IRRemoteControl.h"
+
 /////////////////////////////////////////////////////////////////////////////
 // CIRRemoteControlPage dialog
 
@@ -40,9 +42,12 @@ protected:
 	//{{AFX_MSG(CIRRemoteControlPage)
 	afx_msg void OnIRPlayback();
 	afx_msg void OnIRRecord();
+	virtual BOOL OnInitDialog();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 
+private:
+	CIRRemoteControl* m_pIRRemoteControl;
 };
 
 //{{AFX_INSERT_LOCATION}}

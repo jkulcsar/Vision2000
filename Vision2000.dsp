@@ -75,7 +75,7 @@ LINK32=link.exe
 # ADD RSC /l 0x409 /d "_DEBUG" /d "_AFXDLL"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
+# SUBTRACT BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
 # ADD LINK32 /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
@@ -171,6 +171,14 @@ SOURCE=.\netmeeting.idl
 
 SOURCE=.\StdAfx.cpp
 # ADD CPP /Yc"stdafx.h"
+# End Source File
+# Begin Source File
+
+SOURCE=.\SystemSettings.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\SystemSettingsPage.cpp
 # End Source File
 # Begin Source File
 
@@ -272,6 +280,14 @@ SOURCE=.\Resource.h
 # Begin Source File
 
 SOURCE=.\StdAfx.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SystemSettings.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SystemSettingsPage.h
 # End Source File
 # Begin Source File
 

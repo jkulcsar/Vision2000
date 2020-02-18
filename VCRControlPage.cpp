@@ -149,8 +149,8 @@ BOOL CVCRControlPage::OnInitDialog()
 	m_btnPower.LoadBitmaps( IDB_POWER_U, IDB_POWER_D, IDB_POWER_U, IDB_POWER_X );
 	m_btnPower.SizeToContent();
 
-	m_btnVCR.LoadBitmaps( IDB_VCR_U, IDB_VCR_D, IDB_VCR_U, IDB_VCR_X );
-	m_btnVCR.SizeToContent();
+//	m_btnVCR.LoadBitmaps( IDB_VCR_U, IDB_VCR_D, IDB_VCR_U, IDB_VCR_X );
+//	m_btnVCR.SizeToContent();
 
 
 

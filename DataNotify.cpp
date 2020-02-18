@@ -26,13 +26,12 @@ CDataNotify::CDataNotify(Conf *pConf)
 	m_pConf = pConf;
 	
 	m_pControlCamera = new CControlCamera;
-	if(m_pControlCamera != NULL )
-		m_pControlCamera->InitializeAt(LPT1);
+//	if(m_pControlCamera != NULL )
+//		m_pControlCamera->InitializeAt(LPT1);
 
 	m_pControlVCR = new CControlVCR;
-	if(m_pControlVCR != NULL )
-		m_pControlVCR->InitializeAt(LPT1);
-
+//	if(m_pControlVCR != NULL )
+//		m_pControlVCR->InitializeAt(LPT1);
 }
 
 

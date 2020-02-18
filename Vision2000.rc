@@ -117,7 +117,7 @@ BEGIN
     GROUPBOX        " STOP ",IDC_STATIC,124,54,40,37
     GROUPBOX        " PAUSE ",IDC_STATIC,165,54,40,37
     GROUPBOX        " Power ",IDC_STATIC,17,13,40,37
-    GROUPBOX        " VCR ",IDC_STATIC,17,54,40,37
+    GROUPBOX        " VCR ",IDC_STATIC,17,54,40,37,NOT WS_VISIBLE
     CONTROL         "REW",IDC_REW,"Button",BS_OWNERDRAW | WS_TABSTOP,90,24,
                     24,12
     CONTROL         "REC",IDC_REC,"Button",BS_OWNERDRAW | WS_TABSTOP,90,65,
@@ -130,8 +130,8 @@ BEGIN
                     65,24,12
     CONTROL         "PAUSE",IDC_PAUSE,"Button",BS_OWNERDRAW | WS_TABSTOP,173,
                     65,24,12
-    CONTROL         "VCR",IDC_VCR,"Button",BS_OWNERDRAW | WS_TABSTOP,25,66,
-                    24,12
+    CONTROL         "VCR",IDC_VCR,"Button",BS_OWNERDRAW | NOT WS_VISIBLE | 
+                    WS_TABSTOP,25,66,24,12
     CONTROL         "POWER",IDC_POWER,"Button",BS_OWNERDRAW | WS_TABSTOP,25,
                     26,24,12
 END
@@ -167,6 +167,20 @@ BEGIN
     PUSHBUTTON      "&Record",IDC_IR_RECORD,25,28,50,14
     PUSHBUTTON      "&Playback",IDC_IR_PLAYBACK,26,44,50,14
     GROUPBOX        " IR Remote Control ",IDC_STATIC,18,16,200,69
+END
+
+IDD_SETTINGS_PAGE DIALOG DISCARDABLE  0, 0, 232, 97
+STYLE DS_MODALFRAME | WS_CHILD
+FONT 8, "MS Sans Serif"
+BEGIN
+    GROUPBOX        " Parallel Port ",IDC_STATIC,6,6,68,82
+    CONTROL         "LPT1",IDC_RADIO_LPT1,"Button",BS_AUTORADIOBUTTON | 
+                    BS_PUSHLIKE,15,19,33,13
+    CONTROL         "LPT2",IDC_RADIO_LPT2,"Button",BS_AUTORADIOBUTTON | 
+                    BS_PUSHLIKE,15,33,33,13
+    CONTROL         "LPT3",IDC_RADIO_LPT3,"Button",BS_AUTORADIOBUTTON | 
+                    BS_PUSHLIKE,15,47,33,13
+    PUSHBUTTON      "&Test Port ...",IDC_TEST_PORT,15,66,50,14
 END
 
 
@@ -343,10 +357,11 @@ END
 STRINGTABLE DISCARDABLE 
 BEGIN
     ID_APP_ABOUT            "Information about Vision2000"
-    IDS_TAB_CAMERA_CONTROL  " Camera Control "
-    IDS_TAB_VCR_CONTROL     " VCR Control "
-    IDS_TAB_CALL_CONTROL    " Call Control "
+    IDS_TAB_CAMERA_CONTROL  " Camera "
+    IDS_TAB_VCR_CONTROL     " VCR "
+    IDS_TAB_CALL_CONTROL    " Call "
     IDS_TAB_REMOTE_CONTROL  " Remote Control "
+    IDS_TAB_SETTINGS        " Settings "
 END
 
 STRINGTABLE DISCARDABLE 

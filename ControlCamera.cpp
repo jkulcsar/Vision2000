@@ -18,12 +18,16 @@ static char THIS_FILE[]=__FILE__;
 
 CControlCamera::CControlCamera()
 {
-
+	// init local copy of COM parallel port object
+	CSystemTrayApp* pApp;
+	pApp = (CSystemTrayApp*) AfxGetApp();
+	m_pPP = pApp->GetSystemSettings()->GetParallelPort();
 }
 
 CControlCamera::~CControlCamera()
 {
-
+	//de-init local copy of COM parallel port object
+	m_pPP = NULL;
 }
 
 void CControlCamera::Show(BYTE byteNr)

@@ -49,6 +49,7 @@ extern CVision2000Module _Module;
 #include "imsconf2_i.c"			// contains the CLSID declarations
 #include "imsconf2.h"			// contains the interface declarations
 #include "interface.h"			// Parallel Port COM object interfaces
+#include "COMParallelPort.h"	// C++ parallel port object
 #include "ClUtil.h"
 #include "MgrNtfy.h"
 #include "CallNtfy.h"
@@ -63,6 +64,8 @@ static const GUID guidApp =
 { 0xa5e48460, 0x4f49, 0x11d3, { 0xaf, 0xb1, 0x0, 0x40, 0x95, 0xd0, 0xef, 0x62 } };
 
 #define LPT1 0x378
+#define LPT2 0x278
+#define LPT3 0x3BC
 
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.

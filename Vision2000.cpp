@@ -125,6 +125,16 @@ BOOL CSystemTrayApp::InitInstance()
 	// for COM support
 	// AfxOleInit();
 
+	// Initialize the system settings CSystemSettings object
+	m_pSystemSettings = new CSystemSettings;
+
+	if( FAILED(m_pSystemSettings->Initialize()) )
+	{
+		AfxMessageBox("Failed to initialize system settings!");
+		return -1;	// destroy window; can not continue
+	}
+
+
 	// Initialize the conference object
 	m_pConf=new Conf(m_pMainWnd->GetSafeHwnd());
 
@@ -133,7 +143,6 @@ BOOL CSystemTrayApp::InitInstance()
 		AfxMessageBox("NetMeeting may not be installed");
 		return -1;	// destroy window; can not continue
 	}
-
 
 	return TRUE;
 }
@@ -154,6 +163,13 @@ int CSystemTrayApp::ExitInstance()
 		m_pConf = NULL;
 	}
 
+	if(m_pSystemSettings != NULL)
+	{
+		delete m_pSystemSettings;
+		m_pSystemSettings = NULL;
+	}
+
+
 	if (m_bATLInited)
 	{
 		_Module.RevokeClassObjects();
@@ -171,6 +187,11 @@ Conf* CSystemTrayApp::GetConference()
 	return m_pConf;
 }
 
+
+CSystemSettings* CSystemTrayApp::GetSystemSettings()
+{
+	return m_pSystemSettings;
+}
 
 /////////////////////////////////////////////////////////////////////
 // CVision2000Module object
