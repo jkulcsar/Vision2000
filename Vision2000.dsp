@@ -339,6 +339,10 @@ SOURCE=.\res\ff_u.bmp
 # End Source File
 # Begin Source File
 
+SOURCE=.\res\ff_x.bmp
+# End Source File
+# Begin Source File
+
 SOURCE=.\res\icon1.ico
 # End Source File
 # Begin Source File
@@ -359,6 +363,10 @@ SOURCE=.\res\pause_u.bmp
 # End Source File
 # Begin Source File
 
+SOURCE=.\res\pause_x.bmp
+# End Source File
+# Begin Source File
+
 SOURCE=.\res\play.bmp
 # End Source File
 # Begin Source File
@@ -368,6 +376,10 @@ SOURCE=.\res\play_d.bmp
 # Begin Source File
 
 SOURCE=.\res\play_u.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\play_x.bmp
 # End Source File
 # Begin Source File
 
@@ -387,6 +399,10 @@ SOURCE=.\res\power_u.bmp
 # End Source File
 # Begin Source File
 
+SOURCE=.\res\power_x.bmp
+# End Source File
+# Begin Source File
+
 SOURCE=.\res\rec.bmp
 # End Source File
 # Begin Source File
@@ -403,6 +419,10 @@ SOURCE=.\res\rec_u.bmp
 # End Source File
 # Begin Source File
 
+SOURCE=.\res\rec_x.bmp
+# End Source File
+# Begin Source File
+
 SOURCE=.\res\rew.bmp
 # End Source File
 # Begin Source File
@@ -416,6 +436,10 @@ SOURCE=.\res\rew_d.bmp
 # Begin Source File
 
 SOURCE=.\res\rew_u.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\rew_x.bmp
 # End Source File
 # Begin Source File
 
@@ -439,11 +463,19 @@ SOURCE=.\res\stop_u.bmp
 # End Source File
 # Begin Source File
 
+SOURCE=.\res\stop_x.bmp
+# End Source File
+# Begin Source File
+
 SOURCE=.\res\vc_d.bmp
 # End Source File
 # Begin Source File
 
 SOURCE=.\res\vc_u.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\vc_x.bmp
 # End Source File
 # Begin Source File
 
@@ -460,6 +492,10 @@ SOURCE=.\res\vcr_d.bmp
 # Begin Source File
 
 SOURCE=.\res\vcr_u.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\vcr_x.bmp
 # End Source File
 # Begin Source File
 

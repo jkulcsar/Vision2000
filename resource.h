@@ -43,6 +43,15 @@
 #define IDB_VISION2000                  172
 #define IDI_VISION2000                  174
 #define IDD_IR_CONTROL_PAGE             175
+#define IDB_FF_X                        177
+#define IDB_PAUSE_X                     178
+#define IDB_PLAY_X                      179
+#define IDB_POWER_X                     180
+#define IDB_REC_X                       181
+#define IDB_REW_X                       182
+#define IDB_STOP_X                      183
+#define IDB_VCR_X                       184
+#define IDB_VIDEOCAMERA_X               185
 #define IDC_MACHINENAME                 1000
 #define IDC_CALLHANGUP                  1001
 #define IDC_DATA                        1002
@@ -89,7 +98,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        176
+#define _APS_NEXT_RESOURCE_VALUE        186
 #define _APS_NEXT_COMMAND_VALUE         32777
 #define _APS_NEXT_CONTROL_VALUE         1016
 #define _APS_NEXT_SYMED_VALUE           105

@@ -72,7 +72,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	// Create the tray icon
 	if (!m_TrayIcon.Create(this, WM_ICON_NOTIFY, _T("Vision2000"), NULL, IDR_POPUP_MENU))
 		return -1;
-	m_TrayIcon.SetStandardIcon(IDR_MAINFRAME);
+	m_TrayIcon.SetIcon(IDR_MAINFRAME);
 
 	return 0;
 }
@@ -97,7 +97,8 @@ void CMainFrame::OnClose()
 void CMainFrame::OnControlSheet() 
 {
 	m_pCSh = new CControlSheet( _T("Vision2000"), this );
-	m_pCSh->Create(this);
+	if( m_pCSh != NULL )
+		m_pCSh->Create(this);
 }
 
 LRESULT CMainFrame::OnIdleUpdateCmdUI(WPARAM, LPARAM)

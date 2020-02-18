@@ -313,6 +313,15 @@ IDB_REW_D               BITMAP  DISCARDABLE     "res\\rew_d.bmp"
 IDB_STOP_U              BITMAP  DISCARDABLE     "res\\stop_u.bmp"
 IDB_VCR_D               BITMAP  DISCARDABLE     "res\\vcr_d.bmp"
 IDB_VISION2000          BITMAP  DISCARDABLE     "res\\vision2K.bmp"
+IDB_FF_X                BITMAP  DISCARDABLE     "res\\ff_x.bmp"
+IDB_PAUSE_X             BITMAP  DISCARDABLE     "res\\pause_x.bmp"
+IDB_PLAY_X              BITMAP  DISCARDABLE     "res\\play_x.bmp"
+IDB_POWER_X             BITMAP  DISCARDABLE     "res\\power_x.bmp"
+IDB_REC_X               BITMAP  DISCARDABLE     "res\\rec_x.bmp"
+IDB_REW_X               BITMAP  DISCARDABLE     "res\\rew_x.bmp"
+IDB_STOP_X              BITMAP  DISCARDABLE     "res\\stop_x.bmp"
+IDB_VCR_X               BITMAP  DISCARDABLE     "res\\vcr_x.bmp"
+IDB_VIDEOCAMERA_X       BITMAP  DISCARDABLE     "res\\vc_x.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
