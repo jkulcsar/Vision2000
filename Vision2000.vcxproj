@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <SccProjectName>"$/Vision2000", OBAAAAAA</SccProjectName>
+    <SccLocalPath>.</SccLocalPath>
+    <Keyword>MFCProj</Keyword>
+    <ProjectGuid>{7180D219-3B08-4A74-92F7-DEE5EA9D6E95}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>.\Release\</OutDir>
+    <IntDir>.\Release\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>.\Debug\</OutDir>
+    <IntDir>.\Debug\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <StringPooling>true</StringPooling>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <Optimization>MaxSpeed</Optimization>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AssemblerListingLocation>.\Release\</AssemblerListingLocation>
+      <PrecompiledHeaderOutputFile>.\Release\Vision2000.pch</PrecompiledHeaderOutputFile>
+      <ObjectFileName>.\Release\</ObjectFileName>
+      <ProgramDataBaseFileName>.\Release\</ProgramDataBaseFileName>
+    </ClCompile>
+    <Midl>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TypeLibraryName>.\Release\Vision2000.tlb</TypeLibraryName>
+      <TargetEnvironment>Win32</TargetEnvironment>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Bscmake>
+      <SuppressStartupBanner>false</SuppressStartupBanner>
+      <OutputFile>.\Release\Vision2000.bsc</OutputFile>
+    </Bscmake>
+    <Link>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>.\Release\Vision2000.exe</OutputFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <Optimization>Disabled</Optimization>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <WarningLevel>Level3</WarningLevel>
+      <MinimalRebuild>true</MinimalRebuild>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AssemblerListingLocation>.\Debug\</AssemblerListingLocation>
+      <BrowseInformation>true</BrowseInformation>
+      <PrecompiledHeaderOutputFile>.\Debug\Vision2000.pch</PrecompiledHeaderOutputFile>
+      <ObjectFileName>.\Debug\</ObjectFileName>
+      <ProgramDataBaseFileName>.\Debug\</ProgramDataBaseFileName>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+    </ClCompile>
+    <Midl>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TypeLibraryName>.\Debug\Vision2000.tlb</TypeLibraryName>
+      <TargetEnvironment>Win32</TargetEnvironment>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Bscmake>
+      <SuppressStartupBanner>false</SuppressStartupBanner>
+      <OutputFile>.\Debug\Vision2000.bsc</OutputFile>
+    </Bscmake>
+    <Link>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>.\Debug\Vision2000.exe</OutputFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="ButtonWizardPages.cpp" />
+    <ClCompile Include="CallControlPage.cpp" />
+    <ClCompile Include="Callntfy.cpp" />
+    <ClCompile Include="CameraControlPage.cpp" />
+    <ClCompile Include="Clutil.cpp" />
+    <ClCompile Include="Cnfntfy.cpp" />
+    <ClCompile Include="COMParallelPort.cpp" />
+    <ClCompile Include="Conf.cpp" />
+    <ClCompile Include="ControlCamera.cpp" />
+    <ClCompile Include="controlcm.cpp" />
+    <ClCompile Include="ControlDevice.cpp" />
+    <ClCompile Include="ControlSheet.cpp" />
+    <ClCompile Include="ControlVCR.cpp" />
+    <ClCompile Include="DataNotify.cpp" />
+    <ClCompile Include="HomeAutomationPage.cpp" />
+    <ClCompile Include="HyperLink.cpp" />
+    <ClCompile Include="IRRemoteControl.cpp" />
+    <ClCompile Include="IRRemoteControlPage.cpp" />
+    <ClCompile Include="mainfrm.cpp" />
+    <ClCompile Include="Mgrntfy.cpp" />
+    <ClCompile Include="NewX10DeviceDlg.cpp" />
+    <ClCompile Include="PreviewWnd.cpp" />
+    <ClCompile Include="SetupVCRWizardSheet.cpp" />
+    <ClCompile Include="StdAfx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">stdafx.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="SystemSettings.cpp" />
+    <ClCompile Include="SystemSettingsPage.cpp" />
+    <ClCompile Include="trayicon.cpp" />
+    <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="VCRControlPage.cpp" />
+    <ClCompile Include="Vision2000.cpp" />
+    <ClCompile Include="X10Device.cpp" />
+    <ClCompile Include="X10Settings.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Midl Include="Imsconf2.idl">
+      <MkTypLibCompatible Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</MkTypLibCompatible>
+      <TargetEnvironment Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Win32</TargetEnvironment>
+      <MkTypLibCompatible Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</MkTypLibCompatible>
+      <TargetEnvironment Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Win32</TargetEnvironment>
+    </Midl>
+    <Midl Include="netmeeting.idl">
+      <MkTypLibCompatible Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</MkTypLibCompatible>
+      <TargetEnvironment Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Win32</TargetEnvironment>
+      <MkTypLibCompatible Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</MkTypLibCompatible>
+      <TargetEnvironment Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Win32</TargetEnvironment>
+    </Midl>
+    <Midl Include="Vision2000.idl">
+      <HeaderFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vision2000_i.h</HeaderFileName>
+      <InterfaceIdentifierFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vision2000_i.c</InterfaceIdentifierFileName>
+      <GenerateStublessProxies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</GenerateStublessProxies>
+      <TargetEnvironment Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Win32</TargetEnvironment>
+      <HeaderFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vision2000_i.h</HeaderFileName>
+      <InterfaceIdentifierFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vision2000_i.c</InterfaceIdentifierFileName>
+      <GenerateStublessProxies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</GenerateStublessProxies>
+      <TargetEnvironment Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Win32</TargetEnvironment>
+    </Midl>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Vision2000.rc">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OUTDIR);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OUTDIR);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ButtonWizardPages.h" />
+    <ClInclude Include="CallControlPage.h" />
+    <ClInclude Include="Callntfy.h" />
+    <ClInclude Include="CameraControlPage.h" />
+    <ClInclude Include="Clutil.h" />
+    <ClInclude Include="Cnfntfy.h" />
+    <ClInclude Include="COMParallelPort.h" />
+    <ClInclude Include="Conf.h" />
+    <ClInclude Include="ControlCamera.h" />
+    <ClInclude Include="controlcm.h" />
+    <ClInclude Include="ControlDevice.h" />
+    <ClInclude Include="ControlSheet.h" />
+    <ClInclude Include="ControlVCR.h" />
+    <ClInclude Include="DataNotify.h" />
+    <ClInclude Include="HomeAutomationPage.h" />
+    <ClInclude Include="HyperLink.h" />
+    <ClInclude Include="IRRemoteControl.h" />
+    <ClInclude Include="IRRemoteControlPage.h" />
+    <ClInclude Include="mainfrm.h" />
+    <ClInclude Include="Mgrntfy.h" />
+    <ClInclude Include="NewX10DeviceDlg.h" />
+    <ClInclude Include="PreviewWnd.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="SetupVCRWizardSheet.h" />
+    <ClInclude Include="StdAfx.h" />
+    <ClInclude Include="SystemSettings.h" />
+    <ClInclude Include="SystemSettingsPage.h" />
+    <ClInclude Include="trayicon.h" />
+    <ClInclude Include="Utils.hpp" />
+    <ClInclude Include="VCRControlPage.h" />
+    <ClInclude Include="Vision2000.h" />
+    <ClInclude Include="X10Device.h" />
+    <ClInclude Include="X10Settings.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\Arw01rt.ico" />
+    <Image Include="res\Avercam.ico" />
+    <Image Include="res\bitmap1.bmp" />
+    <Image Include="res\ff.bmp" />
+    <Image Include="res\FF.ico" />
+    <Image Include="res\ff_d.bmp" />
+    <Image Include="res\ff_u.bmp" />
+    <Image Include="res\ff_x.bmp" />
+    <Image Include="res\idr_main.ico" />
+    <Image Include="res\main.ico" />
+    <Image Include="res\pause.bmp" />
+    <Image Include="res\pause.ico" />
+    <Image Include="res\pause_d.bmp" />
+    <Image Include="res\pause_u.bmp" />
+    <Image Include="res\pause_x.bmp" />
+    <Image Include="res\play.bmp" />
+    <Image Include="res\play_d.bmp" />
+    <Image Include="res\play_u.bmp" />
+    <Image Include="res\play_x.bmp" />
+    <Image Include="res\power.bmp" />
+    <Image Include="res\Power.ico" />
+    <Image Include="res\power_d.bmp" />
+    <Image Include="res\power_u.bmp" />
+    <Image Include="res\power_x.bmp" />
+    <Image Include="res\rec.bmp" />
+    <Image Include="res\Rec.ico" />
+    <Image Include="res\rec_d.bmp" />
+    <Image Include="res\rec_u.bmp" />
+    <Image Include="res\rec_x.bmp" />
+    <Image Include="res\rew.bmp" />
+    <Image Include="res\Rew.ico" />
+    <Image Include="res\Rewine.ico" />
+    <Image Include="res\rew_d.bmp" />
+    <Image Include="res\rew_u.bmp" />
+    <Image Include="res\rew_x.bmp" />
+    <Image Include="res\stop.bmp" />
+    <Image Include="res\Stop.ico" />
+    <Image Include="res\stop_d.bmp" />
+    <Image Include="res\stop_u.bmp" />
+    <Image Include="res\stop_x.bmp" />
+    <Image Include="res\vcr.bmp" />
+    <Image Include="res\VCR.ico" />
+    <Image Include="res\vcr_d.bmp" />
+    <Image Include="res\vcr_u.bmp" />
+    <Image Include="res\vcr_x.bmp" />
+    <Image Include="res\Videocamera.bmp" />
+    <Image Include="res\Videotape.bmp" />
+    <Image Include="res\Vision2000.ico" />
+    <Image Include="res\vision2K.bmp" />
+    <Image Include="res\vision2K.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="res\Vision2000.rc2" />
+    <CustomBuild Include="Vision2000.rgs" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
