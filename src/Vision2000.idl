@@ -1,0 +1,19 @@
+
+	// Vision2000.idl : IDL source for Vision2000.exe
+//
+// This file will be processed by the MIDL tool to
+// produce the type library (Vision2000.tlb) and marshalling code.
+import "oaidl.idl";
+import "ocidl.idl";
+[
+	uuid(47660A83-78C0-11D3-AFB2-004095D0EF62),
+	version(1.0),
+	helpstring("Vision2000 1.0 Type Library")
+]
+library Vision2000Lib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+};
+
+	

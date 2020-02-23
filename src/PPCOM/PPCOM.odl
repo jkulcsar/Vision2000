@@ -1,0 +1,66 @@
+// PPCOM.odl : type library source for PPCOM.dll
+
+// This file will be processed by the MIDL compiler to produce the
+// type library (PPCOM.tlb).
+
+[ uuid(98757166-3237-11D3-AFB0-004095D0EF62), version(1.0) ]
+library PPCOM
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+
+
+
+	//  Primary dispatch interface for CParallelPort
+	
+	[ uuid(98757173-3237-11D3-AFB0-004095D0EF62) ]
+	dispinterface IParallelPort
+	{
+		properties:
+			// NOTE - ClassWizard will maintain property information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_PROP(CParallelPort)
+			//}}AFX_ODL_PROP
+			
+		methods:
+			// NOTE - ClassWizard will maintain method information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_METHOD(CParallelPort)
+			//}}AFX_ODL_METHOD
+
+	};
+
+/*
+	//  IRead
+	[ uuid(A417E6A0-323D-11d3-AFB0-004095D0EF62) ]
+	interface IRead : IUnknown
+	{
+		BYTE ReadControlPort();
+		BYTE ReadDataPort();
+		BYTE ReadStatusPort();
+	};
+
+
+	//  IWrite
+	[ uuid(6FF402E0-323E-11d3-AFB0-004095D0EF62) ]
+	interface IWrite : IUnknown
+	{
+		void WriteControlPort( BYTE byteToWrite );
+		void WriteDataPort( BYTE  byteDataToWrite );
+	};
+*/
+
+
+
+	//  Class information for CParallelPort
+
+	[ uuid(98757174-3237-11D3-AFB0-004095D0EF62) ]
+	coclass ParallelPort
+	{
+		[default] dispinterface IParallelPort;
+	};
+
+	//{{AFX_APPEND_ODL}}
+	//}}AFX_APPEND_ODL}}
+};
